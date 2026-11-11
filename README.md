@@ -85,6 +85,30 @@ Three settings compare unpadded 3-way SGBM, reflected-padding 3-way SGBM, and re
 
 Disparity MAE is computed on the intersection of valid predictions and finite positive ground truth. Coverage divides that intersection by the ground-truth valid count. Scene scores are averaged equally. Depth uses quarter-resolution calibration, `focal * baseline_m / (disparity + doffs)`. Invalid depths are NaN.
 
+## Training-only calibration
+
+Calibration uses 795 training images grouped by the exact NYU scene name into five folds. Sorted unique scene names are shuffled with NumPy seed 42 and split into equally sized scene groups. All fit quantities, including feature standardization, come only from the fitting folds.
+
+The global scalar is the median of the per-image median target/prediction ratios over valid crop pixels. A six-parameter monotone curve replaces that scalar with a continuous piecewise-linear map in log depth. Its knots are 0.3, 0.7, 1.5, 3, 6 and 12 meters. The map is anchored at the first knot with a log offset bounded by plus/minus log(2); five slopes lie in [0.25, 2]. The nearest segment extrapolates outside the knot range.
+
+Each fitting image contributes 4,096 randomly sampled valid pixels. Float64 L-BFGS with strong Wolfe line search runs for at most 80 iterations on smooth bounded parameters. The objective is mean per-image clipped-depth RMSE, normalized by its initial scalar value, plus 0.01 times mean squared adjacent-slope differences and 0.001 times mean squared slope deviations from one.
+
+The residual model predicts an image-wise log scale from eight statistics of the original log-depth crop: five percentiles (10, 25, 50, 75, 90), mean, population standard deviation, and the average absolute horizontal/vertical neighbor difference. These features use all crop pixels, without a target mask. Its training target is the log median target/curve-output ratio. Ridge regression minimizes MSE + lambda times squared coefficient norm; the intercept is the target mean. Candidate lambda values are 0.1, 1, 10 and shrinkages are 0.5, 1. Predicted log scales are clipped to plus/minus 0.15 after shrinkage. Only log calculations use a 1e-6 floor; depth outputs are clipped to [0.001, 10].
+
+A candidate is eligible only when all three metrics improve over the curve both overall and in every held-out training fold. The eligible candidate with lowest out-of-fold AbsRel is selected; otherwise the final method remains the curve. All candidates' out-of-fold results are retained. The scalar is one global scale; the curve and adaptive residual are extensions, not single global scalars.
+
+```bash
+"$METRIC_PYTHON" -m depthlab.calibration --data-root data \
+  --predictions outputs/nyu_rgb --output results
+git add results/calibration_parameters.json
+git commit -m "Save calibration fitted on training images"
+bash scripts/run_evaluation.sh data third_party outputs results
+```
+
+The final command evaluates the 654 test images only after fitting and saving the parameters. Pairwise confidence intervals use 10,000 scene-cluster bootstrap draws, retaining image weighting within each replicate. Depth-bin scores average per-image metrics over images containing that bin. The failure-case rule averages metric gains normalized by the previous method's dataset-average scores, then selects the largest gain and largest regression without manual replacement.
+
+The final command also performs a separate training-only camera diagnosis. It compares estimated/known focal ratios to median raw/target depth ratios and repeats inference on the 795 training images with the NYU toolbox RGB intrinsics. These known-camera predictions are kept separate from the RGB-only main results. The camera matrix uses the original 640x480 coordinates; the official inference API handles internal resizing.
+
 ## Sources
 
 - [Middlebury Stereo Evaluation](https://vision.middlebury.edu/stereo/submit3/).
