@@ -1,0 +1,5 @@
+previous,current,kind,index,score,scene
+raw,global_scale,largest_gain,324,0.5587521320516631,classroom_0023
+raw,global_scale,largest_regression,1406,-0.4220127730617988,dining_room_0025
+global_scale,monotone_curve,largest_gain,278,0.4538627994195161,study_room_0006
+global_scale,monotone_curve,largest_regression,351,-0.5530103414659319,foyer_0001

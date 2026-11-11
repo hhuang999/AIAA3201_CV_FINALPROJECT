@@ -1,0 +1,5 @@
+model,gpu,precision,network_hw,seconds_per_image_or_frame,peak_allocated_mib,peak_reserved_mib
+UniDepthV2 RGB-only,NVIDIA A40,official internal FP16 autocast,490x644,0.025048390062033535,498.0771484375,604.0
+"UniDepthV2 known camera, training",NVIDIA A40,official internal FP16 autocast,490x644,0.026349354412336396,497.01611328125,624.0
+Depth Anything V2 Small,NVIDIA A40,FP32,518x924,0.058061979351831335,375.36474609375,448.0
+Video Depth Anything Small,NVIDIA A40,official FP16 autocast,518x924,0.06175015993815446,2689.2197265625,3138.0

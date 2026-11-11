@@ -1,0 +1,11 @@
+{
+  "images": 795,
+  "split": "training only",
+  "focal_ratio_mean": 1.0541723601473203,
+  "focal_ratio_median": 1.103893518447876,
+  "pearson_r": 0.5231118329811053,
+  "pearson_p": 4.758281300878356e-57,
+  "spearman_r": 0.4084844928086621,
+  "spearman_p": 2.5297223061005945e-33,
+  "inverse_rgb_scale": 1.0459458384459976
+}

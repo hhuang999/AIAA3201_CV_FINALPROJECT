@@ -1,0 +1,19 @@
+{
+  "image": [
+    0.0,
+    2.4439147043228138
+  ],
+  "video": [
+    0.0,
+    4.9087562751770015
+  ],
+  "percentiles": [
+    2,
+    98
+  ],
+  "frames": 70,
+  "fps": 24.0,
+  "focus": 0.55,
+  "blur_levels": 6,
+  "max_sigma_pixels": 9.0
+}

@@ -1,0 +1,9 @@
+previous,current,category,images
+raw,global_scale,all_better,299
+raw,global_scale,all_worse,181
+raw,global_scale,mixed_or_tied,174
+raw,global_scale,unchanged,0
+global_scale,monotone_curve,all_better,231
+global_scale,monotone_curve,all_worse,159
+global_scale,monotone_curve,mixed_or_tied,264
+global_scale,monotone_curve,unchanged,0

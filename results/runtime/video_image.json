@@ -1,0 +1,24 @@
+{
+  "method": "image",
+  "source_revision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+  "gpu": "NVIDIA A40",
+  "torch": "2.1.1+cu121",
+  "cuda": "12.1",
+  "precision": "FP32",
+  "input_size": 518,
+  "network_hw": [
+    518,
+    924
+  ],
+  "decoded_hw": [
+    360,
+    640
+  ],
+  "frames": 70,
+  "fps": 24.0,
+  "mean_seconds": 0.058061979351831335,
+  "peak_allocated_mib": 375.36474609375,
+  "peak_reserved_mib": 448.0,
+  "scope": "infer_image, including preprocessing and CPU output transfer; excludes decoding and encoding",
+  "warmup": "five frames; video model pads internally to a complete window"
+}

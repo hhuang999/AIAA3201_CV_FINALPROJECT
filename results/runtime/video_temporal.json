@@ -1,0 +1,24 @@
+{
+  "method": "video",
+  "source_revision": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+  "gpu": "NVIDIA A40",
+  "torch": "2.1.1+cu121",
+  "cuda": "12.1",
+  "precision": "official FP16 autocast",
+  "input_size": 518,
+  "network_hw": [
+    518,
+    924
+  ],
+  "decoded_hw": [
+    360,
+    640
+  ],
+  "frames": 70,
+  "fps": 24.0,
+  "mean_seconds": 0.06175015993815446,
+  "peak_allocated_mib": 2689.2197265625,
+  "peak_reserved_mib": 3138.0,
+  "scope": "offline clip inference divided by decoded frames, including window overlap, preprocessing and CPU transfer",
+  "warmup": "five frames; video model pads internally to a complete window"
+}

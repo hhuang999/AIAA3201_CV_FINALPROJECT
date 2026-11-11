@@ -1,0 +1,23 @@
+{
+  "model": "UniDepthV2 ViT-S",
+  "source_revision": "8d8cfe4c7ee15297099983607febf0d4f32eb3d6",
+  "gpu": "NVIDIA A40",
+  "torch": "2.4.1+cu121",
+  "cuda": "12.1",
+  "precision": "official internal FP16 autocast",
+  "rgb_input_hw": [
+    480,
+    640
+  ],
+  "network_hw": [
+    490,
+    644
+  ],
+  "known_intrinsics": false,
+  "images": 1449,
+  "mean_seconds": 0.025048390062033535,
+  "peak_allocated_mib": 498.0771484375,
+  "peak_reserved_mib": 604.0,
+  "warmup_images": 5,
+  "scope": "infer call, including preprocessing and input transfer; excludes file IO and output transfer"
+}

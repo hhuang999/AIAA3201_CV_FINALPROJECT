@@ -1,0 +1,16 @@
+method,lower_m,upper_m,images,pixels
+global_scale,0,1,254,4738642
+global_scale,1,2,641,45093789
+global_scale,2,4,645,84150080
+global_scale,4,6,415,17235262
+global_scale,6,10,220,4800467
+monotone_curve,0,1,254,4738642
+monotone_curve,1,2,641,45093789
+monotone_curve,2,4,645,84150080
+monotone_curve,4,6,415,17235262
+monotone_curve,6,10,220,4800467
+raw,0,1,254,4738642
+raw,1,2,641,45093789
+raw,2,4,645,84150080
+raw,4,6,415,17235262
+raw,6,10,220,4800467
