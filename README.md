@@ -132,9 +132,15 @@ The residual bound limits each image's correction to a small change around the g
 "$METRIC_PYTHON" -m depthlab.calibration --data-root data \
   --predictions outputs/nyu_rgb --output results
 git add results/calibration_parameters.json
-git commit -m "Save calibration fitted on training images"
+if git diff --cached --quiet -- results/calibration_parameters.json; then
+  echo "Calibration parameters match the existing commit; continuing."
+else
+  git commit --only -m "Save calibration fitted on training images" -- results/calibration_parameters.json
+fi
 bash scripts/run_evaluation.sh data third_party outputs results
 ```
+
+If fitting reproduces the tracked parameters exactly, their existing commit already records them and evaluation can continue without a new commit. Changed parameters are committed before evaluation; unrelated staged files are excluded from this commit.
 
 The final command evaluates the 654 test images only after fitting and saving the parameters. Pairwise confidence intervals use 10,000 scene-cluster bootstrap draws, retaining image weighting within each replicate. Depth-bin scores average per-image metrics over images containing that bin. The failure-case rule averages metric gains normalized by the previous method's dataset-average scores, then selects the largest gain and largest regression without manual replacement.
 
