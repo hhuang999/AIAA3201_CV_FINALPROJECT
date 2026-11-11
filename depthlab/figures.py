@@ -52,17 +52,20 @@ def comparison(handle, raw, index, parameters, previous, current, title, path):
     outputs = corrected_predictions(raw[index].astype(np.float64), parameters)
     before, after = outputs[previous][CROP], outputs[current][CROP]
     valid = valid_depth(gt)
-    error = np.where(valid, np.abs(np.clip(after, .001, 10) - gt), np.nan)
-    fig, axes = plt.subplots(1, 5, figsize=(16, 3.8), layout="constrained")
+    errors = [np.where(valid, np.abs(np.clip(depth, .001, 10) - gt), np.nan)
+              for depth in (before, after)]
+    fig, axes = plt.subplots(1, 6, figsize=(19, 3.8), layout="constrained")
     axes[0].imshow(rgb)
     for ax, depth in zip(axes[1:4], (gt, before, after)):
         im = ax.imshow(depth, cmap="viridis", vmin=0, vmax=10)
-    err = axes[4].imshow(error, cmap="magma", vmin=0, vmax=1.5)
-    for ax, label in zip(axes, ("RGB", "Filled target (m)", LABELS[previous], LABELS[current], "Absolute error (m)")):
-        ax.set_title(label)
+    for ax, error in zip(axes[4:], errors):
+        err = ax.imshow(error, cmap="magma", vmin=0, vmax=1.5)
+    for ax, label in zip(axes, ("RGB", "Filled target (m)", LABELS[previous], LABELS[current],
+                               "Previous error (m)", "Current error (m)")):
+        ax.set_title(label, fontsize=11)
         ax.axis("off")
     fig.colorbar(im, ax=list(axes[1:4]), shrink=.65)
-    fig.colorbar(err, ax=axes[4], shrink=.65)
+    fig.colorbar(err, ax=list(axes[4:]), shrink=.65)
     fig.suptitle(f"{title} | NYU index {index} (zero-based), evaluation crop", fontsize=12)
     fig.savefig(path, dpi=160)
     plt.close(fig)
