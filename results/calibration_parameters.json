@@ -1,0 +1,20 @@
+{
+  "global_scale": 0.9560724478892514,
+  "monotone_curve": {
+    "offset": 0.007383672804437707,
+    "slopes": [
+      0.9215435988062629,
+      0.9819902062882568,
+      1.0615972999152894,
+      1.02175061601938,
+      0.4686017928317423
+    ],
+    "iterations": 34
+  },
+  "residual": null,
+  "selected_method": "monotone_curve",
+  "seed": 42,
+  "sample_count": 4096,
+  "training_images": 795,
+  "training_scenes": 249
+}
