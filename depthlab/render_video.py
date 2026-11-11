@@ -35,13 +35,13 @@ def background_blur(rgb, normalized):
     return np.clip((1 - weight) * stack[lower, y, x] + weight * stack[upper, y, x], 0, 255).astype(np.uint8)
 
 
-def labeled_panels(panels, labels, frame):
+def labeled_panels(panels, labels, frame, total, fps):
     image = np.concatenate(panels, axis=1)
     canvas = cv2.copyMakeBorder(image, 36, 28, 0, 0, cv2.BORDER_CONSTANT, value=(245, 245, 245))
     width = panels[0].shape[1]
     for i, label in enumerate(labels):
         cv2.putText(canvas, label, (i * width + 12, 25), cv2.FONT_HERSHEY_SIMPLEX, .65, (20, 20, 20), 1, cv2.LINE_AA)
-    footer = f"Relative depth: independent clip-wide ranges; colors have no shared metric scale. Frame {frame + 1}"
+    footer = f"Relative depth: independent clip-wide ranges; no shared metric scale. Frame {frame + 1}/{total}, {fps:g} FPS"
     cv2.putText(canvas, footer, (12, canvas.shape[0] - 8), cv2.FONT_HERSHEY_SIMPLEX, .52, (30, 30, 30), 1, cv2.LINE_AA)
     return canvas
 
@@ -73,21 +73,25 @@ def render(args):
     with imageio.get_writer(comparison_path, **kwargs) as comparison, imageio.get_writer(application_path, **kwargs) as application:
         for i, rgb in enumerate(frames):
             colored = [(cmap(norm[i])[..., :3] * 255).astype(np.uint8) for norm in (image_norm, video_norm)]
-            panel = labeled_panels([rgb, *colored], ["RGB", "Framewise relative depth", "Video relative depth"], i)
+            panel = labeled_panels([rgb, *colored], ["RGB", "Framewise relative depth", "Video relative depth"],
+                                   i, len(frames), info["fps"])
             comparison.append_data(panel)
             blurred = [background_blur(rgb, norm[i]) for norm in (image_norm, video_norm)]
-            app = labeled_panels([rgb, *blurred], ["RGB", "Framewise background blur", "Video background blur"], i)
+            app = labeled_panels([rgb, *blurred], ["RGB", "Framewise background blur", "Video background blur"],
+                                 i, len(frames), info["fps"])
             application.append_data(app)
             if i in selected:
                 imageio.imwrite(args.results / f"video_frame_{i:02d}.png", panel)
                 imageio.imwrite(args.results / f"application_frame_{i:02d}.png", app)
     fig, axes = plt.subplots(2, 1, figsize=(12, 5), layout="constrained")
+    fig.suptitle(f"{len(frames)} frames, {info['fps']:g} FPS; independent fixed relative-depth ranges")
     for ax, depth, label in zip(axes, (image_norm, video_norm), ("Framewise", "Video")):
         ax.imshow(depth[:, depth.shape[1] // 2, :], cmap=PALETTE, vmin=0, vmax=1, aspect="auto")
         ax.set(title=f"{label}: center-row depth over time", xlabel="Horizontal pixel", ylabel="Frame")
     fig.savefig(args.results / "video_temporal_slices.png", dpi=180)
     plt.close(fig)
     fig, axes = plt.subplots(2, 3, figsize=(12, 4.8), layout="constrained")
+    fig.suptitle(f"{len(frames)} frames, {info['fps']:g} FPS; adjacent changes include motion and flicker")
     for col, index in enumerate((min(15, len(frames) - 2), min(35, len(frames) - 2), len(frames) - 2)):
         for row, depth in enumerate((image_norm, video_norm)):
             axes[row, col].imshow(depth[index + 1] - depth[index], cmap="coolwarm", vmin=-.15, vmax=.15)
