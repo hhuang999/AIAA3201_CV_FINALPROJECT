@@ -24,9 +24,9 @@ def diagnose(args):
     for row, index in enumerate(ids):
         gt = nyu_depth(handle, index)
         mask = valid_depth(gt[CROP])
-        focal_ratio = .5 * (intrinsics[index, 0, 0] / RGB_INTRINSICS[0, 0]
-                            + intrinsics[index, 1, 1] / RGB_INTRINSICS[1, 1])
-        scale_ratio = np.median(raw[index][CROP][mask] / gt[CROP][mask])
+        focal_ratio = float(.5 * (intrinsics[index, 0, 0] / RGB_INTRINSICS[0, 0]
+                                  + intrinsics[index, 1, 1] / RGB_INTRINSICS[1, 1]))
+        scale_ratio = float(np.median(raw[index][CROP][mask] / gt[CROP][mask]))
         records.append({"index": index, "scene": scenes[index], "focal_ratio": focal_ratio,
                         "raw_over_target": scale_ratio})
         for method, depth in (("rgb_only", raw[index]), ("known_intrinsics", known[row])):
