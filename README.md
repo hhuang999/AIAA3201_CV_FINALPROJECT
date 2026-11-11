@@ -7,6 +7,8 @@ AIAA 3201 course project on stereo geometry, RGB-only metric depth, video depth 
 Use Python 3.10 and a CUDA-capable GPU. Two environments preserve the upstream models' different PyTorch and NumPy versions:
 
 ```bash
+git clone https://github.com/hhuang999/AIAA3102_CV_FINALPROJECTA.git
+cd AIAA3102_CV_FINALPROJECTA
 conda create -n depth-metric python=3.10 -y
 conda create -n depth-video python=3.10 -y
 conda run -n depth-metric pip install -r requirements-metric.txt
@@ -21,7 +23,17 @@ Obtain the official code at these revisions:
 | [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2) | `a561b849ebae10a6f5ef49e26c83cbbcd36c71bf` |
 | [Video Depth Anything](https://github.com/DepthAnything/Video-Depth-Anything) | `4f5ae23172ba60fd7bc11ef671cca678842c7072` |
 
-Clone each repository into its named directory under `third_party`, then check out the revision above. Official GitHub source archives at these revisions are equivalent inputs. The inference commands import the source directly. UniDepth's optional KNN and patch-extraction training/3D-evaluation extensions are not used by this project's 2D depth evaluation. Video frames are decoded with OpenCV, shared by both video pipelines.
+```bash
+mkdir -p third_party
+git clone https://github.com/lpiccinelli-eth/UniDepth.git third_party/UniDepth
+git -C third_party/UniDepth checkout 8d8cfe4c7ee15297099983607febf0d4f32eb3d6
+git clone https://github.com/DepthAnything/Depth-Anything-V2.git third_party/Depth-Anything-V2
+git -C third_party/Depth-Anything-V2 checkout a561b849ebae10a6f5ef49e26c83cbbcd36c71bf
+git clone https://github.com/DepthAnything/Video-Depth-Anything.git third_party/Video-Depth-Anything
+git -C third_party/Video-Depth-Anything checkout 4f5ae23172ba60fd7bc11ef671cca678842c7072
+```
+
+Official GitHub source archives at these revisions are equivalent inputs. The inference commands import the source directly. UniDepth's optional KNN and patch-extraction training/3D-evaluation extensions are not used by this project's 2D depth evaluation. Video frames are decoded with OpenCV, shared by both video pipelines.
 
 Place these downloads in `data/`:
 
@@ -38,6 +50,21 @@ Download weights into the following directories:
 | `video_depth_anything_small/` | `video_depth_anything_vits.pth` from [Video Depth Anything Small](https://huggingface.co/depth-anything/Video-Depth-Anything-Small/tree/main) |
 
 The local UniDepth folder avoids requiring an online Hub connection during inference. Data, weights, third-party source, raw arrays, and videos are excluded from Git.
+
+## Small trial
+
+After preparing the downloads, run one stereo pair, two training images, and five shared video frames. The trial writes to separate output directories and does not evaluate test images:
+
+```bash
+conda run -n depth-metric python -m depthlab.prepare --data-root data --output outputs/trial/data.json
+conda run -n depth-metric python -m depthlab.stereo --data-root data --output outputs/trial/stereo --limit 1
+conda run -n depth-metric python -m depthlab.infer_nyu --data-root data --source third_party/UniDepth --weights data/weights/unidepth_v2_vits14 --output outputs/trial/nyu --split train --limit 2
+conda run -n depth-video python -m depthlab.infer_video --method decode --video data/davis_rollercoaster.mp4 --output outputs/trial/frames --limit 5
+conda run -n depth-video python -m depthlab.infer_video --method image --source third_party/Depth-Anything-V2 --weights data/weights/depth_anything_v2_small/depth_anything_v2_vits.pth --frames outputs/trial/frames --output outputs/trial/image
+conda run -n depth-video python -m depthlab.infer_video --method video --source third_party/Video-Depth-Anything --weights data/weights/video_depth_anything_small/video_depth_anything_vits.pth --frames outputs/trial/frames --output outputs/trial/video
+conda run -n depth-metric python -m depthlab.render_video --frames outputs/trial/frames --image-predictions outputs/trial/image --video-predictions outputs/trial/video --output outputs/trial/delivery --results outputs/trial/figures
+conda run -n depth-metric python -m pytest -q
+```
 
 ## Metric inference
 
@@ -87,7 +114,7 @@ Disparity MAE is computed on the intersection of valid predictions and finite po
 
 ## Training-only calibration
 
-Calibration uses 795 training images grouped by the exact NYU scene name into five folds. Sorted unique scene names are shuffled with NumPy seed 42 and split into equally sized scene groups. All fit quantities, including feature standardization, come only from the fitting folds.
+Calibration uses 795 training images grouped by the exact NYU scene name into five folds. Keeping a scene in one fold avoids learning from closely related views of the validation room. Sorted unique scene names are shuffled with NumPy seed 42 and split into equally sized scene groups. All fit quantities, including feature standardization, come only from the fitting folds.
 
 The global scalar is the median of the per-image median target/prediction ratios over valid crop pixels. A six-parameter monotone curve replaces that scalar with a continuous piecewise-linear map in log depth. Its knots are 0.3, 0.7, 1.5, 3, 6 and 12 meters. The map is anchored at the first knot with a log offset bounded by plus/minus log(2); five slopes lie in [0.25, 2]. The nearest segment extrapolates outside the knot range.
 
@@ -96,6 +123,8 @@ Each fitting image contributes 4,096 randomly sampled valid pixels. Float64 L-BF
 The residual model predicts an image-wise log scale from eight statistics of the original log-depth crop: five percentiles (10, 25, 50, 75, 90), mean, population standard deviation, and the average absolute horizontal/vertical neighbor difference. These features use all crop pixels, without a target mask. Its training target is the log median target/curve-output ratio. Ridge regression minimizes MSE + lambda times squared coefficient norm; the intercept is the target mean. Candidate lambda values are 0.1, 1, 10 and shrinkages are 0.5, 1. Predicted log scales are clipped to plus/minus 0.15 after shrinkage. Only log calculations use a 1e-6 floor; depth outputs are clipped to [0.001, 10].
 
 A candidate is eligible only when all three metrics improve over the curve both overall and in every held-out training fold. The eligible candidate with lowest out-of-fold AbsRel is selected; otherwise the final method remains the curve. All candidates' out-of-fold results are retained. The scalar is one global scale; the curve and adaptive residual are extensions, not single global scalars.
+
+The residual bound limits each image's correction to a small change around the global curve.
 
 ```bash
 "$METRIC_PYTHON" -m depthlab.calibration --data-root data \
@@ -115,6 +144,14 @@ The final command also performs a separate training-only camera diagnosis. It co
 <!-- results:end -->
 
 The CSV/JSON tables under `results` contain per-scene, per-image, fold-level and aggregate scores. `python -m depthlab.summarize --outputs outputs --results results --readme README.md` regenerates the displayed tables from measured results. Raw arrays and MP4/ZIP exports remain under `outputs`.
+
+![Pipeline](results/figures/pipeline.png)
+
+![NYU test scores](results/figures/nyu/test_scores.png)
+
+![Video comparison: all 70 frames at 24 FPS, shown at zero-based frame 35](results/figures/video/video_frame_35.png)
+
+![Application: all 70 frames at 24 FPS, shown at zero-based frame 35](results/figures/video/application_frame_35.png)
 
 ## Sources
 
