@@ -6,6 +6,8 @@ AIAA 3201 course project on stereo geometry, RGB-only metric depth, video depth 
 
 Use Python 3.10 and a CUDA-capable GPU. Two environments preserve the upstream models' different PyTorch and NumPy versions:
 
+The video environment uses imageio-ffmpeg 0.8.1 because the older writer imports `pkg_resources`, which recent setuptools releases remove.
+
 ```bash
 git clone https://github.com/hhuang999/AIAA3102_CV_FINALPROJECTA.git
 cd AIAA3102_CV_FINALPROJECTA
