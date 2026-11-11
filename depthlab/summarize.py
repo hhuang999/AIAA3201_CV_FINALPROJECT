@@ -36,11 +36,20 @@ def summarize(args):
     sections = []
     for title, name in [("Stereo: equal-weight mean over 15 scenes", "stereo_summary.csv"),
                         ("NYU: 654 held-out images, RGB only", "test_summary.csv"),
+                        ("Scene-grouped training out-of-fold scores", "calibration_oof_summary.csv"),
                         ("Training-only camera diagnosis: 795 images", "camera_diagnostic_summary.csv")]:
         frame = pd.read_csv(args.results / name)
         sections.append(f"### {title}\n\n" + frame.to_markdown(index=False, floatfmt=".4f"))
     sections.append("### Efficiency\n\n" + efficiency.to_markdown(index=False, floatfmt=".4f"))
     sections.append("Times use each model's reported inference scope; offline video time is amortized over the 70 decoded frames. Peak memory is allocated GPU memory; reserved memory is also retained in the CSV and runtime JSON files.")
+    params = json.loads((args.results / "calibration_parameters.json").read_text())
+    if params["residual"] is None:
+        sections.append("The final method is the monotone curve. No residual candidate passed all metrics in every fold. The residual stage is inactive; its recorded incremental runtime is zero.")
+    changes = pd.read_csv(args.results / "figures/video/video_adjacent_change.csv")
+    changes.groupby("method").mean(numeric_only=True).drop(columns="frame").to_csv(
+        args.results / "video_change_summary.csv")
+    sections.append("### Video: mean adjacent normalized-depth change\n\n" +
+                    changes.groupby("method")["mean_adjacent_change"].mean().to_frame().to_markdown(floatfmt=".6f"))
     markdown = "\n\n".join(sections)
     (args.results / "summary.md").write_text(markdown + "\n", encoding="utf-8")
     if args.readme is not None:

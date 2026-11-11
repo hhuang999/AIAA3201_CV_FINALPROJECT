@@ -99,6 +99,19 @@ def render(args):
             axes[row, col].axis("off")
     fig.savefig(args.results / "video_adjacent_frames.png", dpi=180)
     plt.close(fig)
+    fig, axes = plt.subplots(3, 3, figsize=(11, 8), layout="constrained")
+    middle = len(frames) // 2
+    zoom = (slice(70, 250), slice(200, 450))
+    for row, index in enumerate((middle - 1, middle, middle + 1)):
+        axes[row, 0].imshow(frames[index][zoom])
+        for col, depth in enumerate((image_norm, video_norm), start=1):
+            axes[row, col].imshow(depth[index][zoom], cmap=PALETTE, vmin=0, vmax=1)
+        for ax, label in zip(axes[row], ("RGB", "Framewise", "Video")):
+            ax.set_title(f"{label}: frame {index}")
+            ax.axis("off")
+    fig.suptitle(f"{len(frames)} frames, {info['fps']:g} FPS; zoom x=200:450, y=70:250; fixed relative-depth ranges")
+    fig.savefig(args.results / "video_boundary_zoom.png", dpi=180)
+    plt.close(fig)
     with zipfile.ZipFile(args.output / "depth_results.zip", "w", zipfile.ZIP_DEFLATED) as archive:
         archive.write(comparison_path, comparison_path.name)
         archive.write(application_path, application_path.name)
