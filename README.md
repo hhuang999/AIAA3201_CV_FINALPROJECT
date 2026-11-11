@@ -52,6 +52,26 @@ UniDepthV2 ViT-S receives RGB only and retains its official internal FP16 autoca
 
 The NYU protocol uses filled `depths` in meters, MATLAB split indices minus one, and the Python crop `[45:471, 41:601]`. Targets satisfy `0.001 < depth < 10`; predictions are clipped to `[0.001, 10]`. AbsRel, RMSE and delta1 (`ratio < 1.25`) use float64 and equal per-image averaging, with no test-time scale alignment. Any necessary output resizing is bilinear with `align_corners=False`.
 
+## Video and background blur
+
+Decode once with `depthlab.infer_video --method decode`, then run `--method image` and `--method video` on the saved frames. Both methods receive the same 70 RGB frames resized to 640x360. Each preserves its official preprocessing with input size 518; the recorded network size is 518x924. The framewise Small model uses FP32; the video Small model uses its official offline FP16 path, including overlapping 32-frame windows and internal cross-window alignment. Their outputs are relative depth, with larger values nearer the camera.
+
+`depthlab.render_video` uses each method's own whole-clip second and 98th percentiles, fixed across all frames, and the same magma palette. Colors do not represent a shared metric scale. The auxiliary mean adjacent-frame change contains real motion as well as flicker and is not a depth-accuracy measure.
+
+The application preserves normalized values above 0.55 in focus. More distant pixels blend between six Gaussian blur levels, from sigma zero to nine pixels. Both depth methods use the same application settings. The comparison and application videos retain 70 frames at 24 FPS and are packed into `outputs/delivery/depth_results.zip`.
+
+## Running baselines
+
+Set the two Python paths, then run all baselines without calculating NYU test scores:
+
+```bash
+export METRIC_PYTHON="$(conda run -n depth-metric python -c 'import sys; print(sys.executable)')"
+export VIDEO_PYTHON="$(conda run -n depth-video python -c 'import sys; print(sys.executable)')"
+bash scripts/run_baselines.sh data third_party outputs results
+```
+
+On Slurm, submit the same command through `scripts/slurm_gpu.sh`, specifying your partition and QOS with `sbatch`. The wrapper uses the GPU UUID when a cluster exposes only one allocated device but supplies a physical CUDA index. It retains the scheduler mask when several devices are visible. Inference runtime excludes file IO; each runtime JSON describes its measured scope, precision, warmup, actual network size, peak allocated/reserved GPU memory, and hardware. Offline video time is amortized over the decoded frames, including overlap and alignment.
+
 ## Stereo geometry
 
 Use the 15 Middlebury quarter-resolution training scenes, including `im0.png`, `im1.png`, `calib.txt`, and `disp0GT.pfm` under `MiddEval3/trainingQ/`.
@@ -70,3 +90,9 @@ Disparity MAE is computed on the intersection of valid predictions and finite po
 - [Middlebury Stereo Evaluation](https://vision.middlebury.edu/stereo/submit3/).
 - Hirschmüller, *Stereo Processing by Semiglobal Matching and Mutual Information*, TPAMI 2008.
 - [OpenCV StereoSGBM](https://docs.opencv.org/4.x/d2/d85/classcv_1_1StereoSGBM.html).
+- [NYU Depth V2](https://cs.nyu.edu/~fergus/datasets/nyu_depth_v2.html), Silberman et al., ECCV 2012.
+- [UniDepthV2](https://arxiv.org/abs/2502.20110), Piccinelli et al., 2025; upstream source is CC BY-NC 4.0.
+- [Depth Anything V2](https://arxiv.org/abs/2406.09414), Yang et al., NeurIPS 2024; Small source/weights are Apache 2.0.
+- [Video Depth Anything](https://arxiv.org/abs/2501.12375), Chen et al., CVPR 2025; Small source/weights are Apache 2.0.
+
+Downloaded third-party repositories retain their original license files. Data and model licenses continue to apply to downloads obtained from the linked sources.
