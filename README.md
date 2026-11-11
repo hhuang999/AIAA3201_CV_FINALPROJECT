@@ -109,6 +109,13 @@ The final command evaluates the 654 test images only after fitting and saving th
 
 The final command also performs a separate training-only camera diagnosis. It compares estimated/known focal ratios to median raw/target depth ratios and repeats inference on the 795 training images with the NYU toolbox RGB intrinsics. These known-camera predictions are kept separate from the RGB-only main results. The camera matrix uses the original 640x480 coordinates; the official inference API handles internal resizing.
 
+## Results
+
+<!-- results:start -->
+<!-- results:end -->
+
+The CSV/JSON tables under `results` contain per-scene, per-image, fold-level and aggregate scores. `python -m depthlab.summarize --outputs outputs --results results --readme README.md` regenerates the displayed tables from measured results. Raw arrays and MP4/ZIP exports remain under `outputs`.
+
 ## Sources
 
 - [Middlebury Stereo Evaluation](https://vision.middlebury.edu/stereo/submit3/).

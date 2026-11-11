@@ -1,0 +1,28 @@
+{
+  "train_images": 795,
+  "test_images": 654,
+  "train_scenes": 249,
+  "test_scenes": 215,
+  "scene_overlap": 0,
+  "stereo_scenes": [
+    "Adirondack",
+    "ArtL",
+    "Jadeplant",
+    "Motorcycle",
+    "MotorcycleE",
+    "Piano",
+    "PianoL",
+    "Pipes",
+    "Playroom",
+    "Playtable",
+    "PlaytableP",
+    "Recycle",
+    "Shelves",
+    "Teddy",
+    "Vintage"
+  ],
+  "video_frames": 70,
+  "video_fps": 24.0,
+  "video_width": 960,
+  "video_height": 540
+}

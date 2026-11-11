@@ -10,3 +10,4 @@ metric=${METRIC_PYTHON:-python}
 "$metric" -m depthlab.diagnose --data-root "$data" --predictions "$outputs/nyu_rgb" --known-predictions "$outputs/nyu_known" --output "$results"
 "$metric" -m depthlab.figures --data-root "$data" --predictions "$outputs/nyu_rgb" --results "$results"
 "$metric" -m depthlab.render_video --frames "$outputs/frames" --image-predictions "$outputs/video_image" --video-predictions "$outputs/video_temporal" --output "$outputs/delivery" --results "$results/figures/video"
+"$metric" -m depthlab.summarize --outputs "$outputs" --results "$results" --readme README.md

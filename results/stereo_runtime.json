@@ -1,0 +1,5 @@
+{
+  "opencv": "4.10.0",
+  "threads": 4,
+  "scope": "forward and reverse matching plus consistency mask"
+}
