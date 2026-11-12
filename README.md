@@ -9,8 +9,8 @@ Use Python 3.10 and a CUDA-capable GPU. Two environments preserve the upstream m
 The video environment uses imageio-ffmpeg 0.8.1 because the older writer imports `pkg_resources`, which recent setuptools releases remove.
 
 ```bash
-git clone https://github.com/hhuang999/AIAA3102_CV_FINALPROJECTA.git
-cd AIAA3102_CV_FINALPROJECTA
+git clone https://github.com/hhuang999/AIAA3102_CV_FINALPROJECT.git
+cd AIAA3102_CV_FINALPROJECT
 conda create -n depth-metric python=3.10 -y
 conda create -n depth-video python=3.10 -y
 conda run -n depth-metric pip install -r requirements-metric.txt
