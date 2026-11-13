@@ -1,0 +1,170 @@
+{
+  "complete": true,
+  "files": [
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_completion_manifest.json",
+      "sha256": "a5054027ed03e58a02e90e0f304a775fd0695969a5a844044d094d973a958305",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": false,
+      "binding_note": "manifest contains no self-hash"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_protocol.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_protocol.json",
+      "sha256": "ae8711aa07dd9d4f5c88d7dc9cbc2902ff83b78dcacd0cb467f90fa0da598ec3",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_methods.csv",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_methods.csv",
+      "sha256": "98f111ff6cc551aa4b17f6ed05f5edcb5de9094be2a8986a68794b565970a9f7",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_decision.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_decision.json",
+      "sha256": "c8175681cf3c41cf5fc7a666af560cce20a43bdb0ea60d3bbefce662fa4794dc",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/fold_fit_records.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/fold_fit_records.json",
+      "sha256": "f8fbcbcbe882e2b0dc7c17a0127498b14b04c3725e4d8a19cd96a8230bcbd48a",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/oof_per_image.csv",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/oof_per_image.csv",
+      "sha256": "1ead17723009412f8a21cbde736593819a2abf0b436443acfb93964931d1153c",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_stability.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_stability.json",
+      "sha256": "de0280b5f8376696932c9cc1207aa9b840b6ebf7e225082341d823e945b0ce45",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_scene_cv/cv_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/followup_completion_manifest.json",
+      "sha256": "5b9dcbd33a237222e49a481aabf96bfc5e61aa1a82193a75f359da3eceaea219",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "bound_by_execution_manifest": false,
+      "binding_note": "manifest contains no self-hash"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_protocol.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/followup_protocol.json",
+      "sha256": "d43c268e4aaad6d36ba8e024ff832db699deb542427d33b8f48fd95d62b34931",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/development_fit.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/development_fit.json",
+      "sha256": "ec0a7d518feaf1fdd7c1a799dd2047412500d2d28f64fd5a6febb5ce904953a1",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/development_methods.csv",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/development_methods.csv",
+      "sha256": "03ee6db92525d54975bad139834634e81b79c0c1d1d9defd58b6225d04ce68e4",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/development_decision.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/development_decision.json",
+      "sha256": "dd4f22873bb2109880d182d3f1b6539a75050850c68c0e76cf59ff5999c28730",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/development_per_image.csv",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/development_per_image.csv",
+      "sha256": "5aa1f5a6a6466471df5637f968e033f565c2e83b57a0c56b83785b8e11db5bdd",
+      "execution_manifest": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_clipped_followup/followup_completion_manifest.json",
+      "bound_by_execution_manifest": true,
+      "binding_note": "verified historical manifest"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_calibration_uncertainty/protocol.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_calibration_uncertainty/protocol.json",
+      "sha256": "15a5a726396454f600926b6b88357337e681970f1eee45ab43c422d07650cb28",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "protocol hash checked against summary"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_calibration_uncertainty/summary.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_calibration_uncertainty/summary.json",
+      "sha256": "90e030c9b27b3414ded9958fe60982df83957ddbcadd5f6be229e3b307cf6d3e",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "no historical per-file hash binding located; current SHA records copied bytes"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/part3_calibration_uncertainty/bootstrap_draws.npz",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/part3_calibration_uncertainty/bootstrap_draws.npz",
+      "sha256": "1dd6a9cbaa8cb6903dfcbaf74861bf6e0f238ad1bfaa0a97f3e95a243fed1d2e",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "no historical per-file hash binding located; current SHA records copied bytes"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/nyu_global_scale/subset_stability.csv",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/nyu_global_scale/subset_stability.csv",
+      "sha256": "eee9bf8165524c95496bbc58ef8661c011b7c1e3b5151e695ca80183e041d990",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "no historical per-file hash binding located; current SHA records copied bytes"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/nyu_global_scale/subset_stability_draws.csv",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/nyu_global_scale/subset_stability_draws.csv",
+      "sha256": "3f4d4bb5e042953f289c62d4c9f95f1165d871cd6b2af3851ca4b4a2b18b24f3",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "no historical per-file hash binding located; current SHA records copied bytes"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/nyu_global_scale/development_protocol.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/nyu_global_scale/development_protocol.json",
+      "sha256": "8c5bb46664e4ba4370fbcdf84bdd4750c1dd6909a23e89e779ddd609bbbaa01c",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "no historical per-file hash binding located; current SHA records copied bytes"
+    },
+    {
+      "source": "/home/ai4s_group/XZG/coursework/CV/Project3/outputs/nyu_global_scale/frozen_scale.json",
+      "destination": "results/pre_freeze_20261111/legacy_scalar/nyu_global_scale/frozen_scale.json",
+      "sha256": "4099bd610afd59952f538360ddaca789b966fab6205e3df94a580038bc82fba0",
+      "execution_manifest": null,
+      "bound_by_execution_manifest": false,
+      "binding_note": "no historical per-file hash binding located; current SHA records copied bytes"
+    }
+  ],
+  "limitations": [
+    "Historical manifests do not hash themselves.",
+    "Uncertainty summary binds its protocol; historical NPZ and subset-stability files have no verified execution-manifest file hashes.",
+    "Historical source execution hashes in copied protocols/manifests are claims of their executions; no original source snapshot copied."
+  ]
+}

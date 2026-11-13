@@ -1,0 +1,10 @@
+{
+  "complete": true,
+  "prepared_files_verified": 6,
+  "selection_replay_identical_except_timestamp": true,
+  "previous_tracked_files_changed": [],
+  "base_commit": "e2fe04aab7daa6c0dfe6f4519b24b7bea517d3b6",
+  "cv_candidate_fits": 90,
+  "sum_cv_fit_wall_seconds": 523.9743769075722,
+  "scope": "CPU/GPU shared-host times are not isolated GPU utilization."
+}

@@ -1,0 +1,78 @@
+{
+  "complete": true,
+  "scope": "Descriptive analysis of saved metrics; no model evaluation or recommendation change",
+  "historical_test_exposure": true,
+  "candidate": "residual_median_ratio_l1_a0.5",
+  "images": 654,
+  "scenes": 215,
+  "reference_overall_image_means": {
+    "abs_rel": 0.1008313178562192,
+    "rmse": 0.3870020911705998,
+    "d1": 0.9032000296888346
+  },
+  "definitions": {
+    "gain": "spline minus candidate for AbsRel and RMSE, candidate minus spline for d1; positive means improvement",
+    "case_score": "mean across three metrics of paired gain divided by overall image-mean spline metric; max/min, ties by lowest dataset index",
+    "scene_aggregation": "equal mean over images within each scene; nonuniform scene sizes reported",
+    "learning_curve": "training-only held-out image means versus mean fitting images across folds; descriptive, no uncertainty intervals"
+  },
+  "image_counts": {
+    "all_three_improve": 277,
+    "all_three_worsen": 193,
+    "other_or_tied": 184
+  },
+  "scene_size": {
+    "min": 1,
+    "max": 11,
+    "median": 3.0
+  },
+  "scene_relative_gain": {
+    "min": -0.10038975511428062,
+    "max": 0.1114775589634623,
+    "median": 0.004017876675115579,
+    "positive_scenes": 128,
+    "negative_scenes": 87,
+    "zero_scenes": 0
+  },
+  "selected_cases": [
+    {
+      "case": "max_relative_gain",
+      "dataset_index": 1277,
+      "scene_id": "living_room_0049",
+      "scene_type": "living_room",
+      "equal_weight_relative_gain": 0.234467508118157,
+      "spline_abs_rel": "0.18463524395828054",
+      "candidate_abs_rel": "0.16038923141469846",
+      "gain_abs_rel": 0.02424601254358208,
+      "spline_rmse": "0.8628562416019272",
+      "candidate_rmse": "0.7458906843440083",
+      "gain_rmse": 0.1169655572579189,
+      "spline_d1": "0.6585638832997988",
+      "candidate_d1": "0.8037139503688799",
+      "gain_d1": 0.14515006706908118
+    },
+    {
+      "case": "min_relative_gain",
+      "dataset_index": 87,
+      "scene_id": "bookstore_0001",
+      "scene_type": "bookstore",
+      "equal_weight_relative_gain": -0.15475479080784083,
+      "spline_abs_rel": "0.33511198273909987",
+      "candidate_abs_rel": "0.3553468362244419",
+      "gain_abs_rel": -0.02023485348534204,
+      "spline_rmse": "1.4555575502655618",
+      "candidate_rmse": "1.4756304373336566",
+      "gain_rmse": -0.020072887068094847,
+      "spline_d1": "0.533530348759222",
+      "candidate_d1": "0.34230801475519784",
+      "gain_d1": -0.19122233400402416
+    }
+  ],
+  "input_sha256": {
+    "outputs/part3b_residual_20261111/final/test/evaluation.json": "02659f524297b0c6999dc5f3780447eb90fea94392e20f4b12641962e5d0ae25",
+    "outputs/part3b_residual_20261111/final/test/per_image.csv": "f1b690b35a19af35b85689cd4605c096a4a60d8c3779094bc7b1d46bd93cf32e",
+    "outputs/part3b_learning_20261111/full/learning_curve.csv": "11d25cf2137a9bb5d68f46260ad0cea3a3aa1129010f8c743e6760cdebb6fb8a",
+    "outputs/part3b_learning_20261111/full/completion.json": "de24b2f899f0c2f2dcbcc3fc01177c69e0c3b9a4dac542b1997f4ad06e50739e"
+  },
+  "source_sha256": "f44d84070003d6b35beac6696e91a4f4fdc192006dec0d0f19e7afc2f4901d35"
+}

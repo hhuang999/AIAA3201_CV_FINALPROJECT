@@ -1,0 +1,11 @@
+previous,current,kind,index,score,scene
+raw,global_scale,largest_gain,324,0.5570776915794877,classroom_0023
+raw,global_scale,largest_regression,1406,-0.4199102659889487,dining_room_0025
+global_scale,monotone_curve,largest_gain,278,0.4528166879276118,study_room_0006
+global_scale,monotone_curve,largest_regression,351,-0.5513625267188845,foyer_0001
+monotone_curve,residual_scale,largest_gain,1277,0.234467508118157,living_room_0049
+monotone_curve,residual_scale,largest_regression,87,-0.15475479080784071,bookstore_0001
+raw,residual_scale,largest_gain,278,0.7988285712727703,study_room_0006
+raw,residual_scale,largest_regression,351,-0.7064329917385846,foyer_0001
+global_scale,residual_scale,largest_gain,278,0.5116866096296953,study_room_0006
+global_scale,residual_scale,largest_regression,351,-0.5702353943247793,foyer_0001

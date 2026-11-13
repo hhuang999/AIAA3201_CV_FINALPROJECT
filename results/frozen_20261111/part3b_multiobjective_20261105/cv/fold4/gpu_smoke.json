@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "kind": "scalar",
+      "numpy_gpu_max_error": 0.0,
+      "initial_loss": 3.0,
+      "final_loss": 2.843059227992399
+    },
+    {
+      "kind": "affine",
+      "numpy_gpu_max_error": 0.0,
+      "initial_loss": 3.0,
+      "final_loss": 6.225009785890744e-05
+    },
+    {
+      "kind": "power",
+      "numpy_gpu_max_error": 8.881784197001252e-16,
+      "initial_loss": 2.9999999999999964,
+      "final_loss": 0.801701304515525
+    },
+    {
+      "kind": "bounded",
+      "numpy_gpu_max_error": 8.881784197001252e-16,
+      "initial_loss": 3.0,
+      "final_loss": 0.587812024855479
+    },
+    {
+      "kind": "spline",
+      "numpy_gpu_max_error": 8.881784197001252e-16,
+      "initial_loss": 3.0000000000000044,
+      "final_loss": 0.03808495606394133
+    }
+  ],
+  "gpu": "NVIDIA RTX A6000",
+  "visible_devices": "6"
+}

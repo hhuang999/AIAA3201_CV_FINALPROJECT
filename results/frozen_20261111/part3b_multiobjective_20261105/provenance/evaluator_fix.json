@@ -1,0 +1,8 @@
+{
+  "reason": "Integer counts divided as defaultfloat32; cast delta1 count tofloat64 to match course NumPy precision. Initial full-resolution parity check detected it before any candidate selection. Fitting objectives and fitted parameters unaffected.",
+  "initial_fit_sources": {
+    "flexible.py": "d9b2a949d737dd4563e1f817cbae6a4e95482b461a1c7cff8d8c7755418f3911",
+    "part3_multiobjective_worker.py": "036f26fd3fea12d123d9b1cea698e6ef32ecbbd1f3aa171fd8d4d9bf68c9aadc"
+  },
+  "corrected_module_sha256": "3a49ed0f2a78515439271f00c49e81df840b2e59838c9630b2aa571b559c9b0b"
+}

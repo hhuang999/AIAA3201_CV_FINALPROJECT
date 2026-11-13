@@ -1,0 +1,984 @@
+{
+  "goal": "Full70frame rawvideo restoration parity, no rendering or GTscoring",
+  "old_manifest_sha256": "7e017bf93d0b3dbb134edac02cb08109b9e8dcce7af9d90df8b118dc6274afc3",
+  "old_archive_sha256": "de0a80b590d78af1d325e756ede71741523b0c24ba1d08e344349f8e04c92d6c",
+  "phases": {
+    "decode": {
+      "all_exact": true,
+      "frames": 70,
+      "fps": 24.0,
+      "decoded_frames_sha256": "a24e2bb64820c6d9642de72e46d727cd9495319ad5b925946e87be32c3ecfe16",
+      "input_sha256": "7268cbecd9806a1e90a416de50dc02e50b4ae01428d5971837cf679dd0c87cb8"
+    },
+    "image": {
+      "all_exact": true,
+      "frames": 70,
+      "shape": [
+        70,
+        360,
+        640
+      ],
+      "changed_pixels": 0,
+      "max_absolute_difference": 0.0,
+      "rows": [
+        {
+          "frame": 0,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 1,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 2,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 3,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 4,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 5,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 6,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 7,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 8,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 9,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 10,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 11,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 12,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 13,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 14,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 15,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 16,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 17,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 18,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 19,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 20,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 21,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 22,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 23,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 24,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 25,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 26,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 27,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 28,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 29,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 30,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 31,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 32,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 33,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 34,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 35,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 36,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 37,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 38,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 39,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 40,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 41,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 42,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 43,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 44,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 45,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 46,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 47,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 48,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 49,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 50,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 51,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 52,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 53,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 54,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 55,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 56,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 57,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 58,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 59,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 60,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 61,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 62,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 63,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 64,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 65,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 66,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 67,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 68,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 69,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        }
+      ],
+      "new_manifest_sha256": "282655f386a51a7dff57a9959f3f379e3f2de0b24a308b155c6f15bb3b978bae",
+      "prediction_manifest": {
+        "method": "image",
+        "source_revision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+        "source": {
+          "revision": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
+          "tracked_source_clean": true
+        },
+        "weights": {
+          "depth_anything_v2_vits.pth": "715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378"
+        },
+        "gpu": "NVIDIA RTX A6000",
+        "torch": "2.8.0+cu128",
+        "cuda": "12.8",
+        "precision": "FP32",
+        "input_size": 518,
+        "network_hw": [
+          518,
+          924
+        ],
+        "frames": 70,
+        "fps": 24.0,
+        "decoded_hw": [
+          360,
+          640
+        ],
+        "decoded_frames_sha256": "a24e2bb64820c6d9642de72e46d727cd9495319ad5b925946e87be32c3ecfe16",
+        "input_sha256": "7268cbecd9806a1e90a416de50dc02e50b4ae01428d5971837cf679dd0c87cb8",
+        "mean_seconds": 0.07239960578403302,
+        "attention_backend": {
+          "implementation": "upstream PyTorch attention branches",
+          "xformers_attention_enabled": false,
+          "configured_modules": [
+            "depth_anything_v2.dinov2_layers.attention",
+            "depth_anything_v2.dinov2_layers.block"
+          ]
+        },
+        "seed": 0,
+        "preprocessing": "official infer_image / infer_video_depth; same decoded uint8 RGB; input_size=518",
+        "peak_allocated_mib": 413.5703125,
+        "peak_reserved_mib": 574.0,
+        "scope": "synchronized infer_image including preprocessing and CPU output transfer; excludes decoding and encoding",
+        "warmup_frames": 1,
+        "schema_version": 1,
+        "complete": true,
+        "depth_archive_sha256": "cfc3c4334019d101a2f4722d463b7948aa9471fb8cfbfa55cb074e4ab108db33"
+      }
+    },
+    "video": {
+      "all_exact": true,
+      "frames": 70,
+      "shape": [
+        70,
+        360,
+        640
+      ],
+      "changed_pixels": 0,
+      "max_absolute_difference": 0.0,
+      "rows": [
+        {
+          "frame": 0,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 1,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 2,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 3,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 4,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 5,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 6,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 7,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 8,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 9,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 10,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 11,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 12,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 13,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 14,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 15,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 16,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 17,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 18,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 19,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 20,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 21,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 22,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 23,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 24,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 25,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 26,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 27,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 28,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 29,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 30,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 31,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 32,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 33,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 34,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 35,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 36,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 37,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 38,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 39,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 40,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 41,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 42,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 43,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 44,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 45,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 46,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 47,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 48,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 49,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 50,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 51,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 52,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 53,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 54,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 55,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 56,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 57,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 58,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 59,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 60,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 61,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 62,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 63,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 64,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 65,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 66,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 67,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 68,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        },
+        {
+          "frame": 69,
+          "array_equal": true,
+          "changed_pixels": 0,
+          "max_absolute_difference": 0.0
+        }
+      ],
+      "new_manifest_sha256": "1ceac27b9d912d45772a2fe0bbc16784545e8219983ba6a96e8f5596e14de0c6",
+      "prediction_manifest": {
+        "method": "video",
+        "source_revision": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+        "source": {
+          "revision": "4f5ae23172ba60fd7bc11ef671cca678842c7072",
+          "tracked_source_clean": true
+        },
+        "weights": {
+          "video_depth_anything_vits.pth": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609"
+        },
+        "gpu": "NVIDIA RTX A6000",
+        "torch": "2.8.0+cu128",
+        "cuda": "12.8",
+        "precision": "official FP16 autocast",
+        "input_size": 518,
+        "network_hw": [
+          518,
+          924
+        ],
+        "frames": 70,
+        "fps": 24.0,
+        "decoded_hw": [
+          360,
+          640
+        ],
+        "decoded_frames_sha256": "a24e2bb64820c6d9642de72e46d727cd9495319ad5b925946e87be32c3ecfe16",
+        "input_sha256": "7268cbecd9806a1e90a416de50dc02e50b4ae01428d5971837cf679dd0c87cb8",
+        "mean_seconds": 0.11174161543271377,
+        "attention_backend": {
+          "implementation": "upstream PyTorch attention branches",
+          "xformers_attention_enabled": false,
+          "configured_modules": [
+            "video_depth_anything.dinov2_layers.attention",
+            "video_depth_anything.dinov2_layers.block",
+            "video_depth_anything.motion_module.attention",
+            "video_depth_anything.motion_module.motion_module"
+          ]
+        },
+        "seed": 0,
+        "preprocessing": "official infer_image / infer_video_depth; same decoded uint8 RGB; input_size=518",
+        "peak_allocated_mib": 8014.21923828125,
+        "peak_reserved_mib": 11858.0,
+        "scope": "synchronized offline clip inference divided by frames, including window overlap, preprocessing and CPU output transfer",
+        "warmup_frames": 32,
+        "schema_version": 1,
+        "complete": true,
+        "depth_archive_sha256": "2585c612a5acd12b4ecfb4da0ae27de33910e1bc48fa8e0fe44cc1e114389d0c"
+      }
+    }
+  },
+  "code_sha256": {
+    "depthlab/infer_video.py": "b4db357a25c84455c5a0a1b69969995bd138205f29cd4d331185bd9ab28eac60",
+    "depthlab/infer_nyu.py": "074c264c0414cfe22e970033d690ac1308bb169f838b2bc3a03309c33ff985e9",
+    "depthlab/cache.py": "b7b8b0ab26ec34d6076f1a2743a2dbe41a406246fd36c40c5464ace69cb08c7e",
+    "depthlab/inference_backend.py": "5f03cb7404bb6fe884b9848070b2a3d098f6058408675ab0474f610f77dfcd1f"
+  },
+  "all_exact": true,
+  "completed_utc": "2026-11-13T02:49:06.483772+00:00"
+}

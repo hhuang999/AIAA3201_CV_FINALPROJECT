@@ -1,0 +1,9 @@
+method,source,fit_definition,images,abs_rel,rmse,d1
+raw,legacy exact scene CV,uncalibrated baseline,795,0.11794041682296927,0.43036864553949045,0.8841813090281732
+median_image,legacy exact scene CV,median of per-image median ratios; all valid fitting pixels,795,0.10558244660759604,0.416424973081104,0.8974297092829513
+log_mean,legacy exact scene CV,pooled-pixel squared log-error optimum; fitting excludes output clipping,795,0.10536273027672641,0.4165297870788942,0.8975493369019146
+least_squares,legacy exact scene CV,pooled-pixel metric squared-error optimum; fitting excludes output clipping,795,0.10579965562362995,0.42482068555671637,0.8950562283554577
+image_absrel_unclipped,legacy exact scene CV,image-equal AbsRel weighted median; fitting excludes output clipping,795,0.10475533570726847,0.41971093252957975,0.8972101740421566
+scalar_absrel,multiobjective sampled scene CV,4096 pixels/image; clipped map; smoothed AbsRel surrogate,795,0.10473288930650207,0.4194154199469779,0.8973045136647989
+scalar_balanced,multiobjective sampled scene CV,4096 pixels/image; clipped map; normalized smooth joint objective,795,0.1052382735085265,0.41679892120395723,0.8975699427170989
+scalar_rmse,multiobjective sampled scene CV,4096 pixels/image; clipped map; mean per-image RMSE with numerical epsilon,795,0.10622917553137727,0.4164460394268373,0.8968534477304083

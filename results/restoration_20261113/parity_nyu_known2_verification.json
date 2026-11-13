@@ -1,0 +1,61 @@
+{
+  "shape": [
+    2,
+    480,
+    640
+  ],
+  "shape_correct": true,
+  "indices": [
+    2,
+    3
+  ],
+  "indices_correct": true,
+  "dtype": "float32",
+  "finite": true,
+  "positive": true,
+  "known_intrinsics": true,
+  "complete": true,
+  "intrinsics_shape": [
+    2,
+    3,
+    3
+  ],
+  "intrinsics_finite": true,
+  "main_rgb_manifest_unchanged": true,
+  "depth_min": 1.1418966054916382,
+  "depth_max": 2.9495720863342285,
+  "completion_manifest_sha256": "1fc4f111459b215052a1572d69c49e40e201b3ddad2e79648f18c77e779b643f",
+  "signature": {
+    "indices": [
+      2,
+      3
+    ],
+    "shape": [
+      2,
+      480,
+      640
+    ],
+    "dtype": "float32",
+    "known_intrinsics": true,
+    "split": "train",
+    "source": {
+      "revision": "8d8cfe4c7ee15297099983607febf0d4f32eb3d6",
+      "tracked_source_clean": true
+    },
+    "weights": {
+      "config.json": "ecc1f898690debe387d10329cca5d9d66a0a447ce83c3a2a7ae3673c7ce43cfe",
+      "model.safetensors": "93705cb3295dd7476b44911b8a55f5215bf74e8d5eccd27cecdb1b338270a648"
+    },
+    "data": {
+      "nyu_mat_sha256": "2d724b0c0ab358aa1ce5df855e5bd14a2279ab7202efe22f32a30d612dcb86aa",
+      "splits_sha256": "6e081404491a8bfba2f066beaa9713ef6046f9007aa5f799f2a350506a580cee"
+    },
+    "seed": 0,
+    "backend": "upstream PyTorch attention branches; xformers disabled",
+    "preprocessing": "official infer; interpolation_mode=bilinear; RGB uint8 480x640",
+    "camera_policy": "fresh K tensor per call"
+  },
+  "completed_utc": "2026-11-13T03:05:09.445717+00:00",
+  "scope": "Knowncamera2trainingimages smoke only; noGTscoring ormainpipeline changes",
+  "fresh_camera_mutation_regression": "existing test_known_camera_is_fresh_per_call passes in29testPart2suite"
+}

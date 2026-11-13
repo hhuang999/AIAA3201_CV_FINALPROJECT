@@ -1,0 +1,4799 @@
+{
+  "timestamp_utc": "2026-10-31T14:32:44.196434+00:00",
+  "scope": "official795_train_fivefold_scene_disjoint",
+  "seed": 20261031,
+  "folds": 5,
+  "disclosure": "Exploratory continuation after original654test results were already known. Five-fold selection uses only official795training images and scene IDs; no official test metric is consulted by the CV phase.",
+  "selection_rule": {
+    "primary": "minimum equal-image mean out-of-fold AbsRel across all795trainimages",
+    "ties": "within1e-12 AbsRel, lower RMSE then higher delta1 then method name",
+    "promotion": "winner must be median, or its scene-bootstrap gain over median has positive98.333333%CI lower bound (Bonferroni across3nonmedian alternatives)",
+    "secondary": "RMSE,delta1,fold winners,per-scene variation,tail error reported; not used to override primary except exact ties",
+    "reference": "original frozen median remains available; a selected follow-up artifact is separate",
+    "uncertainty": "conditional on frozen out-of-fold predictions; bootstrap does not refit fold scalars"
+  },
+  "fold_construction": "shuffle sorted unique scene IDs with default_rng(seed), split into5equal scene-count chunks",
+  "images": 795,
+  "scene_groups": 249,
+  "assignments": [
+    {
+      "dataset_index": 2,
+      "scene_id": "office_0003",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 3,
+      "scene_id": "office_0003",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 4,
+      "scene_id": "office_0004",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 5,
+      "scene_id": "office_0004",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 6,
+      "scene_id": "office_0004",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 7,
+      "scene_id": "office_0004",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 9,
+      "scene_id": "office_0006",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 10,
+      "scene_id": "office_0006",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 11,
+      "scene_id": "office_0006",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 12,
+      "scene_id": "office_0006",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 18,
+      "scene_id": "office_0009",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 19,
+      "scene_id": "office_0009",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 21,
+      "scene_id": "office_0011",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 22,
+      "scene_id": "office_0011",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 23,
+      "scene_id": "office_0011",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 24,
+      "scene_id": "office_0011",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 25,
+      "scene_id": "office_0012",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 26,
+      "scene_id": "office_0012",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 43,
+      "scene_id": "bathroom_0002",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 44,
+      "scene_id": "bathroom_0002",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 47,
+      "scene_id": "bathroom_0005",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 48,
+      "scene_id": "bathroom_0006",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 49,
+      "scene_id": "living_room_0000",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 50,
+      "scene_id": "living_room_0000",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 51,
+      "scene_id": "living_room_0000",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 52,
+      "scene_id": "living_room_0000",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 53,
+      "scene_id": "living_room_0000",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 54,
+      "scene_id": "living_room_0000",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 57,
+      "scene_id": "bedroom_0012",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 63,
+      "scene_id": "bedroom_0014",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 64,
+      "scene_id": "bedroom_0014",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 65,
+      "scene_id": "bedroom_0014",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 66,
+      "scene_id": "bedroom_0015",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 67,
+      "scene_id": "bedroom_0016",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 68,
+      "scene_id": "bedroom_0016",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 69,
+      "scene_id": "bedroom_0016",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 70,
+      "scene_id": "bedroom_0016",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 71,
+      "scene_id": "bedroom_0016",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 72,
+      "scene_id": "bedroom_0017",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 73,
+      "scene_id": "bedroom_0017",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 74,
+      "scene_id": "bedroom_0017",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 79,
+      "scene_id": "bedroom_0019",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 80,
+      "scene_id": "bedroom_0019",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 81,
+      "scene_id": "bedroom_0019",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 82,
+      "scene_id": "bedroom_0019",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 91,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 92,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 93,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 94,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 95,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 96,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 97,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 98,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 99,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 100,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 101,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 102,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 103,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 104,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 105,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 106,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 107,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 108,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 109,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 110,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 111,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 112,
+      "scene_id": "bookstore_0000",
+      "scene_type": "bookstore",
+      "fold": 0
+    },
+    {
+      "dataset_index": 113,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 114,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 115,
+      "scene_id": "bookstore_0002",
+      "scene_type": "bookstore",
+      "fold": 1
+    },
+    {
+      "dataset_index": 119,
+      "scene_id": "cafe_0001",
+      "scene_type": "cafe",
+      "fold": 3
+    },
+    {
+      "dataset_index": 120,
+      "scene_id": "cafe_0001",
+      "scene_type": "cafe",
+      "fold": 3
+    },
+    {
+      "dataset_index": 121,
+      "scene_id": "cafe_0001",
+      "scene_type": "cafe",
+      "fold": 3
+    },
+    {
+      "dataset_index": 122,
+      "scene_id": "cafe_0001",
+      "scene_type": "cafe",
+      "fold": 3
+    },
+    {
+      "dataset_index": 123,
+      "scene_id": "cafe_0001",
+      "scene_type": "cafe",
+      "fold": 3
+    },
+    {
+      "dataset_index": 129,
+      "scene_id": "kitchen_0006",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 134,
+      "scene_id": "kitchen_0008",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 135,
+      "scene_id": "kitchen_0008",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 137,
+      "scene_id": "kitchen_0010",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 138,
+      "scene_id": "kitchen_0010",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 139,
+      "scene_id": "kitchen_0010",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 140,
+      "scene_id": "kitchen_0010",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 141,
+      "scene_id": "kitchen_0011",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 142,
+      "scene_id": "kitchen_0011",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 143,
+      "scene_id": "kitchen_0011",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 144,
+      "scene_id": "kitchen_0011",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 145,
+      "scene_id": "living_room_0004",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 146,
+      "scene_id": "living_room_0004",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 147,
+      "scene_id": "living_room_0004",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 148,
+      "scene_id": "living_room_0004",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 149,
+      "scene_id": "living_room_0004",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 150,
+      "scene_id": "living_room_0005",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 151,
+      "scene_id": "living_room_0006",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 155,
+      "scene_id": "living_room_0010",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 156,
+      "scene_id": "living_room_0010",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 157,
+      "scene_id": "living_room_0010",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 158,
+      "scene_id": "living_room_0010",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 159,
+      "scene_id": "living_room_0011",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 160,
+      "scene_id": "living_room_0011",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 161,
+      "scene_id": "living_room_0011",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 162,
+      "scene_id": "living_room_0011",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 163,
+      "scene_id": "living_room_0012",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 164,
+      "scene_id": "living_room_0012",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 165,
+      "scene_id": "living_room_0012",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 169,
+      "scene_id": "bathroom_0001",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 176,
+      "scene_id": "bedroom_0004",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 177,
+      "scene_id": "bedroom_0004",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 178,
+      "scene_id": "bedroom_0004",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 202,
+      "scene_id": "kitchen_0003",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 203,
+      "scene_id": "kitchen_0003",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 204,
+      "scene_id": "kitchen_0003",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 205,
+      "scene_id": "kitchen_0003",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 212,
+      "scene_id": "office_0000",
+      "scene_type": "office",
+      "fold": 1
+    },
+    {
+      "dataset_index": 213,
+      "scene_id": "office_0000",
+      "scene_type": "office",
+      "fold": 1
+    },
+    {
+      "dataset_index": 214,
+      "scene_id": "office_0000",
+      "scene_type": "office",
+      "fold": 1
+    },
+    {
+      "dataset_index": 215,
+      "scene_id": "office_0000",
+      "scene_type": "office",
+      "fold": 1
+    },
+    {
+      "dataset_index": 216,
+      "scene_id": "bedroom_0020",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 217,
+      "scene_id": "bedroom_0020",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 218,
+      "scene_id": "bedroom_0021",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 222,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 223,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 224,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 225,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 226,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 227,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 228,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 229,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 230,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 231,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 232,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 233,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 234,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 235,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 236,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 237,
+      "scene_id": "furniture_store_0001",
+      "scene_type": "furniture_store",
+      "fold": 4
+    },
+    {
+      "dataset_index": 238,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 239,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 240,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 241,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 242,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 243,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 244,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 245,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 246,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 247,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 248,
+      "scene_id": "furniture_store_0002",
+      "scene_type": "furniture_store",
+      "fold": 2
+    },
+    {
+      "dataset_index": 250,
+      "scene_id": "kitchen_0016",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 251,
+      "scene_id": "kitchen_0016",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 252,
+      "scene_id": "kitchen_0017",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 253,
+      "scene_id": "kitchen_0017",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 254,
+      "scene_id": "living_room_0018",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 255,
+      "scene_id": "living_room_0018",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 256,
+      "scene_id": "living_room_0018",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 257,
+      "scene_id": "living_room_0019",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 258,
+      "scene_id": "living_room_0019",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 259,
+      "scene_id": "living_room_0020",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 260,
+      "scene_id": "living_room_0020",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 261,
+      "scene_id": "living_room_0020",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 262,
+      "scene_id": "living_room_0020",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 264,
+      "scene_id": "living_room_0022",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 265,
+      "scene_id": "living_room_0022",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 266,
+      "scene_id": "living_room_0022",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 267,
+      "scene_id": "living_room_0022",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 268,
+      "scene_id": "living_room_0022",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 269,
+      "scene_id": "living_room_0022",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 273,
+      "scene_id": "study_room_0004",
+      "scene_type": "study_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 274,
+      "scene_id": "study_room_0004",
+      "scene_type": "study_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 275,
+      "scene_id": "study_room_0005",
+      "scene_type": "study_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 276,
+      "scene_id": "study_room_0005",
+      "scene_type": "study_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 277,
+      "scene_id": "study_room_0005",
+      "scene_type": "study_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 285,
+      "scene_id": "classroom_0003",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 286,
+      "scene_id": "classroom_0003",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 287,
+      "scene_id": "classroom_0004",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 288,
+      "scene_id": "classroom_0004",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 289,
+      "scene_id": "classroom_0005",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 290,
+      "scene_id": "classroom_0005",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 291,
+      "scene_id": "classroom_0006",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 292,
+      "scene_id": "classroom_0006",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 293,
+      "scene_id": "classroom_0006",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 294,
+      "scene_id": "classroom_0006",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 302,
+      "scene_id": "classroom_0010",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 303,
+      "scene_id": "classroom_0010",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 304,
+      "scene_id": "classroom_0010",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 305,
+      "scene_id": "classroom_0011",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 306,
+      "scene_id": "classroom_0011",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 307,
+      "scene_id": "classroom_0012",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 308,
+      "scene_id": "classroom_0012",
+      "scene_type": "classroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 312,
+      "scene_id": "classroom_0016",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 313,
+      "scene_id": "classroom_0016",
+      "scene_type": "classroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 317,
+      "scene_id": "classroom_0018",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 318,
+      "scene_id": "classroom_0018",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 319,
+      "scene_id": "classroom_0018",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 320,
+      "scene_id": "classroom_0022",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 321,
+      "scene_id": "classroom_0022",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 322,
+      "scene_id": "classroom_0022",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 323,
+      "scene_id": "classroom_0022",
+      "scene_type": "classroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 335,
+      "scene_id": "computer_lab_0002",
+      "scene_type": "computer_lab",
+      "fold": 0
+    },
+    {
+      "dataset_index": 336,
+      "scene_id": "computer_lab_0002",
+      "scene_type": "computer_lab",
+      "fold": 0
+    },
+    {
+      "dataset_index": 337,
+      "scene_id": "computer_lab_0002",
+      "scene_type": "computer_lab",
+      "fold": 0
+    },
+    {
+      "dataset_index": 338,
+      "scene_id": "conference_room_0001",
+      "scene_type": "conference_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 339,
+      "scene_id": "conference_room_0001",
+      "scene_type": "conference_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 340,
+      "scene_id": "conference_room_0001",
+      "scene_type": "conference_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 341,
+      "scene_id": "conference_room_0002",
+      "scene_type": "conference_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 342,
+      "scene_id": "conference_room_0002",
+      "scene_type": "conference_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 343,
+      "scene_id": "dinette_0001",
+      "scene_type": "dinette",
+      "fold": 4
+    },
+    {
+      "dataset_index": 344,
+      "scene_id": "dinette_0001",
+      "scene_type": "dinette",
+      "fold": 4
+    },
+    {
+      "dataset_index": 345,
+      "scene_id": "dinette_0001",
+      "scene_type": "dinette",
+      "fold": 4
+    },
+    {
+      "dataset_index": 346,
+      "scene_id": "dinette_0001",
+      "scene_type": "dinette",
+      "fold": 4
+    },
+    {
+      "dataset_index": 347,
+      "scene_id": "excercise_room_0001",
+      "scene_type": "excercise_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 348,
+      "scene_id": "excercise_room_0001",
+      "scene_type": "excercise_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 349,
+      "scene_id": "excercise_room_0001",
+      "scene_type": "excercise_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 352,
+      "scene_id": "foyer_0002",
+      "scene_type": "foyer",
+      "fold": 1
+    },
+    {
+      "dataset_index": 353,
+      "scene_id": "foyer_0002",
+      "scene_type": "foyer",
+      "fold": 1
+    },
+    {
+      "dataset_index": 364,
+      "scene_id": "home_office_0004",
+      "scene_type": "home_office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 365,
+      "scene_id": "home_office_0004",
+      "scene_type": "home_office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 366,
+      "scene_id": "home_office_0004",
+      "scene_type": "home_office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 367,
+      "scene_id": "home_office_0005",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 368,
+      "scene_id": "home_office_0005",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 369,
+      "scene_id": "home_office_0005",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 370,
+      "scene_id": "home_office_0005",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 371,
+      "scene_id": "home_office_0006",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 372,
+      "scene_id": "home_office_0006",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 373,
+      "scene_id": "home_office_0006",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 374,
+      "scene_id": "home_office_0006",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 375,
+      "scene_id": "home_office_0006",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 376,
+      "scene_id": "home_office_0007",
+      "scene_type": "home_office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 377,
+      "scene_id": "home_office_0007",
+      "scene_type": "home_office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 378,
+      "scene_id": "home_office_0007",
+      "scene_type": "home_office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 379,
+      "scene_id": "home_office_0008",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 380,
+      "scene_id": "home_office_0008",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 381,
+      "scene_id": "home_office_0008",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 382,
+      "scene_id": "home_office_0008",
+      "scene_type": "home_office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 390,
+      "scene_id": "home_office_0011",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 391,
+      "scene_id": "home_office_0011",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 392,
+      "scene_id": "home_office_0011",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 393,
+      "scene_id": "home_office_0011",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 397,
+      "scene_id": "home_storage_0001",
+      "scene_type": "home_storage",
+      "fold": 3
+    },
+    {
+      "dataset_index": 398,
+      "scene_id": "home_storage_0001",
+      "scene_type": "home_storage",
+      "fold": 3
+    },
+    {
+      "dataset_index": 399,
+      "scene_id": "home_storage_0001",
+      "scene_type": "home_storage",
+      "fold": 3
+    },
+    {
+      "dataset_index": 400,
+      "scene_id": "home_storage_0001",
+      "scene_type": "home_storage",
+      "fold": 3
+    },
+    {
+      "dataset_index": 401,
+      "scene_id": "home_storage_0001",
+      "scene_type": "home_storage",
+      "fold": 3
+    },
+    {
+      "dataset_index": 402,
+      "scene_id": "indoor_balcony_0001",
+      "scene_type": "indoor_balcony",
+      "fold": 3
+    },
+    {
+      "dataset_index": 403,
+      "scene_id": "indoor_balcony_0001",
+      "scene_type": "indoor_balcony",
+      "fold": 3
+    },
+    {
+      "dataset_index": 404,
+      "scene_id": "laundry_room_0001",
+      "scene_type": "laundry_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 405,
+      "scene_id": "laundry_room_0001",
+      "scene_type": "laundry_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 406,
+      "scene_id": "laundry_room_0001",
+      "scene_type": "laundry_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 407,
+      "scene_id": "office_kitchen_0001",
+      "scene_type": "office_kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 408,
+      "scene_id": "office_kitchen_0001",
+      "scene_type": "office_kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 409,
+      "scene_id": "office_kitchen_0001",
+      "scene_type": "office_kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 414,
+      "scene_id": "office_kitchen_0003",
+      "scene_type": "office_kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 415,
+      "scene_id": "office_kitchen_0003",
+      "scene_type": "office_kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 416,
+      "scene_id": "office_kitchen_0003",
+      "scene_type": "office_kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 417,
+      "scene_id": "playroom_0002",
+      "scene_type": "playroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 418,
+      "scene_id": "playroom_0002",
+      "scene_type": "playroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 419,
+      "scene_id": "playroom_0002",
+      "scene_type": "playroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 420,
+      "scene_id": "playroom_0003",
+      "scene_type": "playroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 421,
+      "scene_id": "playroom_0003",
+      "scene_type": "playroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 422,
+      "scene_id": "playroom_0003",
+      "scene_type": "playroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 423,
+      "scene_id": "playroom_0003",
+      "scene_type": "playroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 424,
+      "scene_id": "playroom_0003",
+      "scene_type": "playroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 425,
+      "scene_id": "playroom_0004",
+      "scene_type": "playroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 426,
+      "scene_id": "playroom_0004",
+      "scene_type": "playroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 427,
+      "scene_id": "playroom_0004",
+      "scene_type": "playroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 428,
+      "scene_id": "playroom_0004",
+      "scene_type": "playroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 435,
+      "scene_id": "playroom_0006",
+      "scene_type": "playroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 436,
+      "scene_id": "playroom_0006",
+      "scene_type": "playroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 437,
+      "scene_id": "playroom_0006",
+      "scene_type": "playroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 438,
+      "scene_id": "playroom_0006",
+      "scene_type": "playroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 439,
+      "scene_id": "playroom_0006",
+      "scene_type": "playroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 448,
+      "scene_id": "printer_room_0001",
+      "scene_type": "printer_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 449,
+      "scene_id": "printer_room_0001",
+      "scene_type": "printer_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 450,
+      "scene_id": "printer_room_0001",
+      "scene_type": "printer_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 451,
+      "scene_id": "reception_room_0001",
+      "scene_type": "reception_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 452,
+      "scene_id": "reception_room_0001",
+      "scene_type": "reception_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 453,
+      "scene_id": "reception_room_0001",
+      "scene_type": "reception_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 454,
+      "scene_id": "reception_room_0001",
+      "scene_type": "reception_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 455,
+      "scene_id": "reception_room_0001",
+      "scene_type": "reception_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 456,
+      "scene_id": "reception_room_0001",
+      "scene_type": "reception_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 457,
+      "scene_id": "reception_room_0002",
+      "scene_type": "reception_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 458,
+      "scene_id": "reception_room_0002",
+      "scene_type": "reception_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 459,
+      "scene_id": "reception_room_0002",
+      "scene_type": "reception_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 460,
+      "scene_id": "reception_room_0002",
+      "scene_type": "reception_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 466,
+      "scene_id": "reception_room_0004",
+      "scene_type": "reception_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 467,
+      "scene_id": "reception_room_0004",
+      "scene_type": "reception_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 477,
+      "scene_id": "study_0003",
+      "scene_type": "study",
+      "fold": 4
+    },
+    {
+      "dataset_index": 478,
+      "scene_id": "study_0003",
+      "scene_type": "study",
+      "fold": 4
+    },
+    {
+      "dataset_index": 479,
+      "scene_id": "study_0003",
+      "scene_type": "study",
+      "fold": 4
+    },
+    {
+      "dataset_index": 480,
+      "scene_id": "study_0003",
+      "scene_type": "study",
+      "fold": 4
+    },
+    {
+      "dataset_index": 481,
+      "scene_id": "study_0004",
+      "scene_type": "study",
+      "fold": 1
+    },
+    {
+      "dataset_index": 482,
+      "scene_id": "study_0004",
+      "scene_type": "study",
+      "fold": 1
+    },
+    {
+      "dataset_index": 483,
+      "scene_id": "study_0004",
+      "scene_type": "study",
+      "fold": 1
+    },
+    {
+      "dataset_index": 484,
+      "scene_id": "study_0005",
+      "scene_type": "study",
+      "fold": 2
+    },
+    {
+      "dataset_index": 485,
+      "scene_id": "study_0005",
+      "scene_type": "study",
+      "fold": 2
+    },
+    {
+      "dataset_index": 486,
+      "scene_id": "study_0006",
+      "scene_type": "study",
+      "fold": 1
+    },
+    {
+      "dataset_index": 487,
+      "scene_id": "study_0006",
+      "scene_type": "study",
+      "fold": 1
+    },
+    {
+      "dataset_index": 488,
+      "scene_id": "study_0006",
+      "scene_type": "study",
+      "fold": 1
+    },
+    {
+      "dataset_index": 489,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 490,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 491,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 492,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 493,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 494,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 495,
+      "scene_id": "basement_0001",
+      "scene_type": "basement",
+      "fold": 4
+    },
+    {
+      "dataset_index": 496,
+      "scene_id": "bathroom_0053",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 497,
+      "scene_id": "bathroom_0053",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 498,
+      "scene_id": "bathroom_0054",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 499,
+      "scene_id": "bathroom_0055",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 500,
+      "scene_id": "bathroom_0055",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 501,
+      "scene_id": "bathroom_0055",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 502,
+      "scene_id": "bathroom_0056",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 503,
+      "scene_id": "bathroom_0056",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 504,
+      "scene_id": "bathroom_0056",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 505,
+      "scene_id": "bathroom_0057",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 506,
+      "scene_id": "bathroom_0057",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 513,
+      "scene_id": "bedroom_0132",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 526,
+      "scene_id": "bedroom_0136",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 527,
+      "scene_id": "bedroom_0136",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 528,
+      "scene_id": "bedroom_0136",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 529,
+      "scene_id": "bedroom_0136",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 533,
+      "scene_id": "bedroom_0138",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 534,
+      "scene_id": "bedroom_0138",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 535,
+      "scene_id": "bedroom_0138",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 539,
+      "scene_id": "bedroom_0140",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 540,
+      "scene_id": "bedroom_0140",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 541,
+      "scene_id": "bedroom_0140",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 542,
+      "scene_id": "bedroom_0140",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 543,
+      "scene_id": "dining_room_0037",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 544,
+      "scene_id": "dining_room_0037",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 545,
+      "scene_id": "dining_room_0037",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 546,
+      "scene_id": "dining_room_0037",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 547,
+      "scene_id": "dining_room_0037",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 551,
+      "scene_id": "home_office_0013",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 552,
+      "scene_id": "home_office_0013",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 553,
+      "scene_id": "home_office_0013",
+      "scene_type": "home_office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 571,
+      "scene_id": "kitchen_0059",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 572,
+      "scene_id": "kitchen_0059",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 573,
+      "scene_id": "kitchen_0059",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 574,
+      "scene_id": "kitchen_0060",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 575,
+      "scene_id": "kitchen_0060",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 576,
+      "scene_id": "kitchen_0060",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 577,
+      "scene_id": "kitchen_0060",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 583,
+      "scene_id": "living_room_0082",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 584,
+      "scene_id": "living_room_0082",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 585,
+      "scene_id": "living_room_0082",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 586,
+      "scene_id": "living_room_0082",
+      "scene_type": "living_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 587,
+      "scene_id": "living_room_0083",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 588,
+      "scene_id": "living_room_0083",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 589,
+      "scene_id": "living_room_0083",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 594,
+      "scene_id": "living_room_0085",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 595,
+      "scene_id": "living_room_0085",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 596,
+      "scene_id": "living_room_0086",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 597,
+      "scene_id": "living_room_0086",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 598,
+      "scene_id": "living_room_0086",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 599,
+      "scene_id": "living_room_0086",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 600,
+      "scene_id": "living_room_0086",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 601,
+      "scene_id": "living_room_0086",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 607,
+      "scene_id": "office_0018",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 608,
+      "scene_id": "office_0019",
+      "scene_type": "office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 609,
+      "scene_id": "office_0019",
+      "scene_type": "office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 610,
+      "scene_id": "office_0019",
+      "scene_type": "office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 613,
+      "scene_id": "office_0021",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 614,
+      "scene_id": "office_0021",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 615,
+      "scene_id": "office_0021",
+      "scene_type": "office",
+      "fold": 4
+    },
+    {
+      "dataset_index": 621,
+      "scene_id": "office_0023",
+      "scene_type": "office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 622,
+      "scene_id": "office_0023",
+      "scene_type": "office",
+      "fold": 3
+    },
+    {
+      "dataset_index": 623,
+      "scene_id": "office_0024",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 624,
+      "scene_id": "office_0024",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 625,
+      "scene_id": "office_0024",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 626,
+      "scene_id": "office_0024",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 627,
+      "scene_id": "office_0025",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 628,
+      "scene_id": "office_0025",
+      "scene_type": "office",
+      "fold": 0
+    },
+    {
+      "dataset_index": 629,
+      "scene_id": "office_0026",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 630,
+      "scene_id": "office_0026",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 631,
+      "scene_id": "office_0026",
+      "scene_type": "office",
+      "fold": 2
+    },
+    {
+      "dataset_index": 638,
+      "scene_id": "student_lounge_0001",
+      "scene_type": "student_lounge",
+      "fold": 3
+    },
+    {
+      "dataset_index": 639,
+      "scene_id": "student_lounge_0001",
+      "scene_type": "student_lounge",
+      "fold": 3
+    },
+    {
+      "dataset_index": 640,
+      "scene_id": "student_lounge_0001",
+      "scene_type": "student_lounge",
+      "fold": 3
+    },
+    {
+      "dataset_index": 641,
+      "scene_id": "student_lounge_0001",
+      "scene_type": "student_lounge",
+      "fold": 3
+    },
+    {
+      "dataset_index": 642,
+      "scene_id": "student_lounge_0001",
+      "scene_type": "student_lounge",
+      "fold": 3
+    },
+    {
+      "dataset_index": 645,
+      "scene_id": "study_0008",
+      "scene_type": "study",
+      "fold": 4
+    },
+    {
+      "dataset_index": 646,
+      "scene_id": "study_0008",
+      "scene_type": "study",
+      "fold": 4
+    },
+    {
+      "dataset_index": 647,
+      "scene_id": "bathroom_0007",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 648,
+      "scene_id": "bathroom_0007",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 651,
+      "scene_id": "bathroom_0010",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 652,
+      "scene_id": "bathroom_0010",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 653,
+      "scene_id": "bathroom_0011",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 654,
+      "scene_id": "bathroom_0011",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 658,
+      "scene_id": "bathroom_0013",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 659,
+      "scene_id": "bathroom_0013",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 660,
+      "scene_id": "bathroom_0014",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 661,
+      "scene_id": "bathroom_0014",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 664,
+      "scene_id": "bathroom_0016",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 665,
+      "scene_id": "bathroom_0016",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 666,
+      "scene_id": "bathroom_0016",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 673,
+      "scene_id": "bathroom_0019",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 674,
+      "scene_id": "bathroom_0019",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 681,
+      "scene_id": "bathroom_0023",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 682,
+      "scene_id": "bathroom_0023",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 683,
+      "scene_id": "bathroom_0024",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 684,
+      "scene_id": "bathroom_0024",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 690,
+      "scene_id": "bathroom_0028",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 691,
+      "scene_id": "bathroom_0028",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 694,
+      "scene_id": "bathroom_0030",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 695,
+      "scene_id": "bathroom_0030",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 699,
+      "scene_id": "bathroom_0033",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 700,
+      "scene_id": "bathroom_0033",
+      "scene_type": "bathroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 701,
+      "scene_id": "bathroom_0034",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 702,
+      "scene_id": "bathroom_0034",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 703,
+      "scene_id": "bathroom_0034",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 704,
+      "scene_id": "bathroom_0035",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 713,
+      "scene_id": "bathroom_0039",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 714,
+      "scene_id": "bathroom_0039",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 715,
+      "scene_id": "bathroom_0039",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 718,
+      "scene_id": "bathroom_0041",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 719,
+      "scene_id": "bathroom_0041",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 720,
+      "scene_id": "bathroom_0041",
+      "scene_type": "bathroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 721,
+      "scene_id": "bathroom_0042",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 722,
+      "scene_id": "bathroom_0042",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 728,
+      "scene_id": "bathroom_0045",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 729,
+      "scene_id": "bathroom_0045",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 734,
+      "scene_id": "bathroom_0048",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 735,
+      "scene_id": "bathroom_0048",
+      "scene_type": "bathroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 736,
+      "scene_id": "bathroom_0049",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 737,
+      "scene_id": "bathroom_0049",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 738,
+      "scene_id": "bathroom_0050",
+      "scene_type": "bathroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 739,
+      "scene_id": "bathroom_0051",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 740,
+      "scene_id": "bathroom_0051",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 741,
+      "scene_id": "bathroom_0051",
+      "scene_type": "bathroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 744,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 745,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 746,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 747,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 748,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 749,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 750,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 751,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 752,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 753,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 754,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 755,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 756,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 757,
+      "scene_id": "kitchen_0019",
+      "scene_type": "kitchen",
+      "fold": 3
+    },
+    {
+      "dataset_index": 787,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 788,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 789,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 790,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 791,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 792,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 793,
+      "scene_id": "kitchen_0028",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 794,
+      "scene_id": "kitchen_0029",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 795,
+      "scene_id": "kitchen_0029",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 796,
+      "scene_id": "kitchen_0029",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 797,
+      "scene_id": "kitchen_0029",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 798,
+      "scene_id": "kitchen_0029",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 804,
+      "scene_id": "kitchen_0031",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 805,
+      "scene_id": "kitchen_0031",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 806,
+      "scene_id": "kitchen_0031",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 807,
+      "scene_id": "kitchen_0031",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 808,
+      "scene_id": "kitchen_0031",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 814,
+      "scene_id": "kitchen_0033",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 815,
+      "scene_id": "kitchen_0033",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 816,
+      "scene_id": "kitchen_0033",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 817,
+      "scene_id": "kitchen_0033",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 818,
+      "scene_id": "kitchen_0033",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 819,
+      "scene_id": "kitchen_0033",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 823,
+      "scene_id": "kitchen_0035",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 824,
+      "scene_id": "kitchen_0035",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 825,
+      "scene_id": "kitchen_0035",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 826,
+      "scene_id": "kitchen_0035",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 827,
+      "scene_id": "kitchen_0035",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 828,
+      "scene_id": "kitchen_0035",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 829,
+      "scene_id": "kitchen_0037",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 830,
+      "scene_id": "kitchen_0037",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 831,
+      "scene_id": "kitchen_0037",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 846,
+      "scene_id": "kitchen_0041",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 847,
+      "scene_id": "kitchen_0041",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 848,
+      "scene_id": "kitchen_0041",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 852,
+      "scene_id": "kitchen_0043",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 853,
+      "scene_id": "kitchen_0043",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 854,
+      "scene_id": "kitchen_0043",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 855,
+      "scene_id": "kitchen_0043",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 862,
+      "scene_id": "kitchen_0045",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 863,
+      "scene_id": "kitchen_0045",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 864,
+      "scene_id": "kitchen_0045",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 865,
+      "scene_id": "kitchen_0045",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 866,
+      "scene_id": "kitchen_0045",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 867,
+      "scene_id": "kitchen_0045",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 871,
+      "scene_id": "kitchen_0047",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 872,
+      "scene_id": "kitchen_0047",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 873,
+      "scene_id": "kitchen_0047",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 874,
+      "scene_id": "kitchen_0047",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 875,
+      "scene_id": "kitchen_0048",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 876,
+      "scene_id": "kitchen_0048",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 877,
+      "scene_id": "kitchen_0048",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 878,
+      "scene_id": "kitchen_0048",
+      "scene_type": "kitchen",
+      "fold": 1
+    },
+    {
+      "dataset_index": 879,
+      "scene_id": "kitchen_0049",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 880,
+      "scene_id": "kitchen_0049",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 881,
+      "scene_id": "kitchen_0049",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 882,
+      "scene_id": "kitchen_0049",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 883,
+      "scene_id": "kitchen_0050",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 884,
+      "scene_id": "kitchen_0050",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 885,
+      "scene_id": "kitchen_0050",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 886,
+      "scene_id": "kitchen_0050",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 887,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 888,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 889,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 890,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 891,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 892,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 893,
+      "scene_id": "kitchen_0051",
+      "scene_type": "kitchen",
+      "fold": 0
+    },
+    {
+      "dataset_index": 894,
+      "scene_id": "kitchen_0052",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 895,
+      "scene_id": "kitchen_0052",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 896,
+      "scene_id": "kitchen_0052",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 897,
+      "scene_id": "kitchen_0052",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 898,
+      "scene_id": "kitchen_0052",
+      "scene_type": "kitchen",
+      "fold": 4
+    },
+    {
+      "dataset_index": 899,
+      "scene_id": "kitchen_0053",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 900,
+      "scene_id": "kitchen_0053",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 901,
+      "scene_id": "kitchen_0053",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 902,
+      "scene_id": "kitchen_0053",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 903,
+      "scene_id": "kitchen_0053",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 904,
+      "scene_id": "kitchen_0053",
+      "scene_type": "kitchen",
+      "fold": 2
+    },
+    {
+      "dataset_index": 908,
+      "scene_id": "bedroom_0025",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 909,
+      "scene_id": "bedroom_0025",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 910,
+      "scene_id": "bedroom_0025",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 911,
+      "scene_id": "bedroom_0025",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 912,
+      "scene_id": "bedroom_0026",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 913,
+      "scene_id": "bedroom_0026",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 914,
+      "scene_id": "bedroom_0026",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 915,
+      "scene_id": "bedroom_0026",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 919,
+      "scene_id": "bedroom_0028",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 920,
+      "scene_id": "bedroom_0028",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 921,
+      "scene_id": "bedroom_0028",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 922,
+      "scene_id": "bedroom_0029",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 923,
+      "scene_id": "bedroom_0029",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 924,
+      "scene_id": "bedroom_0029",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 928,
+      "scene_id": "bedroom_0031",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 929,
+      "scene_id": "bedroom_0031",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 930,
+      "scene_id": "bedroom_0031",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 935,
+      "scene_id": "bedroom_0033",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 936,
+      "scene_id": "bedroom_0033",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 937,
+      "scene_id": "bedroom_0034",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 938,
+      "scene_id": "bedroom_0034",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 939,
+      "scene_id": "bedroom_0034",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 940,
+      "scene_id": "bedroom_0035",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 941,
+      "scene_id": "bedroom_0035",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 942,
+      "scene_id": "bedroom_0036",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 943,
+      "scene_id": "bedroom_0036",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 947,
+      "scene_id": "bedroom_0038",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 948,
+      "scene_id": "bedroom_0038",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 949,
+      "scene_id": "bedroom_0039",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 950,
+      "scene_id": "bedroom_0039",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 951,
+      "scene_id": "bedroom_0040",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 952,
+      "scene_id": "bedroom_0040",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 953,
+      "scene_id": "bedroom_0040",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 954,
+      "scene_id": "bedroom_0041",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 955,
+      "scene_id": "bedroom_0041",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 956,
+      "scene_id": "bedroom_0041",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 957,
+      "scene_id": "bedroom_0042",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 962,
+      "scene_id": "bedroom_0045",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 963,
+      "scene_id": "bedroom_0045",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 967,
+      "scene_id": "bedroom_0047",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 968,
+      "scene_id": "bedroom_0047",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 977,
+      "scene_id": "bedroom_0050",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 978,
+      "scene_id": "bedroom_0050",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 979,
+      "scene_id": "bedroom_0050",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 980,
+      "scene_id": "bedroom_0051",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 981,
+      "scene_id": "bedroom_0051",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 982,
+      "scene_id": "bedroom_0051",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 983,
+      "scene_id": "bedroom_0051",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 984,
+      "scene_id": "bedroom_0051",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 985,
+      "scene_id": "bedroom_0052",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 986,
+      "scene_id": "bedroom_0052",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 987,
+      "scene_id": "bedroom_0052",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 988,
+      "scene_id": "bedroom_0053",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 989,
+      "scene_id": "bedroom_0053",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 995,
+      "scene_id": "bedroom_0056",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 996,
+      "scene_id": "bedroom_0056",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 997,
+      "scene_id": "bedroom_0057",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 998,
+      "scene_id": "bedroom_0057",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 999,
+      "scene_id": "bedroom_0057",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1004,
+      "scene_id": "bedroom_0059",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1005,
+      "scene_id": "bedroom_0059",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1006,
+      "scene_id": "bedroom_0059",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1007,
+      "scene_id": "bedroom_0060",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1008,
+      "scene_id": "bedroom_0060",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1012,
+      "scene_id": "bedroom_0062",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1013,
+      "scene_id": "bedroom_0062",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1014,
+      "scene_id": "bedroom_0062",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1015,
+      "scene_id": "bedroom_0062",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1016,
+      "scene_id": "bedroom_0062",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1017,
+      "scene_id": "bedroom_0063",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1018,
+      "scene_id": "bedroom_0063",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1019,
+      "scene_id": "bedroom_0063",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1023,
+      "scene_id": "bedroom_0065",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1024,
+      "scene_id": "bedroom_0065",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1025,
+      "scene_id": "bedroom_0065",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1026,
+      "scene_id": "bedroom_0066",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1027,
+      "scene_id": "bedroom_0066",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1028,
+      "scene_id": "bedroom_0067",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1029,
+      "scene_id": "bedroom_0067",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1030,
+      "scene_id": "bedroom_0067",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1034,
+      "scene_id": "bedroom_0069",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1035,
+      "scene_id": "bedroom_0069",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1036,
+      "scene_id": "bedroom_0069",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1039,
+      "scene_id": "bedroom_0071",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1040,
+      "scene_id": "bedroom_0071",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1041,
+      "scene_id": "bedroom_0071",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1042,
+      "scene_id": "bedroom_0071",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1043,
+      "scene_id": "bedroom_0072",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1044,
+      "scene_id": "bedroom_0072",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1045,
+      "scene_id": "bedroom_0072",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1046,
+      "scene_id": "bedroom_0072",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1049,
+      "scene_id": "bedroom_0074",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1050,
+      "scene_id": "bedroom_0074",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1053,
+      "scene_id": "bedroom_0076",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1054,
+      "scene_id": "bedroom_0076",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1055,
+      "scene_id": "bedroom_0076",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1058,
+      "scene_id": "bedroom_0078",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1059,
+      "scene_id": "bedroom_0078",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1060,
+      "scene_id": "bedroom_0078",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1061,
+      "scene_id": "bedroom_0079",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1062,
+      "scene_id": "bedroom_0079",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1063,
+      "scene_id": "bedroom_0079",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1064,
+      "scene_id": "bedroom_0079",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1065,
+      "scene_id": "bedroom_0080",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1066,
+      "scene_id": "bedroom_0080",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1067,
+      "scene_id": "bedroom_0080",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1068,
+      "scene_id": "bedroom_0080",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1069,
+      "scene_id": "bedroom_0081",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1070,
+      "scene_id": "bedroom_0081",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1071,
+      "scene_id": "bedroom_0081",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1072,
+      "scene_id": "bedroom_0082",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1073,
+      "scene_id": "bedroom_0082",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1084,
+      "scene_id": "bedroom_0086",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1085,
+      "scene_id": "bedroom_0086",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1086,
+      "scene_id": "bedroom_0086",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1096,
+      "scene_id": "bedroom_0090",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1104,
+      "scene_id": "bedroom_0094",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1109,
+      "scene_id": "bedroom_0096",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1110,
+      "scene_id": "bedroom_0096",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1111,
+      "scene_id": "bedroom_0096",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1112,
+      "scene_id": "bedroom_0097",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1113,
+      "scene_id": "bedroom_0097",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1114,
+      "scene_id": "bedroom_0098",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1115,
+      "scene_id": "bedroom_0098",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1119,
+      "scene_id": "bedroom_0100",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1120,
+      "scene_id": "bedroom_0100",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1121,
+      "scene_id": "bedroom_0100",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1131,
+      "scene_id": "bedroom_0104",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1132,
+      "scene_id": "bedroom_0104",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1133,
+      "scene_id": "bedroom_0104",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1136,
+      "scene_id": "bedroom_0106",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1137,
+      "scene_id": "bedroom_0106",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1138,
+      "scene_id": "bedroom_0106",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1139,
+      "scene_id": "bedroom_0106",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1140,
+      "scene_id": "bedroom_0107",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1141,
+      "scene_id": "bedroom_0107",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1142,
+      "scene_id": "bedroom_0107",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1158,
+      "scene_id": "bedroom_0113",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1159,
+      "scene_id": "bedroom_0113",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1160,
+      "scene_id": "bedroom_0113",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1167,
+      "scene_id": "bedroom_0116",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1168,
+      "scene_id": "bedroom_0116",
+      "scene_type": "bedroom",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1171,
+      "scene_id": "bedroom_0118",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1172,
+      "scene_id": "bedroom_0118",
+      "scene_type": "bedroom",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1176,
+      "scene_id": "bedroom_0120",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1177,
+      "scene_id": "bedroom_0120",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1184,
+      "scene_id": "bedroom_0124",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1185,
+      "scene_id": "bedroom_0124",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1186,
+      "scene_id": "bedroom_0125",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1187,
+      "scene_id": "bedroom_0125",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1188,
+      "scene_id": "bedroom_0125",
+      "scene_type": "bedroom",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1189,
+      "scene_id": "bedroom_0126",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1190,
+      "scene_id": "bedroom_0126",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1196,
+      "scene_id": "bedroom_0129",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1197,
+      "scene_id": "bedroom_0129",
+      "scene_type": "bedroom",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1198,
+      "scene_id": "bedroom_0130",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1199,
+      "scene_id": "bedroom_0130",
+      "scene_type": "bedroom",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1212,
+      "scene_id": "living_room_0029",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1213,
+      "scene_id": "living_room_0029",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1214,
+      "scene_id": "living_room_0029",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1220,
+      "scene_id": "living_room_0032",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1221,
+      "scene_id": "living_room_0032",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1222,
+      "scene_id": "living_room_0032",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1223,
+      "scene_id": "living_room_0033",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1224,
+      "scene_id": "living_room_0033",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1230,
+      "scene_id": "living_room_0035",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1231,
+      "scene_id": "living_room_0035",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1235,
+      "scene_id": "living_room_0037",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1236,
+      "scene_id": "living_room_0037",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1237,
+      "scene_id": "living_room_0038",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1238,
+      "scene_id": "living_room_0038",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1239,
+      "scene_id": "living_room_0038",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1240,
+      "scene_id": "living_room_0039",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1241,
+      "scene_id": "living_room_0039",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1242,
+      "scene_id": "living_room_0039",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1243,
+      "scene_id": "living_room_0040",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1244,
+      "scene_id": "living_room_0040",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1245,
+      "scene_id": "living_room_0040",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1250,
+      "scene_id": "living_room_0042",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1251,
+      "scene_id": "living_room_0042",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1252,
+      "scene_id": "living_room_0042",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1265,
+      "scene_id": "living_room_0046",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1266,
+      "scene_id": "living_room_0046",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1267,
+      "scene_id": "living_room_0046",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1268,
+      "scene_id": "living_room_0046",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1269,
+      "scene_id": "living_room_0046",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1270,
+      "scene_id": "living_room_0047",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1271,
+      "scene_id": "living_room_0047",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1272,
+      "scene_id": "living_room_0047",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1273,
+      "scene_id": "living_room_0047",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1280,
+      "scene_id": "living_room_0050",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1281,
+      "scene_id": "living_room_0050",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1282,
+      "scene_id": "living_room_0050",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1283,
+      "scene_id": "living_room_0050",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1295,
+      "scene_id": "living_room_0055",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1299,
+      "scene_id": "living_room_0058",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1300,
+      "scene_id": "living_room_0058",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1308,
+      "scene_id": "living_room_0062",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1309,
+      "scene_id": "living_room_0062",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1310,
+      "scene_id": "living_room_0062",
+      "scene_type": "living_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1311,
+      "scene_id": "living_room_0063",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1312,
+      "scene_id": "living_room_0063",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1315,
+      "scene_id": "living_room_0067",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1316,
+      "scene_id": "living_room_0068",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1317,
+      "scene_id": "living_room_0068",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1318,
+      "scene_id": "living_room_0068",
+      "scene_type": "living_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1319,
+      "scene_id": "living_room_0069",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1320,
+      "scene_id": "living_room_0069",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1321,
+      "scene_id": "living_room_0069",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1322,
+      "scene_id": "living_room_0069",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1323,
+      "scene_id": "living_room_0070",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1324,
+      "scene_id": "living_room_0070",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1325,
+      "scene_id": "living_room_0070",
+      "scene_type": "living_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1326,
+      "scene_id": "living_room_0071",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1327,
+      "scene_id": "living_room_0071",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1332,
+      "scene_id": "living_room_0078",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1333,
+      "scene_id": "living_room_0078",
+      "scene_type": "living_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1340,
+      "scene_id": "dining_room_0001",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1341,
+      "scene_id": "dining_room_0001",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1342,
+      "scene_id": "dining_room_0001",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1343,
+      "scene_id": "dining_room_0001",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1344,
+      "scene_id": "dining_room_0001",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1345,
+      "scene_id": "dining_room_0002",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1349,
+      "scene_id": "dining_room_0004",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1350,
+      "scene_id": "dining_room_0004",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1351,
+      "scene_id": "dining_room_0004",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1356,
+      "scene_id": "dining_room_0007",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1357,
+      "scene_id": "dining_room_0007",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1358,
+      "scene_id": "dining_room_0007",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1359,
+      "scene_id": "dining_room_0007",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1360,
+      "scene_id": "dining_room_0008",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1361,
+      "scene_id": "dining_room_0008",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1362,
+      "scene_id": "dining_room_0008",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1365,
+      "scene_id": "dining_room_0010",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1366,
+      "scene_id": "dining_room_0010",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1369,
+      "scene_id": "dining_room_0012",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1370,
+      "scene_id": "dining_room_0012",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1371,
+      "scene_id": "dining_room_0013",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1372,
+      "scene_id": "dining_room_0013",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1373,
+      "scene_id": "dining_room_0013",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1374,
+      "scene_id": "dining_room_0013",
+      "scene_type": "dining_room",
+      "fold": 3
+    },
+    {
+      "dataset_index": 1375,
+      "scene_id": "dining_room_0014",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1376,
+      "scene_id": "dining_room_0014",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1377,
+      "scene_id": "dining_room_0015",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1378,
+      "scene_id": "dining_room_0015",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1379,
+      "scene_id": "dining_room_0015",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1380,
+      "scene_id": "dining_room_0015",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1381,
+      "scene_id": "dining_room_0016",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1382,
+      "scene_id": "dining_room_0016",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1391,
+      "scene_id": "dining_room_0019",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1392,
+      "scene_id": "dining_room_0019",
+      "scene_type": "dining_room",
+      "fold": 0
+    },
+    {
+      "dataset_index": 1401,
+      "scene_id": "dining_room_0023",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1402,
+      "scene_id": "dining_room_0023",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1403,
+      "scene_id": "dining_room_0024",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1404,
+      "scene_id": "dining_room_0024",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1405,
+      "scene_id": "dining_room_0024",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1414,
+      "scene_id": "dining_room_0028",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1415,
+      "scene_id": "dining_room_0028",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1416,
+      "scene_id": "dining_room_0029",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1417,
+      "scene_id": "dining_room_0029",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1418,
+      "scene_id": "dining_room_0029",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1419,
+      "scene_id": "dining_room_0029",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1424,
+      "scene_id": "dining_room_0031",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1425,
+      "scene_id": "dining_room_0031",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1426,
+      "scene_id": "dining_room_0031",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1427,
+      "scene_id": "dining_room_0031",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1428,
+      "scene_id": "dining_room_0031",
+      "scene_type": "dining_room",
+      "fold": 2
+    },
+    {
+      "dataset_index": 1433,
+      "scene_id": "dining_room_0033",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1434,
+      "scene_id": "dining_room_0033",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1435,
+      "scene_id": "dining_room_0033",
+      "scene_type": "dining_room",
+      "fold": 4
+    },
+    {
+      "dataset_index": 1436,
+      "scene_id": "dining_room_0034",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1437,
+      "scene_id": "dining_room_0034",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1438,
+      "scene_id": "dining_room_0034",
+      "scene_type": "dining_room",
+      "fold": 1
+    },
+    {
+      "dataset_index": 1439,
+      "scene_id": "dining_room_0034",
+      "scene_type": "dining_room",
+      "fold": 1
+    }
+  ],
+  "source_sha256": {
+    "src/calibration/global_scale.py": "326cfa777a0c8e1993b9c7dac8c9e7cd6d70ffb8c1e8c07f06a3bb8ed0d116e3",
+    "src/eval/nyu.py": "07c920bd8a6b131bd11a69a47204b34ff234b94a7ca7654ca0f925a1883a1c60",
+    "scripts/eval_nyu_global_scale.py": "deba4dd8bc2c9df40c835a5d527947387132133d08ca62d1699655fb27062567",
+    "scripts/part3_scene_crossvalidation.py": "e8f9a47a0074c66cd4455c67ca746edb323acbe3799c0fcfcdec4f7ead4db6af"
+  },
+  "dataset_sha256": "2d724b0c0ab358aa1ce5df855e5bd14a2279ab7202efe22f32a30d612dcb86aa",
+  "split_sha256": "6e081404491a8bfba2f066beaa9713ef6046f9007aa5f799f2a350506a580cee",
+  "train_cache_sha256": "a3c5d961282896b9e150c8b250e11289f26d736f477e000d4028ead04f616c68"
+}

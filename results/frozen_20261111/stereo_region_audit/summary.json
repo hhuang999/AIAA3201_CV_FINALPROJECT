@@ -1,0 +1,438 @@
+{
+  "timestamp_utc": "2026-11-05T08:36:50.617480+00:00",
+  "scene_count": 15,
+  "scope": "all15trainingQ",
+  "parameter_selection": false,
+  "policy": "Original finite-positive all-GT course denominator retained. Region labels are used only for this descriptive post-hoc analysis.",
+  "geometry_fix_parity": [
+    {
+      "scene": "Adirondack",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Adirondack",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "ArtL",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "ArtL",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Jadeplant",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Jadeplant",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Motorcycle",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Motorcycle",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "MotorcycleE",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "MotorcycleE",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Piano",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Piano",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "PianoL",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "PianoL",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Pipes",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Pipes",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Playroom",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Playroom",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Playtable",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Playtable",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "PlaytableP",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "PlaytableP",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Recycle",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Recycle",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Shelves",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Shelves",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Teddy",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Teddy",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Vintage",
+      "method": "baseline",
+      "all_three_arrays_equal": true
+    },
+    {
+      "scene": "Vintage",
+      "method": "improved",
+      "all_three_arrays_equal": true
+    }
+  ],
+  "summary": [
+    {
+      "region": "all",
+      "method": "baseline",
+      "scenes_with_gt": 15,
+      "scene_equal_mae_px": 1.4188053441759578,
+      "scene_equal_coverage": 0.621967745994883,
+      "scene_equal_good1_yield": 0.5435047296020222,
+      "pooled_mae_px": 1.2650387855238405,
+      "pooled_coverage": 0.6266022097640432,
+      "pooled_good1_yield": 0.5474148551791208,
+      "gt_pixels": 4586010,
+      "retained_pixels": 2873604
+    },
+    {
+      "region": "all",
+      "method": "improved",
+      "scenes_with_gt": 15,
+      "scene_equal_mae_px": 1.360796374165255,
+      "scene_equal_coverage": 0.7432850693824455,
+      "scene_equal_good1_yield": 0.6498218171756664,
+      "pooled_mae_px": 1.2537235236392243,
+      "pooled_coverage": 0.7473708081752983,
+      "pooled_good1_yield": 0.6528718864546741,
+      "gt_pixels": 4586010,
+      "retained_pixels": 3427450
+    },
+    {
+      "region": "nonoccluded",
+      "method": "baseline",
+      "scenes_with_gt": 15,
+      "scene_equal_mae_px": 1.097721505154948,
+      "scene_equal_coverage": 0.6836230917715991,
+      "scene_equal_good1_yield": 0.6128393536066865,
+      "pooled_mae_px": 0.9713736390728149,
+      "pooled_coverage": 0.6870978093513957,
+      "pooled_good1_yield": 0.6153072502128398,
+      "gt_pixels": 4041771,
+      "retained_pixels": 2777092
+    },
+    {
+      "region": "nonoccluded",
+      "method": "improved",
+      "scenes_with_gt": 15,
+      "scene_equal_mae_px": 1.0508447392187215,
+      "scene_equal_coverage": 0.8200142656063107,
+      "scene_equal_good1_yield": 0.7351356205668639,
+      "pooled_mae_px": 0.9480525657947161,
+      "pooled_coverage": 0.8200519029900506,
+      "pooled_good1_yield": 0.7337902122609123,
+      "gt_pixels": 4041771,
+      "retained_pixels": 3314462
+    },
+    {
+      "region": "occluded",
+      "method": "baseline",
+      "scenes_with_gt": 15,
+      "scene_equal_mae_px": 8.75568346553564,
+      "scene_equal_coverage": 0.18307676502891995,
+      "scene_equal_good1_yield": 0.0461413737309062,
+      "pooled_mae_px": 9.715129229074606,
+      "pooled_coverage": 0.17733385516289718,
+      "pooled_good1_yield": 0.04321447011331419,
+      "gt_pixels": 544239,
+      "retained_pixels": 96512
+    },
+    {
+      "region": "occluded",
+      "method": "improved",
+      "scenes_with_gt": 15,
+      "scene_equal_mae_px": 9.141297931053373,
+      "scene_equal_coverage": 0.21395759459393324,
+      "scene_equal_good1_yield": 0.05574115439173151,
+      "pooled_mae_px": 10.220470207173976,
+      "pooled_coverage": 0.20760731957834702,
+      "pooled_good1_yield": 0.05193490359933779,
+      "gt_pixels": 544239,
+      "retained_pixels": 112988
+    },
+    {
+      "region": "unknown_label",
+      "method": "baseline",
+      "scenes_with_gt": 0,
+      "scene_equal_mae_px": null,
+      "scene_equal_coverage": null,
+      "scene_equal_good1_yield": null,
+      "pooled_mae_px": null,
+      "pooled_coverage": null,
+      "pooled_good1_yield": null,
+      "gt_pixels": 0,
+      "retained_pixels": 0
+    },
+    {
+      "region": "unknown_label",
+      "method": "improved",
+      "scenes_with_gt": 0,
+      "scene_equal_mae_px": null,
+      "scene_equal_coverage": null,
+      "scene_equal_good1_yield": null,
+      "pooled_mae_px": null,
+      "pooled_coverage": null,
+      "pooled_good1_yield": null,
+      "gt_pixels": 0,
+      "retained_pixels": 0
+    }
+  ],
+  "source_sha256": {
+    "scripts/part1_region_audit.py": "0ec0da5df1f5a47fa37503d6328e480de43396d85c67d36896693c724bc551b8",
+    "src/stereo/sgbm.py": "b667bb86f4cf2db3f18bd88d57cfa8b5e12cbbbc11998087815687579aac7b8e",
+    "src/stereo/middlebury.py": "5138fce34fffabf59cff17fad06737365aa6e5e819498200ee97ffc9ad446112"
+  },
+  "input_sha256": {
+    "outputs/stereo/Adirondack_disparity.npy": "d41fb213210bda890d145abb610363474dad0cc0ceeb23b71b2e662ec6d4bdb3",
+    "outputs/stereo/Adirondack_valid.npy": "9164e977aa670b996615419b063ba598ec1af8d6e4211bfb59247bc8addbbe05",
+    "outputs/stereo/Adirondack_depth.npy": "09e532ccca32b8f06db9a68fc2817be26878ccc89b05f93ac1176ed2eaec6cd7",
+    "outputs/stereo_improved/Adirondack_disparity.npy": "d1c8cb90faa00319da4a43815a5bc5e10e8c59038eadaa92704d8859dbdc066d",
+    "outputs/stereo_improved/Adirondack_valid.npy": "34b340ce687069e65fda9924a7fcc55ef11b30ffb1acb962315d5acc15a602eb",
+    "outputs/stereo_improved/Adirondack_depth.npy": "bb77f58513ef328768698f271885761ef5dbd8b27eb45abc440c94813156f3f6",
+    "data/middlebury/MiddEval3/trainingQ/Adirondack/mask0nocc.png": "fca476f94ab32c0d89e74cdaf37c2781a4930d010e37923c8559745fffd204a2",
+    "data/middlebury/MiddEval3/trainingQ/Adirondack/disp0GT.pfm": "265ee6a413c3335a821f9885f406de1a227158dd0ef9f970d247e5efdec296d6",
+    "data/middlebury/MiddEval3/trainingQ/Adirondack/calib.txt": "87374b6cbeb5802f1b6488bdaec08a08ed4d729f3b392e0bd975307764eac557",
+    "data/middlebury/MiddEval3/trainingQ/Adirondack/im0.png": "edf9ae03c0bd3251a0d2a6e66a9cd570abad3472c3b5f6c3730becaf7176d896",
+    "data/middlebury/MiddEval3/trainingQ/Adirondack/im1.png": "13a9c20682787006b6b9afc9203e0fa8f178c3e85e0d066a835a79181c1410f5",
+    "outputs/stereo/ArtL_disparity.npy": "c091655cfa7be79cade3d4d0425b59e52b7fc8b14c05edbafaacfca3c5e144f6",
+    "outputs/stereo/ArtL_valid.npy": "42e26b24a7f38d0469809ee1a74312796534ac37f647be2aed617135e1b79ce0",
+    "outputs/stereo/ArtL_depth.npy": "e703cbe0a3c5375b33f104df70814d47c3d04621ec23cc02974f559a9e2214a8",
+    "outputs/stereo_improved/ArtL_disparity.npy": "b11d72565740db248460875e8fb74beaf6ad8a28b871c20af91cb1bb83851c24",
+    "outputs/stereo_improved/ArtL_valid.npy": "371d38fb58fbbcdf0711d7471f3c6190ee1c65bb1fe0c90df533d7701002669b",
+    "outputs/stereo_improved/ArtL_depth.npy": "3150cc642eccb782edd9aa3cbd4fa446e8c94a0155b8e8b28056e09ec499fdf8",
+    "data/middlebury/MiddEval3/trainingQ/ArtL/mask0nocc.png": "3742e86cf7f79316d0365ac2533b3fe3962a93accdd9577e9bf0c1ee5987581d",
+    "data/middlebury/MiddEval3/trainingQ/ArtL/disp0GT.pfm": "e0bb550d8cd4d2570413dfe74495f1d43a05026796ca4e1c4b65f195b3bad861",
+    "data/middlebury/MiddEval3/trainingQ/ArtL/calib.txt": "ef734a74f2c513cfc689c5ebe9b371f04d750d062ab1690b4c284a32166824cf",
+    "data/middlebury/MiddEval3/trainingQ/ArtL/im0.png": "a29a9a9289bbc6428342b6a7d0b5141efcb6dd5a0cb88cae618d80f1e088f9cc",
+    "data/middlebury/MiddEval3/trainingQ/ArtL/im1.png": "b12a0833a4591ff775dd548f14af2a7e8d569084f25e8ec2ab913b84fc85237c",
+    "outputs/stereo/Jadeplant_disparity.npy": "747ac5c165b97e6a881d102db4828747c42848008a5b2f99064ed65592a5cb47",
+    "outputs/stereo/Jadeplant_valid.npy": "2f5478c673b6bf7dbcf0bce37b339a28a1766255b09cdc8026e5aa3ac95c0fe1",
+    "outputs/stereo/Jadeplant_depth.npy": "3ae1a4669dbaba271ea469ea74f9dbf98451a868fdd4792bd3244840ee16954f",
+    "outputs/stereo_improved/Jadeplant_disparity.npy": "c8f543a7966c9e5dec5ae45765169f2dc16b27e4fbef43fa7e0e3e1527239936",
+    "outputs/stereo_improved/Jadeplant_valid.npy": "ef6dc2c1dc6759d56da5cd1599e334cbb8dd7a7d3938801c84b663e181263a68",
+    "outputs/stereo_improved/Jadeplant_depth.npy": "f39c013dfc416755c4fa015aa92a31cf45d121575a594edaf4cfee6890aa0b76",
+    "data/middlebury/MiddEval3/trainingQ/Jadeplant/mask0nocc.png": "a05cd38fc5258d05eefd53dcec08f4cb780517eca7c8065dce7564305f0480a8",
+    "data/middlebury/MiddEval3/trainingQ/Jadeplant/disp0GT.pfm": "0228d78b98a2736c89e6620388b83e5a16d85d7bb64b22591a50e5edcd48d310",
+    "data/middlebury/MiddEval3/trainingQ/Jadeplant/calib.txt": "7344b0bf4cd4ee185723942eb6bf8fe34667a0b2cebdf5a8351fe77ed0ea0813",
+    "data/middlebury/MiddEval3/trainingQ/Jadeplant/im0.png": "f8248440b1c3421e01343983a0724db70e64af32235e9d145d1c808615417a76",
+    "data/middlebury/MiddEval3/trainingQ/Jadeplant/im1.png": "2d7691f7c177cbdf6728f1ddfacde845a2e4b24692f0b92d243dcd59d621f9f9",
+    "outputs/stereo/Motorcycle_disparity.npy": "55b98addba64184def5042e1018500d80c2a1c27629ba193e7138c860dc36d33",
+    "outputs/stereo/Motorcycle_valid.npy": "221d4cc0fec867e1bbda0902acf1b2ee853ad0297b11c0f2d1d58065e0451820",
+    "outputs/stereo/Motorcycle_depth.npy": "220cfd02d391f48b7449d9f52f614ea5cc2b080820a37c83563b551cec34dade",
+    "outputs/stereo_improved/Motorcycle_disparity.npy": "25934d62e8cc3a2e3092211df1a6cd291aea73799e8ac283477fe1301f10a79f",
+    "outputs/stereo_improved/Motorcycle_valid.npy": "4625430cdf3641d1f76ea12bbcf207b06405505c59152db9c4a89cc7885ecab6",
+    "outputs/stereo_improved/Motorcycle_depth.npy": "b9cacba352aa5376be03c6abffd111698e1c10f64bbb54bb71b47b3bafd4b72c",
+    "data/middlebury/MiddEval3/trainingQ/Motorcycle/mask0nocc.png": "dfa4e6db93fde4bdc33a32286478ebff23a58d775be95d859e8d72e1c20d6bd8",
+    "data/middlebury/MiddEval3/trainingQ/Motorcycle/disp0GT.pfm": "b7c4557ec53314d97643f3e3f7c4098eb992aaab193937e03a7759b42dfa6f11",
+    "data/middlebury/MiddEval3/trainingQ/Motorcycle/calib.txt": "d886e8f78085eb3a13f45e1a70a5fdbeb09a2a2091e364536269318d4ffa5e52",
+    "data/middlebury/MiddEval3/trainingQ/Motorcycle/im0.png": "a7b3988b02447c190309b0503da3db036d0c6c0380c3b9b6acda3d66594f5312",
+    "data/middlebury/MiddEval3/trainingQ/Motorcycle/im1.png": "9bb3c7fa53a27f003223b2fc504f86e1647f70cb2d25f3baedf3127957934a87",
+    "outputs/stereo/MotorcycleE_disparity.npy": "9c33a6c4c3e857cb0ff0498ce9828209e7846a85924fe8fb140eee7348433cf2",
+    "outputs/stereo/MotorcycleE_valid.npy": "e90f95b732584eca5ba93eeaed906b4dd4563ea0cf5065c5946e8fff43093bdf",
+    "outputs/stereo/MotorcycleE_depth.npy": "f9f9eaa3a8de9518e047a55a4127acad6206d0b7311bce3958d7522db4b41d78",
+    "outputs/stereo_improved/MotorcycleE_disparity.npy": "65d4a5ad3b9159a2c804007954a691f0f553e868048218faecc9e0665dbee5b5",
+    "outputs/stereo_improved/MotorcycleE_valid.npy": "c1a073bebecee0ebe319bd07afc8f2be5bed4a197d01780be5f039f8c7b97e57",
+    "outputs/stereo_improved/MotorcycleE_depth.npy": "bb565e0799d24e9bb4d9a1a4df731dafae3f3defa82f82fc0581ffbac9ab97f0",
+    "data/middlebury/MiddEval3/trainingQ/MotorcycleE/mask0nocc.png": "dfa4e6db93fde4bdc33a32286478ebff23a58d775be95d859e8d72e1c20d6bd8",
+    "data/middlebury/MiddEval3/trainingQ/MotorcycleE/disp0GT.pfm": "b7c4557ec53314d97643f3e3f7c4098eb992aaab193937e03a7759b42dfa6f11",
+    "data/middlebury/MiddEval3/trainingQ/MotorcycleE/calib.txt": "d886e8f78085eb3a13f45e1a70a5fdbeb09a2a2091e364536269318d4ffa5e52",
+    "data/middlebury/MiddEval3/trainingQ/MotorcycleE/im0.png": "a7b3988b02447c190309b0503da3db036d0c6c0380c3b9b6acda3d66594f5312",
+    "data/middlebury/MiddEval3/trainingQ/MotorcycleE/im1.png": "e86151aad3da99ea3e7be4a9c3269ded759e97824b448b2047d6da12797f8cc5",
+    "outputs/stereo/Piano_disparity.npy": "9209b12015f30c5e7164b6248cbd4dc1a87a001adf998da74dbee5acbd4fade3",
+    "outputs/stereo/Piano_valid.npy": "f46b17b0e0ac4a8288e9cc7251e5c2c58b6de88b1b56b18c9db3f850db4681f9",
+    "outputs/stereo/Piano_depth.npy": "a93618cdf5ea9069b87d7f598803b20c25b2a9ef2b4addae6d08a015a207373c",
+    "outputs/stereo_improved/Piano_disparity.npy": "33ea5302a3e6473311a74b57698f7ccc90348ff560a04564d5755b9ec089d276",
+    "outputs/stereo_improved/Piano_valid.npy": "4e83c538ecfee87196ecf3afc400d5f93e1cd2fff0ffdae76fbcb577daf5b849",
+    "outputs/stereo_improved/Piano_depth.npy": "6a670b06bf711cd5db54d53c027b13f76dc0d0626c0ef89b5389cb2d3f35cf88",
+    "data/middlebury/MiddEval3/trainingQ/Piano/mask0nocc.png": "9a9926ba4599787a0a5cc69552aa4e8424cc0b79ec04acdedfd77d73037f5554",
+    "data/middlebury/MiddEval3/trainingQ/Piano/disp0GT.pfm": "eef5202a45a5cfd5fe016e97bd40cb30ac0be7832fab8d9c885c07d409994461",
+    "data/middlebury/MiddEval3/trainingQ/Piano/calib.txt": "2be57753cbe419293560f5fb47575378b29c11ea9c2c59635d9c50f1cdae1b99",
+    "data/middlebury/MiddEval3/trainingQ/Piano/im0.png": "22dee69c42fb2e7bab34415cfda2aa20b88032b6449a043ae793b5a7438e4c5d",
+    "data/middlebury/MiddEval3/trainingQ/Piano/im1.png": "fb8f47fb73d49bf5f8c3447c697b175286870860f77d57404b13b59f174dca68",
+    "outputs/stereo/PianoL_disparity.npy": "2a85bf8495fb9250cd6a17f8c72fac6fff25cfa2d23b41becf11f4c09d420f17",
+    "outputs/stereo/PianoL_valid.npy": "50f30d385213ebdecdeab738bb219ac68a2db0ab6ad3b98cfc44412232c3e18a",
+    "outputs/stereo/PianoL_depth.npy": "76b142e74fc163f4c82de48b3e730beafd3276dfb57dfd7af712722749f20574",
+    "outputs/stereo_improved/PianoL_disparity.npy": "d511db59660ad39f7bc75f3ddf6430c430f4829331c5419173c885d0fa3489b0",
+    "outputs/stereo_improved/PianoL_valid.npy": "dd14c58c3cb2b345c8ba141a8446aa191a2afdf424b5bcfb075ecd6adaa91787",
+    "outputs/stereo_improved/PianoL_depth.npy": "9201f951898fe1a8f17e78b6faacf50a75dee8a401ba851c957800fcb3c0576b",
+    "data/middlebury/MiddEval3/trainingQ/PianoL/mask0nocc.png": "9a9926ba4599787a0a5cc69552aa4e8424cc0b79ec04acdedfd77d73037f5554",
+    "data/middlebury/MiddEval3/trainingQ/PianoL/disp0GT.pfm": "eef5202a45a5cfd5fe016e97bd40cb30ac0be7832fab8d9c885c07d409994461",
+    "data/middlebury/MiddEval3/trainingQ/PianoL/calib.txt": "2be57753cbe419293560f5fb47575378b29c11ea9c2c59635d9c50f1cdae1b99",
+    "data/middlebury/MiddEval3/trainingQ/PianoL/im0.png": "22dee69c42fb2e7bab34415cfda2aa20b88032b6449a043ae793b5a7438e4c5d",
+    "data/middlebury/MiddEval3/trainingQ/PianoL/im1.png": "e0829b470a3f2d1466f3bdf7f81446c9fe5dc3a3604d44724c056d6f286816c0",
+    "outputs/stereo/Pipes_disparity.npy": "bf3a73a979c95f873cbe584eb1d510d4a2c56fc067173106a3289593c2f2824a",
+    "outputs/stereo/Pipes_valid.npy": "93cc1d527e78bba8ddf48ea7fcbd9470eb9149dbc9ec64ead7e8f5e8b109445f",
+    "outputs/stereo/Pipes_depth.npy": "95b68e6825f21df0d3da1e2bbf8e611d4ec904195d7509f749dc0b90c114aed4",
+    "outputs/stereo_improved/Pipes_disparity.npy": "28c5fd748e73e0845f555e74c46b0fedf38d8a17a74a5a9ee6b98fd1e5a1f15d",
+    "outputs/stereo_improved/Pipes_valid.npy": "2792da98540aeddc88ca1405cf195aa6ff1a10ade1006eef0330caa5c54b9f1b",
+    "outputs/stereo_improved/Pipes_depth.npy": "fd714afd3b86e4dc39da360feb6e7e9421a740061f69937f256a1a18078b567d",
+    "data/middlebury/MiddEval3/trainingQ/Pipes/mask0nocc.png": "f7b804398932fdf9879923b08345d63e2378d27b79246cad2b04bb1c01e86b23",
+    "data/middlebury/MiddEval3/trainingQ/Pipes/disp0GT.pfm": "7c0fd88e4821cce0544d51c6c9925d0a73a558226289af27997572ca9fcd361b",
+    "data/middlebury/MiddEval3/trainingQ/Pipes/calib.txt": "6d57705f282b57ec56e475fb6ad46955256470d71d088d3283b1013ce2e62a60",
+    "data/middlebury/MiddEval3/trainingQ/Pipes/im0.png": "e891bc253b5a73a3c258fa571ef302f1f531ffcd59b505f7aa5760168a51fde1",
+    "data/middlebury/MiddEval3/trainingQ/Pipes/im1.png": "26db33f99f5d448fd623bd5d6d61ac57c07a07b9ebad9d9aaf0bd2aa77ec8d4d",
+    "outputs/stereo/Playroom_disparity.npy": "5f10dd0c7899c89bf395227aadb7e1379970bf4708db11a3d5d164b477b3f271",
+    "outputs/stereo/Playroom_valid.npy": "ef78ddd2919b99e41959d7d7ec810c702a8516580545194ed252ed8126837715",
+    "outputs/stereo/Playroom_depth.npy": "e29b1d743d5f9e61193847866e56e12aa9ef0e4780c98bef9ca5c88cfc95ff26",
+    "outputs/stereo_improved/Playroom_disparity.npy": "f6788519ccb2dd873fbf4950a0432f715f3ea5ca69f4576faffa54d46dfaef7b",
+    "outputs/stereo_improved/Playroom_valid.npy": "faa7733d9d45c573789d2d1df604bc7097c2a1f8124f454282459b81f1d24ace",
+    "outputs/stereo_improved/Playroom_depth.npy": "293d7e5e8a5b6626f33cfab27e081a101d9af073c9b83431c43af0977c01116d",
+    "data/middlebury/MiddEval3/trainingQ/Playroom/mask0nocc.png": "68e0eb07a7d324a1c43e29fd97d70cbd24aa85d100dcfce4ed38cdcde0708eb5",
+    "data/middlebury/MiddEval3/trainingQ/Playroom/disp0GT.pfm": "8e39ebb0f392ca9c5a98638f71ab355a7b7eaea3a9a7c21d32e00e2d9e4165c9",
+    "data/middlebury/MiddEval3/trainingQ/Playroom/calib.txt": "d7b2f1e8e00dae0d1e576bf66b440509ba844dad7481a0b5ef23ea0747461caa",
+    "data/middlebury/MiddEval3/trainingQ/Playroom/im0.png": "8063ce1fef9c5cc36c9c61f3f22dee26e7287af9044df6fb0bfa6d4b3fde9d1e",
+    "data/middlebury/MiddEval3/trainingQ/Playroom/im1.png": "54503fdcf6bc7f2af228756f6c6e35570e6f3003763c799aa9ddbdd34c9b1c0c",
+    "outputs/stereo/Playtable_disparity.npy": "7947345f39527dbbeea96c3cc6268cd1be916e6312f856175af68ec827088733",
+    "outputs/stereo/Playtable_valid.npy": "a4dda243c371f1adc78806e6f041d8fd4c5e62e3f74c6ed3105164130f6e2c23",
+    "outputs/stereo/Playtable_depth.npy": "9da023f20e2109b5d421b329a60dfcfc01f29820414c08c6f403f38a21fd32f1",
+    "outputs/stereo_improved/Playtable_disparity.npy": "2189c0fa2195aecf2e6fd9766f07f275d94db7991d1ade3d76ff6f02d930267e",
+    "outputs/stereo_improved/Playtable_valid.npy": "0253c93379b29fa96b418434e6c36fb4eab004e5261c8bca386736109ef4d61d",
+    "outputs/stereo_improved/Playtable_depth.npy": "c2335394ebd507c3703b3ce64a962235b0fa5f78e6e2d8b962e2eba5fd39cd88",
+    "data/middlebury/MiddEval3/trainingQ/Playtable/mask0nocc.png": "00844453850b289e61759cdab7367d50070f5c8910aed5cba3bb67b6074dc147",
+    "data/middlebury/MiddEval3/trainingQ/Playtable/disp0GT.pfm": "d0cc802ecdbdbf56a1356087b5d963c771176ebbcaa20e8cbe023befa7e95e80",
+    "data/middlebury/MiddEval3/trainingQ/Playtable/calib.txt": "9ea58e552710bb730b2968c7373162663bc3e1d3a4d267beb8cbfc5b7cb6ba18",
+    "data/middlebury/MiddEval3/trainingQ/Playtable/im0.png": "81f7e1c5ab1543d038fa5907f0572c02cff23d6c061773f20da8918baeff6deb",
+    "data/middlebury/MiddEval3/trainingQ/Playtable/im1.png": "bb355856d6f2056be9368d941968dbdb0dd84e3e5c79298acd4cec89d59add29",
+    "outputs/stereo/PlaytableP_disparity.npy": "dc96083ae7c2e18227e747cda59e4588789a31fbd4676b1c57ace554840d8c07",
+    "outputs/stereo/PlaytableP_valid.npy": "70d5401947a6cba773dbdcca75e0d4734cdcb0a216e93d75fba55e5f3df55c41",
+    "outputs/stereo/PlaytableP_depth.npy": "2356eeb8ec384936d5f5e702e5142272ffa37b755e9bc0937663d92e0bfc8763",
+    "outputs/stereo_improved/PlaytableP_disparity.npy": "ee2bf80d899d5293b67eaa07e1c2ac57c2a809bdef6d3bd14af93ae74c7cd16f",
+    "outputs/stereo_improved/PlaytableP_valid.npy": "1a9a1f36a5447b6027131ae9278bfc589827557229f29f00827cd87a911fab1d",
+    "outputs/stereo_improved/PlaytableP_depth.npy": "0523140ccee91597504b21e6d2343e0098c2f6dace208c833ad79b852702c9e0",
+    "data/middlebury/MiddEval3/trainingQ/PlaytableP/mask0nocc.png": "28a3d2756db4c2dafa2a410b1da469bace8f2a40ee5d4c3177b86cefa740a40c",
+    "data/middlebury/MiddEval3/trainingQ/PlaytableP/disp0GT.pfm": "197f58b51ce80acbd53680948d3b4cb36f1671fcf40488cb61f239550179036b",
+    "data/middlebury/MiddEval3/trainingQ/PlaytableP/calib.txt": "a789f540c408802f3d6d469ff4e6894561105e2d2cd24a86172490173ef13a4e",
+    "data/middlebury/MiddEval3/trainingQ/PlaytableP/im0.png": "e59c9db5a1fc3b19b4dbcb8a3c735f6119bcf5f6f148d39d4249ad81973a95e3",
+    "data/middlebury/MiddEval3/trainingQ/PlaytableP/im1.png": "779213a6ee111e936cf44bd54e8b5d302a697cfcedd4a5e4d73ddaa326f9f8c2",
+    "outputs/stereo/Recycle_disparity.npy": "7ce6cf9278848ee023a051865729334c8ce00f809f268cfdab4fe86dd510ebca",
+    "outputs/stereo/Recycle_valid.npy": "cac8d0b69d80891d6d61a2710a1e5176978919cb9bc3c697905bb21404e25ddc",
+    "outputs/stereo/Recycle_depth.npy": "87bcb91b8fe58ad23fd6c63af63ef10ddccff9081d83ba6b922432b3b62784ca",
+    "outputs/stereo_improved/Recycle_disparity.npy": "820742a4478cb28d0d5c573fdb2fd6992f494b2bb6aad1a1db96e24d29376f6c",
+    "outputs/stereo_improved/Recycle_valid.npy": "269f5f72f77f71556e1c3b96d1e254fb128205eaa2e70853502e6d695c0ab1b0",
+    "outputs/stereo_improved/Recycle_depth.npy": "f94b693379e9364e73acd9fdd2e3a5c1ab8d50e9dbfe18e20e89e9040ab16164",
+    "data/middlebury/MiddEval3/trainingQ/Recycle/mask0nocc.png": "3fbe2ec1fe38911ec1e7732de47c2c373220c7ac0497fc6691ce5328144404b6",
+    "data/middlebury/MiddEval3/trainingQ/Recycle/disp0GT.pfm": "cf755541547336db621fa073925e01ad8baec931ff44995ac19d0081a4effd16",
+    "data/middlebury/MiddEval3/trainingQ/Recycle/calib.txt": "2e7a875a6e20667be1d7155cec741aa48151bd5fb10ba62917a6186451004201",
+    "data/middlebury/MiddEval3/trainingQ/Recycle/im0.png": "63076e5c00650431e0d1e0ff6765f7f7f4be3e85966e9e09a111e68e2f2fc6fd",
+    "data/middlebury/MiddEval3/trainingQ/Recycle/im1.png": "e75e3fcdf19b13b02ad3278d40e42e4e6800be2b9dbd69a03ab3f498cc44baec",
+    "outputs/stereo/Shelves_disparity.npy": "f999f65c8a5cdf9f25d563b889dd3f1e6b55fe89fa0e154b060ba2f351ee7e5a",
+    "outputs/stereo/Shelves_valid.npy": "8e23fa5745e3102884ecf9fcccd332fdbed392ef6dce8aba166e57c4b75422a5",
+    "outputs/stereo/Shelves_depth.npy": "eec8fccf578eed0ee75dc2735e0a59885621f3c472867d211e0ecf3b258b6e72",
+    "outputs/stereo_improved/Shelves_disparity.npy": "5f23c00f34a88233e28faea07eb8a00c0f641e58237e38c85d720ee9ef6f6480",
+    "outputs/stereo_improved/Shelves_valid.npy": "da41e7e8952a565eb3030d29243f7975908bebce66d33baa95bb55b8027bc7ba",
+    "outputs/stereo_improved/Shelves_depth.npy": "a1ccf2d350295ddd22fd764d4962544fae2dceb6254290de1762abd01f59aa66",
+    "data/middlebury/MiddEval3/trainingQ/Shelves/mask0nocc.png": "4ed63502e112fd98cd344e1bdb27886197d77347a5804f1ae08999f6723a4033",
+    "data/middlebury/MiddEval3/trainingQ/Shelves/disp0GT.pfm": "afec37afab28de8542cf5dc14611210ff920c40a0a0f409ecdcc40ae77205ae5",
+    "data/middlebury/MiddEval3/trainingQ/Shelves/calib.txt": "d202fb16fb03a377e3179b2da77a605a2a896464425223dc92523552fd8c0608",
+    "data/middlebury/MiddEval3/trainingQ/Shelves/im0.png": "ec20b8b4f1334d5a7167fe214ca32207b3cf5a490e0a68c92ee4672225e521f5",
+    "data/middlebury/MiddEval3/trainingQ/Shelves/im1.png": "76095d15bb1173334d6cd4374cf54cf195033ae68a453392b0717d79b50cfd77",
+    "outputs/stereo/Teddy_disparity.npy": "dfa0970a3c43e5073741eb44ef80bcf9973862449c83b320fb4b8adabeee3233",
+    "outputs/stereo/Teddy_valid.npy": "5969e3aca7d12006b9b486d59eed9efdd0aac02791e246e85b997a267c4fee2d",
+    "outputs/stereo/Teddy_depth.npy": "2bd000351c80fd071b038aac9e43c2862375f7a7754885c5033b7733b40b64b9",
+    "outputs/stereo_improved/Teddy_disparity.npy": "ab11363929d55ceb1d89d7c849e684dddacea5f80ec1e16b2f0ea6463e57c73d",
+    "outputs/stereo_improved/Teddy_valid.npy": "4cc4c3ecf04669c3ec3f3525fc6938f954b3a9752852e07e2bbb59a42457559d",
+    "outputs/stereo_improved/Teddy_depth.npy": "c7f1d43be188404eb5760851518c08bb4b647a7960ffcbc34f5a4a3ec02c3399",
+    "data/middlebury/MiddEval3/trainingQ/Teddy/mask0nocc.png": "f654d8b5e8494f0ed054ae75cea90096a60ab79093fba7f408b629ad0b462229",
+    "data/middlebury/MiddEval3/trainingQ/Teddy/disp0GT.pfm": "895744a0bed14c428b98a8aeba63053f4b52279ba8284ecf9d15fa045444217e",
+    "data/middlebury/MiddEval3/trainingQ/Teddy/calib.txt": "25c523c597aa84679f09e19f9cc79d899a4172ca40dc7b33314d7a9a752e25bc",
+    "data/middlebury/MiddEval3/trainingQ/Teddy/im0.png": "0620f5cb513ca67aaaf3702c0b1e261641d67171ad56fa0934ca4cede638b023",
+    "data/middlebury/MiddEval3/trainingQ/Teddy/im1.png": "2c377edb3c2144f32c56c4c969ec5dcb6b6bf02db9c95e21d24e70ac5fe6b350",
+    "outputs/stereo/Vintage_disparity.npy": "ec83c107156df90aac3e2bb3bca996c54fcad015c9190c093d6026d769b1f915",
+    "outputs/stereo/Vintage_valid.npy": "01ed72636f12d153051c2b02b2120451f0f5cf8cbbf78548ea81cd02e88d9864",
+    "outputs/stereo/Vintage_depth.npy": "242fae687bbef32a8e111fd3e0c600f2f349f7440de813630401ebd4845a46f5",
+    "outputs/stereo_improved/Vintage_disparity.npy": "6690f25d871fe7946bd6e32eb4737c4d5f09b2a0e2727bd3ac285bf2a42e4351",
+    "outputs/stereo_improved/Vintage_valid.npy": "ba74cae013c23dd263a45e56a266f9fad8baedf3e84f05ea26934b69b0616242",
+    "outputs/stereo_improved/Vintage_depth.npy": "02e6afa2c861d96bf8a24a929850316bc532be78609941a5787c8b59351bbd46",
+    "data/middlebury/MiddEval3/trainingQ/Vintage/mask0nocc.png": "670d42b1ce409a8fe5b4e6f61dc8afd489c2660e2ace012506109e7d2bb5792c",
+    "data/middlebury/MiddEval3/trainingQ/Vintage/disp0GT.pfm": "203b5ffd69a7d997e6666dd03dd91d9df8f0af20e85c44559d96ea8043cebf91",
+    "data/middlebury/MiddEval3/trainingQ/Vintage/calib.txt": "f9840cc430cab9192a1a8e7a713ab20199c3446a090b0710fd24c626b2ad6c81",
+    "data/middlebury/MiddEval3/trainingQ/Vintage/im0.png": "7042ff4a715e683ee57a7cf42caec57121a0fab68f86440f2014b5c8685864c5",
+    "data/middlebury/MiddEval3/trainingQ/Vintage/im1.png": "faeed68e7ecf395702b6bc99094d42a4db4163d0b7a77dbcbb1452c9cdff8b7d"
+  },
+  "seconds": 7.440389109775424
+}

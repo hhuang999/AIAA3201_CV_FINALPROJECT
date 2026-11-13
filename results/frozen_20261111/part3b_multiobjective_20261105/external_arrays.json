@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "path": "/nas/Public/ai4s_group/XZG/coursework/CV/Project3/experiments/20261105_b_multiobjective/arrays.tar",
+  "bytes": 3150653440,
+  "sha256": "72b1d6a0f4067ba04e1860e8ccada00d787149b6e2e9d6e91c79281401075108",
+  "files": {
+    "prepared/pred_train.npy": {
+      "bytes": 758620928,
+      "sha256": "b37e204bb35070804b41d7749226da46cde8b48b027234898c2dfd282f7e5732"
+    },
+    "prepared/gt_train.npy": {
+      "bytes": 758620928,
+      "sha256": "3a13e5f360fe7cb272069b3eb11bc3e7d8182ab17193cac91ce001748b778d21"
+    },
+    "prepared/samples.npy": {
+      "bytes": 26050688,
+      "sha256": "a8a9fd0f7a7c79c8a619cd8a0f4564a6324214efdf3eec43713f30fe16ba2b08"
+    },
+    "prepared/features.npy": {
+      "bytes": 51008,
+      "sha256": "cb3688785fa2b47a7be305a00c40dbd1d4a19afd0e0889eed927027147d2955c"
+    },
+    "prepared/ratios.npy": {
+      "bytes": 6488,
+      "sha256": "ae56e699417c618b845a2a49b5ff41179f0503cc870ad6ce21e826b699b42e47"
+    },
+    "final/test/primary_depth.npy": {
+      "bytes": 1607270528,
+      "sha256": "168916b36cca990503354781a1444bed0d85287d9616d232d101fc5b67f08ed3"
+    },
+    "initial_fit_sources/flexible.py": {
+      "bytes": 7181,
+      "sha256": "d9b2a949d737dd4563e1f817cbae6a4e95482b461a1c7cff8d8c7755418f3911"
+    },
+    "initial_fit_sources/part3_multiobjective_worker.py": {
+      "bytes": 8480,
+      "sha256": "036f26fd3fea12d123d9b1cea698e6ef32ecbbd1f3aa171fd8d4d9bf68c9aadc"
+    }
+  },
+  "archive_entries_verified": true,
+  "scope": "Lossless final predictions and exact training fitting/evaluation arrays; no model weights or original dataset duplicated."
+}

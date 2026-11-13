@@ -1,0 +1,32 @@
+{
+  "complete": true,
+  "scope": "Existing saved artifacts only; no new fit, model inference, test scoring or resampling",
+  "identity_check": {
+    "images": 795,
+    "same_image_fold_scene": true,
+    "same_dataset_split_train_cache_hash": true,
+    "median_oof_max_difference": 8.881784197001252e-16
+  },
+  "scalar_oof": "Same five held-out scene folds and full-resolution OOF metrics; fitting methods and pixel approximations differ.",
+  "clipped_development": "Separate 641 fitting / 154 held-out images, not five-fold OOF.",
+  "budget": "100 nested scene draws for 5/10/25/50/100 scenes; full 199 scenes is one draw. Empirical quantiles describe draws on one fixed split, not a population confidence interval.",
+  "historical_test_exposure": true,
+  "imported_source_binding_limitations": [
+    "Historical manifests do not hash themselves.",
+    "Uncertainty summary binds its protocol; historical NPZ and subset-stability files have no verified execution-manifest file hashes.",
+    "Historical source execution hashes in copied protocols/manifests are claims of their executions; no original source snapshot copied."
+  ],
+  "source_sha256": "00fff45b90c7ae4b8c79b463f628261b508a24158661ae03fb17056c7e2a5e93",
+  "input_sha256": {
+    "results/pre_freeze_20261111/legacy_scalar/import_manifest.json": "6de4cdc714677a2c00618bd687cf3cce85c4451fd60f592107f68432c1ffae07",
+    "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/oof_per_image.csv": "1ead17723009412f8a21cbde736593819a2abf0b436443acfb93964931d1153c",
+    "results/part3b_multiobjective_20261105/selection/oof_per_image.csv": "8ac2140ba82422b630b3bb2f750a06b6430ed9c5d3033dd5eea67ef174a051d9",
+    "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_methods.csv": "98f111ff6cc551aa4b17f6ed05f5edcb5de9094be2a8986a68794b565970a9f7",
+    "results/part3b_multiobjective_20261105/selection/cv_methods.csv": "356cabc1742df7e9d1a105fcf8e4a2271ba32bcc94b537dd9fb583a7a3333397",
+    "results/pre_freeze_20261111/legacy_scalar/part3_scene_cv/cv_protocol.json": "ae8711aa07dd9d4f5c88d7dc9cbc2902ff83b78dcacd0cb467f90fa0da598ec3",
+    "results/part3b_multiobjective_20261105/prepared/protocol.json": "369d272ed71d4183cb45cb072176fdd19e23da0352e762316186363f68ee1483",
+    "results/pre_freeze_20261111/legacy_scalar/part3_clipped_followup/development_methods.csv": "03ee6db92525d54975bad139834634e81b79c0c1d1d9defd58b6225d04ce68e4",
+    "results/refinement_20261105/b_robustness/budget_draws.csv": "382a628460c1010cf4c352f28c1e24e99376a20cd09afd1dc7920180b6e772de",
+    "results/refinement_20261105/b_robustness/budget_protocol.json": "4708d3eb7d3e2a636dec3a0a58c15b19432bd76f63e4324a1b53c0b630c92616"
+  }
+}

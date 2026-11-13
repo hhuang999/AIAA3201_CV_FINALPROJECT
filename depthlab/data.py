@@ -6,9 +6,20 @@ from scipy.io import loadmat
 
 
 def splits(data_root):
-    indices = loadmat(Path(data_root) / "splits.mat")
-    return {name: indices[key].ravel().astype(int) - 1
-            for name, key in [("train", "trainNdxs"), ("test", "testNdxs")]}
+    source = loadmat(Path(data_root) / "splits.mat")
+    result = {}
+    for name, key in [("train", "trainNdxs"), ("test", "testNdxs")]:
+        values = np.asarray(source[key]).ravel()
+        if (not len(values) or not np.isfinite(values).all()
+                or not np.equal(values, np.floor(values)).all() or np.any(values < 1)):
+            raise ValueError("Split IDs must be nonempty positive MATLAB integers")
+        ids = values.astype(np.int64) - 1
+        if len(np.unique(ids)) != len(ids):
+            raise ValueError("Duplicate image IDs in official split")
+        result[name] = ids
+    if np.intersect1d(result["train"], result["test"]).size:
+        raise ValueError("Training and test image IDs overlap")
+    return result
 
 
 def scene_names(handle):

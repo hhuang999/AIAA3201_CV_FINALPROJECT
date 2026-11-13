@@ -1,0 +1,25 @@
+{
+  "scope": "Descriptive evidence only",
+  "historical_test_exposure": true,
+  "model_parameters_changed": false,
+  "model_selection": false,
+  "test_gt_read": false,
+  "smoke": false,
+  "bins": [
+    0.001,
+    1.0,
+    2.0,
+    4.0,
+    6.0,
+    10.0
+  ],
+  "source_sha256": {
+    "calibration_analysis.py": "028b2e83f4881fbb3c417d33651cdd5f25f3e6dbad28a4e357db6d8abe0a8fd0",
+    "calibration_study.py": "db7de9de89991d4de35097cdc5cc0007441180522c8165e2373bcb2adb78e4fd",
+    "frozen.py": "abe45962f70e31c6f174e973a353240bd85098b37c937b74de72e3b08ae77850",
+    "cache.py": "b7b8b0ab26ec34d6076f1a2743a2dbe41a406246fd36c40c5464ace69cb08c7e",
+    "data.py": "2b569493404e30c7029cfc9b89f5cf5f098bc17f50af8c17a8a75b3e2afffa30",
+    "metrics.py": "381e58dd887687e9534a2b0ff4054d92236686db08ab9478968c9b70949c3f39"
+  },
+  "saved_scores_sha256": "1ced0a5c8f1d721ccd568a590c749187676a5feaaa3daa0e97a5c9cc4d5672f0"
+}

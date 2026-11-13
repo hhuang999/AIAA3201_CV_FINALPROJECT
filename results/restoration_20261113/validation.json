@@ -1,0 +1,45 @@
+{
+  "schema": "part123b_restoration_v1",
+  "complete": true,
+  "original_frozen_commit": "91091a1b1d27fc2e19e56c2910dd0b3020921f59",
+  "new_repository_base": "411687c4cce2a0c8be021f188c7ae9ef6b85de56",
+  "branch": "codex/part3b",
+  "commit_identity": {
+    "name": "XZG",
+    "email": "zxia147@connect.hkust-gz.edu.cn",
+    "github": "hjjs4"
+  },
+  "tests_passed": 107,
+  "cli_entrypoints_passed": 15,
+  "environment_packages_verified": 87,
+  "part1": {
+    "scenes": 15,
+    "configurations": 3,
+    "arrays_byte_identical": 135,
+    "changed_pixels": 0
+  },
+  "part2": {
+    "nyu_images": 1449,
+    "nyu_changed_pixels": 0,
+    "video_frames_per_method": 70,
+    "video_changed_pixels": 0,
+    "known_camera_train_smoke_images": 2
+  },
+  "part3b": {
+    "primary": "residual_median_ratio_l1_a0.5",
+    "test_images": 654,
+    "changed_depth_pixels": 0,
+    "per_image_metric_rows_compared": 2616,
+    "max_metric_difference": 4.440892098500626e-16,
+    "frozen_model_sha256": "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5",
+    "abs_rel": 0.09960689343231784,
+    "rmse_m": 0.3831236302386158,
+    "delta1": 0.9055456208197196,
+    "uncertainty_comparison_values_equal": 36
+  },
+  "historical_artifacts_copied_unchanged": 164,
+  "protected_original_figures_unchanged": 38,
+  "reports_or_final_videos_generated": false,
+  "scope": "Preservation of previously frozen results, not a new model-selection or independent holdout experiment. Optional discovery/learning workflows restored and synthetic-tested; historical fitted parameters remain the deployed primary.",
+  "large_arrays": "outputs/restored_20261113 (ignored NAS-backed runtime artifacts)"
+}

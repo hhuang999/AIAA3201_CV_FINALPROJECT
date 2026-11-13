@@ -1,0 +1,76 @@
+{
+  "raw": {
+    "scenes": 215,
+    "repeats": 20000,
+    "seed": 20261105,
+    "mean_gain": {
+      "abs_rel": 0.013712322074527633,
+      "rmse": 0.01186386921475413,
+      "d1": 0.01103003725718227
+    },
+    "ordinary95CI": {
+      "abs_rel": [
+        0.010307635199597895,
+        0.017134407629187682
+      ],
+      "rmse": [
+        0.0021764019810623153,
+        0.021501257677726825
+      ],
+      "d1": [
+        0.0015937869812071301,
+        0.020804061345993108
+      ]
+    },
+    "simultaneous_three_metrics_one_sided_lower": {
+      "abs_rel": 0.010017839323564951,
+      "rmse": 0.0013840874667216186,
+      "d1": 0.0007636415502464804
+    },
+    "all_three_lower_positive": true,
+    "interpretation": "Positive favors primary. Whole scenes resampled with image-equal means; fixed fitted models. Historical test exposure means this is exploratory evidence, not a pristine confirmatory experiment.",
+    "images_improving_each_metric": {
+      "abs_rel": 435,
+      "rmse": 365,
+      "d1": 372
+    },
+    "images_improving_all_three": 306
+  },
+  "median": {
+    "scenes": 215,
+    "repeats": 20000,
+    "seed": 20261105,
+    "mean_gain": {
+      "abs_rel": 0.0012108608587680803,
+      "rmse": 0.0022863718214286787,
+      "d1": 0.0037999723622058556
+    },
+    "ordinary95CI": {
+      "abs_rel": [
+        0.0003910101390680639,
+        0.002044826258063075
+      ],
+      "rmse": [
+        -0.0030611134883393116,
+        0.00829320688697516
+      ],
+      "d1": [
+        0.0014644050684189513,
+        0.0063089078438356575
+      ]
+    },
+    "simultaneous_three_metrics_one_sided_lower": {
+      "abs_rel": 0.0003269639365488774,
+      "rmse": -0.003441641766400131,
+      "d1": 0.0012986352365642391
+    },
+    "all_three_lower_positive": false,
+    "interpretation": "Positive favors primary. Whole scenes resampled with image-equal means; fixed fitted models. Historical test exposure means this is exploratory evidence, not a pristine confirmatory experiment.",
+    "images_improving_each_metric": {
+      "abs_rel": 379,
+      "rmse": 383,
+      "d1": 332
+    },
+    "images_improving_all_three": 229
+  }
+}

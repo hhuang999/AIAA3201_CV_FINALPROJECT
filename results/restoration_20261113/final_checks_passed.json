@@ -1,0 +1,68 @@
+[
+  {
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "exit": 0,
+    "stdout": "........................................................................ [ 67%]\n...................................                                      [100%]\n107 passed in 6.17s\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/local/bin/uv",
+      "pip",
+      "check",
+      "--python",
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "Using Python 3.10.20 environment at: /home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction\nChecked 87 packages in 1ms\nAll installed packages are compatible\n"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bash",
+      "-n",
+      "scripts/run_baselines.sh"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bash",
+      "-n",
+      "scripts/run_evaluation.sh"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bash",
+      "-n",
+      "scripts/slurm_gpu.sh"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

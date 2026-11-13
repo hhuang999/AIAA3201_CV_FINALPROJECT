@@ -1,0 +1,59 @@
+{
+  "arrays": [
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/Project3-final-20261111/outputs/part3b_residual_20261111/final/test/primary_depth.npy",
+      "bytes": 1607270528,
+      "sha256": "94d351f467c4ae16fcca37222413dc9cf67556d99fbd2e9d7985de936ec245a4",
+      "role": "Frozen candidate official test depth"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_refinement/local_inputs/nyu_cache/unidepth_none_train.npy",
+      "bytes": 976896128,
+      "sha256": "a3c5d961282896b9e150c8b250e11289f26d736f477e000d4028ead04f616c68",
+      "role": "Original raw training predictions"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_refinement/local_inputs/nyu_cache/unidepth_none_test.npy",
+      "bytes": 803635328,
+      "sha256": "316179138ab7d8432407a34390e220211a958b91df57a7897b7b8b70eadc5113",
+      "role": "Original raw test predictions"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_b_multiobjective/prepared/pred_train.npy",
+      "bytes": 758620928,
+      "sha256": "b37e204bb35070804b41d7749226da46cde8b48b027234898c2dfd282f7e5732",
+      "role": "Verified prepared training input"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_b_multiobjective/prepared/gt_train.npy",
+      "bytes": 758620928,
+      "sha256": "3a13e5f360fe7cb272069b3eb11bc3e7d8182ab17193cac91ce001748b778d21",
+      "role": "Verified prepared training input"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_b_multiobjective/prepared/samples.npy",
+      "bytes": 26050688,
+      "sha256": "a8a9fd0f7a7c79c8a619cd8a0f4564a6324214efdf3eec43713f30fe16ba2b08",
+      "role": "Verified prepared training input"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_b_multiobjective/prepared/features.npy",
+      "bytes": 51008,
+      "sha256": "cb3688785fa2b47a7be305a00c40dbd1d4a19afd0e0889eed927027147d2955c",
+      "role": "Verified prepared training input"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_b_multiobjective/prepared/ratios.npy",
+      "bytes": 6488,
+      "sha256": "ae56e699417c618b845a2a49b5ff41179f0503cc870ad6ce21e826b699b42e47",
+      "role": "Verified prepared training input"
+    },
+    {
+      "path": "/home/ai4s_group/XZG/coursework/CV/handoffs/20261105_b_multiobjective/prepared/protocol.json",
+      "bytes": 103643,
+      "sha256": "369d272ed71d4183cb45cb072176fdd19e23da0352e762316186363f68ee1483",
+      "role": "Verified prepared training input"
+    }
+  ],
+  "note": "Large arrays remain external. Checksums were validated by training/final evaluation; final test depth can be replayed from frozen JSON and raw predictions without GT."
+}

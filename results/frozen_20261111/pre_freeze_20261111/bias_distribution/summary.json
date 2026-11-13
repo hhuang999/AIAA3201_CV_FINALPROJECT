@@ -1,0 +1,51 @@
+{
+  "complete": true,
+  "smoke": false,
+  "source_sha256": "d5793d5c8f50b7f7936aeba5fc7141c1b7c62ae56d17af959c8951e48f4a61ca",
+  "protocol_sha256": "c8c8bbe42458a360a2de49b52d18e0abe86f515389356b28b2fa5bdd81edaeeb",
+  "training_bias": {
+    "images": 795,
+    "scenes": 249,
+    "frozen_median_scale": 0.9562753491527104,
+    "original_per_image_ratio_max_difference": 0.0,
+    "scene_median_ratio_below_one": 196,
+    "scene_median_ratio_above_one": 53,
+    "per_image_ratio": {
+      "mean": 0.9630176434285973,
+      "std": 0.09624733953197061,
+      "min": 0.6766042365196161,
+      "p10": 0.8538254651334185,
+      "p25": 0.9050642396831214,
+      "median": 0.9562753491527104,
+      "p75": 1.0085897333499911,
+      "p90": 1.0760337363489567,
+      "p95": 1.1243247386960402,
+      "max": 1.4595735844969606
+    },
+    "scope": "Descriptive official-training bias only. Frozen median uses these training labels; these are in-sample diagnostics, not validation gains or parameter-selection evidence.",
+    "definitions": {
+      "ratio": "GT/raw before clipping, per-image median, as original scalar estimator; ratio below1 suggests an image-level overestimation tendency",
+      "signed_relative_error": "Image mean (clipped_prediction-GT)/GT; positive means overprediction",
+      "signed_log_error": "Image mean log(clipped_prediction/GT); positive means overprediction",
+      "aggregation": "Equal image means within each nonempty GT bin; scene ratios are medians across images in the scene",
+      "warning": "A ratio median below1 and a positive mean relative error measure different summaries; neither implies every pixel or scene is overpredicted"
+    }
+  },
+  "saved_test_distributions": {
+    "images": 654,
+    "methods": [
+      "raw",
+      "median",
+      "spline_rmse",
+      "residual_median_ratio_l1_a0.5"
+    ],
+    "metrics": [
+      "abs_rel",
+      "rmse",
+      "d1"
+    ],
+    "explanation": "Descriptive summaries of previously saved official scores. No GT read, rescoring, fitting, confidence interval or new adoption decision."
+  },
+  "historical_test_exposure": true,
+  "model_parameters_changed": false
+}

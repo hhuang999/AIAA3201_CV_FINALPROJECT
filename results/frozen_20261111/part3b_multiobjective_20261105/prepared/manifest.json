@@ -1,0 +1,13 @@
+{
+  "complete": true,
+  "images": 795,
+  "scene_groups": 249,
+  "files_sha256": {
+    "pred_train.npy": "b37e204bb35070804b41d7749226da46cde8b48b027234898c2dfd282f7e5732",
+    "gt_train.npy": "3a13e5f360fe7cb272069b3eb11bc3e7d8182ab17193cac91ce001748b778d21",
+    "samples.npy": "a8a9fd0f7a7c79c8a619cd8a0f4564a6324214efdf3eec43713f30fe16ba2b08",
+    "features.npy": "cb3688785fa2b47a7be305a00c40dbd1d4a19afd0e0889eed927027147d2955c",
+    "ratios.npy": "ae56e699417c618b845a2a49b5ff41179f0503cc870ad6ce21e826b699b42e47",
+    "protocol.json": "369d272ed71d4183cb45cb072176fdd19e23da0352e762316186363f68ee1483"
+  }
+}

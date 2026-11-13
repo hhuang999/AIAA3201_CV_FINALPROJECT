@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "kind": "nyu_predictions",
+  "signature": {
+    "indices": [
+      2,
+      3
+    ],
+    "shape": [
+      2,
+      480,
+      640
+    ],
+    "dtype": "float32",
+    "known_intrinsics": true,
+    "split": "train",
+    "source": {
+      "revision": "8d8cfe4c7ee15297099983607febf0d4f32eb3d6",
+      "tracked_source_clean": true
+    },
+    "weights": {
+      "config.json": "ecc1f898690debe387d10329cca5d9d66a0a447ce83c3a2a7ae3673c7ce43cfe",
+      "model.safetensors": "93705cb3295dd7476b44911b8a55f5215bf74e8d5eccd27cecdb1b338270a648"
+    },
+    "data": {
+      "nyu_mat_sha256": "2d724b0c0ab358aa1ce5df855e5bd14a2279ab7202efe22f32a30d612dcb86aa",
+      "splits_sha256": "6e081404491a8bfba2f066beaa9713ef6046f9007aa5f799f2a350506a580cee"
+    },
+    "seed": 0,
+    "backend": "upstream PyTorch attention branches; xformers disabled",
+    "preprocessing": "official infer; interpolation_mode=bilinear; RGB uint8 480x640",
+    "camera_policy": "fresh K tensor per call"
+  },
+  "completed": 2,
+  "complete": true,
+  "runtime_signature": {
+    "torch": "2.8.0+cu128",
+    "cuda": "12.8",
+    "device": "cuda:0",
+    "gpu": "NVIDIA RTX A6000",
+    "attention_backend": {
+      "implementation": "upstream PyTorch attention branches",
+      "xformers_attention_enabled": false,
+      "configured_modules": [
+        "unidepth.models.backbones.metadinov2.attention",
+        "unidepth.models.backbones.metadinov2.block"
+      ]
+    },
+    "shape_constraints": {
+      "height_min": 15,
+      "pixels_max": 600000,
+      "pixels_min": 200000,
+      "ratio_bounds": [
+        0.5,
+        2.5
+      ],
+      "sample": true,
+      "shape_mult": 14,
+      "width_min": 15
+    },
+    "precision": "official FP16 CUDA autocast / FP32 weights"
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "depth_sha256": "0a88829e2dc1d65e557d68a5580e7922a55521720f3803eadacf60cbdf359775",
+      "intrinsics_sha256": "99c7aa0e6392cb5f56938953da410e4d3d2a44cb63889683db812095e3e869c2"
+    }
+  ],
+  "files": {
+    "depth.npy": "68fa488fa6335236c689f28743c8a18235f88363332133c44492f18d68b912ec",
+    "indices.npy": "824c4b7b87be0e815247414f68db42bebbcbe6de6574e4427f194083ef8da969",
+    "intrinsics.npy": "fe19003cdec2525adc8e068ffda95b3ccf8358468018a52e92bc914b815f6c51"
+  }
+}

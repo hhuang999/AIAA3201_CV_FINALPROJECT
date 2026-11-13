@@ -1,0 +1,68 @@
+{
+  "timestamp_utc": "2026-10-31T14:25:11.628934+00:00",
+  "scope": "Code and experiments only. Exploratory objective audit, scene-disjoint development, single-pass evaluator regression.",
+  "original_frozen_main_files_unchanged": {
+    "outputs/nyu_global_scale/frozen_scale.json": true,
+    "outputs/nyu_global_scale/nyu_global_scale.csv": true,
+    "outputs/nyu_global_scale/development_protocol.json": true
+  },
+  "original_frozen_fit_source_verified_against_archive": {
+    "scripts/eval_nyu_global_scale.py": {
+      "expected_original_sha256": "5ea338c9bbb4024022c642707e7276ece89a1da3efbf7b6f67d7e24548e6980a",
+      "archived_sha256": "5ea338c9bbb4024022c642707e7276ece89a1da3efbf7b6f67d7e24548e6980a"
+    },
+    "src/calibration/global_scale.py": {
+      "expected_original_sha256": "1d03547f4e29183954a3ee487e497f4ceb605396ece0facd45baf74205e52079",
+      "archived_sha256": "1d03547f4e29183954a3ee487e497f4ceb605396ece0facd45baf74205e52079"
+    },
+    "src/eval/nyu.py": {
+      "expected_original_sha256": "07c920bd8a6b131bd11a69a47204b34ff234b94a7ca7654ca0f925a1883a1c60",
+      "archived_sha256": "07c920bd8a6b131bd11a69a47204b34ff234b94a7ca7654ca0f925a1883a1c60"
+    }
+  },
+  "archive_manifest_sha256": "cbf3c11988bbc8161058da1b8632d2c1777add6a0cfb31f386e8c9cdaf37eda2",
+  "current_source_sha256": {
+    "src/calibration/global_scale.py": "326cfa777a0c8e1993b9c7dac8c9e7cd6d70ffb8c1e8c07f06a3bb8ed0d116e3",
+    "src/eval/nyu.py": "07c920bd8a6b131bd11a69a47204b34ff234b94a7ca7654ca0f925a1883a1c60",
+    "scripts/eval_nyu_global_scale.py": "deba4dd8bc2c9df40c835a5d527947387132133d08ca62d1699655fb27062567",
+    "scripts/part3_clipped_followup.py": "61a36b11470e970bdfe57025417950fda9a05aebef76c51e69b1c68d094a730d",
+    "scripts/part3_development_scene_audit.py": "24bc9c959df035caa8a4c9e45539d856bfc9901b095d85381ae14c2d4e4a81de",
+    "tests/test_calibration.py": "26ef9104fe2b16f2a0fb02bad9c6424a6245cddcb7b9c8583477af406eac2844",
+    "tests/test_calibration_clipped.py": "40f2176af00f5d6b2bef2bb847ed03024254d0970521bf11e121ae612f28d277"
+  },
+  "development_execution_source_matches_current": true,
+  "prediction_cache_hashes_unchanged": {
+    "train": true,
+    "test": true
+  },
+  "full654_baseline_parity": {
+    "images": 654,
+    "methods": 5,
+    "maximum_absolute_metric_difference": 0.0,
+    "tolerance": 1e-12,
+    "passed": true,
+    "single_pass_evaluation_seconds": 37.540988555178046,
+    "scope": "All old per-method means and raw/median per-image7metrics verified against unchanged frozen results"
+  },
+  "calibration_tests_passed": 14,
+  "new_clipped_candidate_test_evaluated": false,
+  "adoption": "Optional exact clipped optimizer retained for reference; not adopted. Original median main method unchanged.",
+  "artifacts_sha256": {
+    "adoption_decision.json": "c1f0c7259fc81fcb5de8b212ef57b8c3d2e2ff6a885e65d1373139c519d6a209",
+    "baseline_reproduction.json": "0bd5e84e626485a748103801bb55c98af13eeb1cdafc8d84837009eddb1d4995",
+    "development_comparisons.json": "898cfcc66e286a81d18c0bfe4153a1cc33dddda01b477afd255bace4b60b3989",
+    "development_decision.json": "dd4f22873bb2109880d182d3f1b6539a75050850c68c0e76cf59ff5999c28730",
+    "development_fit.json": "ec0a7d518feaf1fdd7c1a799dd2047412500d2d28f64fd5a6febb5ce904953a1",
+    "development_methods.csv": "03ee6db92525d54975bad139834634e81b79c0c1d1d9defd58b6225d04ce68e4",
+    "development_per_image.csv": "5aa1f5a6a6466471df5637f968e033f565c2e83b57a0c56b83785b8e11db5bdd",
+    "development_per_scene.csv": "c4aa6102817c26c65b296c241429118100327aef0e0d182c318b55d15ecd5f95",
+    "development_per_scene_type.csv": "63307563c2e5d8c7bd001c0d2e320b538982327ca930c40df266f5c0c2dcecee",
+    "development_robustness_summary.json": "0327e6b971edb354da873a757c6c412e6b38b5651c8d5e9743dfb3e65b851519",
+    "development_run.log": "9c22a19c35fd4a48c2c251d662e6eccfc11739a37773932a6577370fea6c96a6",
+    "evaluator_efficiency.json": "31276247dec65594ad0804778f289853de286787af4ffce2db950158bfec05d5",
+    "followup_protocol.json": "d43c268e4aaad6d36ba8e024ff832db699deb542427d33b8f48fd95d62b34931",
+    "test_methods.csv": "a93eb6be40212fe07849d21dfd608c2e898d99638321fd8152d8c273edabc79f",
+    "unit_test.log": "3f80970e976a876c1009f5f287d0fe4889029feb396b08497ef787690dbecd28",
+    "verification_run.log": "7b87044fecf8a05a5a10deeac70dfd8537a80b26a5e6c2a40ab15217bdd82e60"
+  }
+}

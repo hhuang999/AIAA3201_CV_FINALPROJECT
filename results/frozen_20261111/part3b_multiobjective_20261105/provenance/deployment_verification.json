@@ -1,0 +1,24 @@
+{
+  "complete": true,
+  "images": 654,
+  "maximum_difference_from_GPU_m": 5.329070518200751e-15,
+  "public_entry_sha256": "40ab17798b46d214436f8ea1687cc877d148b1c2110bf091de55d92bb82aa4b7",
+  "receipt": {
+    "method": "spline_rmse",
+    "kind": "spline",
+    "shape": [
+      654,
+      480,
+      640
+    ],
+    "dtype": "float64",
+    "units": "meters",
+    "input_sha256": "316179138ab7d8432407a34390e220211a958b91df57a7897b7b8b70eadc5113",
+    "output_sha256": "2d63e9a8ebbb44d295230612cf873168f19c9ec7abade26b5c57ede2531d8de6",
+    "frozen_sha256": "5109b8e9f8c61138f76b1682775aa94317250212fd644aa451560df115217f19",
+    "implementation_sha256": "3a49ed0f2a78515439271f00c49e81df840b2e59838c9630b2aa571b559c9b0b",
+    "ground_truth_used": false,
+    "fit_performed": false,
+    "scope": "NYU-calibrated RGB-only UniDepthV2-Small raw predictions; new-domain accuracy not established."
+  }
+}

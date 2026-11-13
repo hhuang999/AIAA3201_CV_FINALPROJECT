@@ -1,0 +1,146 @@
+{
+  "metadata": {
+    "images": 654,
+    "scenes": 215,
+    "methods": [
+      "raw",
+      "median",
+      "spline_rmse",
+      "residual_scale"
+    ],
+    "metrics": [
+      "abs_rel",
+      "rmse",
+      "d1"
+    ],
+    "bootstrap_seed": 20261111,
+    "bootstrap_repeats": 20000,
+    "historical_test_exposure": true,
+    "model_selection": false,
+    "deployment_changed": false,
+    "scope": "Previously saved scores only; no test GT reading, inference or rescoring",
+    "uncertainty": "Fixed-model scene bootstrap, preserving image weighting. Three-metric adjustment is per comparison; five comparisons are descriptive, not a family-wide selection test. Does not include refitting uncertainty."
+  },
+  "comparisons": {
+    "median_vs_raw": {
+      "gain": [
+        0.012501461215759539,
+        0.009577497393325444,
+        0.007230064894976381
+      ],
+      "conditional_scene_95ci": [
+        [
+          0.00915724737195429,
+          0.0009489294321341314,
+          -0.002111368808770211
+        ],
+        [
+          0.01581778668315939,
+          0.018233105641105512,
+          0.01640219377223071
+        ]
+      ],
+      "one_sided_bonferroni_3_metrics_lower": [
+        0.008857858913511762,
+        0.000129453169105514,
+        -0.002929228760635391
+      ]
+    },
+    "spline_rmse_vs_median": {
+      "gain": [
+        0.0012108608587680803,
+        0.0022863718214286787,
+        0.0037999723622058556
+      ],
+      "conditional_scene_95ci": [
+        [
+          0.00040086947334686934,
+          -0.003028039985658032,
+          0.0014922556308017778
+        ],
+        [
+          0.0020313588888970073,
+          0.008267317920366671,
+          0.006245184113421367
+        ]
+      ],
+      "one_sided_bonferroni_3_metrics_lower": [
+        0.0003332359459411113,
+        -0.0034429929006847366,
+        0.0013184362952630383
+      ]
+    },
+    "residual_scale_vs_raw": {
+      "gain": [
+        0.014936746498428867,
+        0.0157423301467382,
+        0.013375628388065403
+      ],
+      "conditional_scene_95ci": [
+        [
+          0.011573872423280968,
+          0.006337174732717267,
+          0.004381299351941261
+        ],
+        [
+          0.01827097717589465,
+          0.025243518482476815,
+          0.02250931350112686
+        ]
+      ],
+      "one_sided_bonferroni_3_metrics_lower": [
+        0.011290143014280092,
+        0.00553565015554788,
+        0.003635696226311622
+      ]
+    },
+    "residual_scale_vs_median": {
+      "gain": [
+        0.0024352852826693442,
+        0.006164832753412739,
+        0.0061455634930890094
+      ],
+      "conditional_scene_95ci": [
+        [
+          0.0017336155320703368,
+          0.0008139821632104293,
+          0.0036372252198326183
+        ],
+        [
+          0.0031291016327695056,
+          0.012121032583254065,
+          0.008794212078040481
+        ]
+      ],
+      "one_sided_bonferroni_3_metrics_lower": [
+        0.0016739128253488041,
+        0.0003666721137657363,
+        0.0034529082331059262
+      ]
+    },
+    "residual_scale_vs_spline_rmse": {
+      "gain": [
+        0.0012244244239012659,
+        0.0038784609319840718,
+        0.002345591130883157
+      ],
+      "conditional_scene_95ci": [
+        [
+          0.000595860499828386,
+          0.0023449697678972876,
+          0.000657925617617155
+        ],
+        [
+          0.001857782908426385,
+          0.00543898170840108,
+          0.004094670636310197
+        ]
+      ],
+      "one_sided_bonferroni_3_metrics_lower": [
+        0.0005420153808324383,
+        0.0021891270625452623,
+        0.0005191389822253303
+      ]
+    }
+  }
+}

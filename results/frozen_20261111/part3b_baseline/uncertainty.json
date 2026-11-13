@@ -1,0 +1,16 @@
+{
+  "mean_absrel_gain": 0.012501461215759528,
+  "fraction_images_improved": 0.6284403669724771,
+  "image_bootstrap_95_ci": [
+    0.010103934578132913,
+    0.014852553871233314
+  ],
+  "scene_cluster_bootstrap_95_ci": [
+    0.009117338004286846,
+    0.01580486754482341
+  ],
+  "images": 654,
+  "scene_groups": 215,
+  "bootstrap_repeats": 5000,
+  "interpretation": "positive gain means calibration reduces AbsRel; uncertainty is conditional on the fixed fitted scale"
+}

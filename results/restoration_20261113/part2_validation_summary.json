@@ -1,0 +1,25 @@
+{
+  "completed_utc": "2026-11-13T02:49:53.508460+00:00",
+  "all_exact": true,
+  "nyu_images": 1449,
+  "video_frames_per_method": 70,
+  "changed_pixels_all_cases": 0,
+  "max_absolute_difference_all_cases": 0.0,
+  "synthetic_tests": "29 passed; actual CLI unspecifiedcuda regression fixed after failurefirsttest",
+  "evidence": {
+    "parity_nyu_train2_comparison.json": {
+      "sha256": "057f66477f7b7c4aefd97090acb26bb2597f9f8b53a105fd7d14398c3838cb48",
+      "all_exact": true
+    },
+    "parity_nyu_all_comparison.json": {
+      "sha256": "cbb0e41f991deeb69758e74aeff6c5e9479105d8e5a79bba3491fa0015116d4d",
+      "all_exact": true
+    },
+    "parity_video70_comparison.json": {
+      "sha256": "37cef04e51603c70a7607cc160f18adc0ffb489deebf04974ccdf3f8d715478f",
+      "all_exact": true
+    }
+  },
+  "scope": "Raw inference parity only; no ground-truth scoring, model selection, video rendering, final media/report writes, commits or pushes",
+  "new_full_nyu_cache": "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_nyu_all"
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "module": "cache_subset",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "calibration",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "calibration_analysis",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "calibration_study",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "diagnose",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "evaluate",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "figures",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "infer_nyu",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "infer_video",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "learning_curve",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "prepare",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "render_video",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "stereo",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "summarize",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "module": "verify",
+    "exit": 0,
+    "stderr": ""
+  }
+]

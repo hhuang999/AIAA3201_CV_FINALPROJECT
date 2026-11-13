@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/usr/local/bin/uv",
+    "pip",
+    "check",
+    "--python",
+    "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "Using Python 3.10.20 environment at: /home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction\nChecked 87 packages in 3ms\nAll installed packages are compatible\n",
+  "note": "This environment is managed by uv and intentionally does not install pip."
+}

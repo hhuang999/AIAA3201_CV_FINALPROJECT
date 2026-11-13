@@ -1,0 +1,12 @@
+{
+  "complete": true,
+  "ast_unchanged_sha256": {
+    "flexible.py:make_torch_map": "c61bbae341c9de590ff38a19788229862d8ff66c83aa3f5dccaf48c9714d9bf7",
+    "flexible.py:apply_calibration": "71fd2fe711e1ba17934882b1b4136433cb39feada54b8f6bc730a6744aed1507",
+    "flexible.py:torch_apply": "94650f506ae6078ab9353b087c154ca9cfce4f8ccaa5d1b709e1f4b87df1b606",
+    "flexible.py:ridge_fit": "517c90cad258169c17c6eac6aee2cf6a62f4e9c14dd73ba09ce6b495479f6d3b",
+    "part3_multiobjective_worker.py:fit_map": "1930c5eb327242adc8a07655a8ffc9f8240e905c403ad40411dc30a7296eb251",
+    "part3_multiobjective_worker.py:loss_components": "365512e3248df1fd30cff1b1320d9b2399f3d8522d6218366241fb0b34c56bd0"
+  },
+  "scope": "Fitting/model transforms unchanged by evaluation precision correction"
+}

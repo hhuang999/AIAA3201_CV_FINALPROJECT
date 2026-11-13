@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-11-11T07:18:22.483749+00:00",
+  "fractions": [
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "seed": 20261111,
+  "scope": "Official training images only; fixed scene-held-out folds",
+  "fitting": "Nested random scene subsets per fold, ceil(fraction * fit_scene_count), all their images. Same4096pixels/image and original RMSE objective/regularization/optimizer; full-data fold fits reused exactly.",
+  "methods": [
+    "median",
+    "spline_rmse"
+  ],
+  "test_read": false,
+  "model_selection": false,
+  "planned_fit_trials": 15,
+  "smoke": false,
+  "prepared_manifest_sha256": "1e63c4ef2d5760c806207442c4134aa703f4b77ec09a14fd08d6a1e10bddc1a5",
+  "source_sha256": {
+    "scripts/part3_learning_curve.py": "847511fd33ebe2a0179749e71051f8fb400c229578d9eaf243d76141fe9544b5",
+    "scripts/part3_multiobjective_worker.py": "5764bed5ba0a669137d760635fa4527dc0c31fdf072d6fb125c61975533434b6",
+    "scripts/part3_residual_study.py": "a5ebf1b244f22e7cb0c6102c3dfc9aefceae1be4f63699123e8e24dbb37bb86e",
+    "src/calibration/flexible.py": "3a49ed0f2a78515439271f00c49e81df840b2e59838c9630b2aa571b559c9b0b"
+  },
+  "resources": {
+    "workers": 4,
+    "torch_threads": 2,
+    "gpu": false
+  }
+}

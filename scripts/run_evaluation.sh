@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# Numerical frozen replay only. Presentation generation is a separate task.
 data=${1:-data}
-sources=${2:-third_party}
-outputs=${3:-outputs}
-results=${4:-results}
+outputs=${2:-outputs/reproduction}
+results=${3:-results/reproduction}
 metric=${METRIC_PYTHON:-python}
-"$metric" -m depthlab.evaluate --data-root "$data" --predictions "$outputs/nyu_rgb" --parameters "$results/calibration_parameters.json" --output "$results"
-"$metric" -m depthlab.infer_nyu --data-root "$data" --source "$sources/UniDepth" --weights "$data/weights/unidepth_v2_vits14" --output "$outputs/nyu_known" --split train --known-intrinsics
-"$metric" -m depthlab.diagnose --data-root "$data" --predictions "$outputs/nyu_rgb" --known-predictions "$outputs/nyu_known" --output "$results"
-"$metric" -m depthlab.figures --data-root "$data" --predictions "$outputs/nyu_rgb" --results "$results"
-"$metric" -m depthlab.render_video --frames "$outputs/frames" --image-predictions "$outputs/video_image" --video-predictions "$outputs/video_temporal" --output "$outputs/delivery" --results "$results/figures/video"
-"$metric" -m depthlab.summarize --outputs "$outputs" --results "$results" --readme README.md
+frozen=results/frozen_20261111/part3b_residual_20261111/final
+"$metric" -m depthlab.evaluate \
+  --data-root "$data" --predictions "$outputs/nyu_rgb" \
+  --parameters "$frozen/frozen_model.json" \
+  --expected-model-sha256 176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5 \
+  --reference "$frozen/test/per_image.csv" --output "$results/frozen_replay"

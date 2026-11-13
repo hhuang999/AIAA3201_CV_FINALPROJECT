@@ -1,0 +1,111 @@
+{
+  "complete": true,
+  "scope": "Read-only comparison of saved evidence; no fitting, inference, GT evaluation or model changes",
+  "tolerance": 1e-12,
+  "values_compared": 36,
+  "maximum_absolute_difference": 0.0,
+  "all_within_tolerance": true,
+  "comparisons": {
+    "raw": {
+      "gain": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 3
+      },
+      "ci95": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 6
+      },
+      "one_sided_bonferroni_3_metrics_lower": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 3
+      }
+    },
+    "median": {
+      "gain": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 3
+      },
+      "ci95": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 6
+      },
+      "one_sided_bonferroni_3_metrics_lower": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 3
+      }
+    },
+    "spline_rmse": {
+      "gain": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 3
+      },
+      "ci95": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 6
+      },
+      "one_sided_bonferroni_3_metrics_lower": {
+        "max_absolute_difference": 0.0,
+        "bitwise_equal": true,
+        "values_checked": 3
+      }
+    }
+  },
+  "old_comparisons": "results/frozen_20261111/part3b_residual_20261111/final/test/comparisons.json",
+  "old_comparisons_sha256": "f028ad01224ce2031951059d515085a72e1f2a8c3e9ffd797823302baf9c34ff",
+  "new_uncertainty": "outputs/restored_20261113/saved_score_analysis/saved_uncertainty.json",
+  "new_uncertainty_sha256": "9d5f33eecb19c8627fb8c664557d377f1deee81d7f9946d28618641c465a8a0c",
+  "import_manifest": "results/frozen_20261111/IMPORT_MANIFEST.json",
+  "imported_files_verified": 164,
+  "legacy_learning_base": "results/frozen_20261111/part3b_multiobjective_20261105",
+  "legacy_base_frozen": "results/frozen_20261111/part3b_multiobjective_20261105/final/frozen_models.json",
+  "legacy_base_frozen_sha256": "5109b8e9f8c61138f76b1682775aa94317250212fd644aa451560df115217f19",
+  "legacy_selection_hash_verified": true,
+  "legacy_training_ids": 795,
+  "legacy_heldout_assignment_ids": 795,
+  "legacy_fold_checks": [
+    {
+      "fold": 0,
+      "fit_images": 641,
+      "validation_images": 154,
+      "models": 21,
+      "all_receipt_hashes_verified": true
+    },
+    {
+      "fold": 1,
+      "fit_images": 629,
+      "validation_images": 166,
+      "models": 21,
+      "all_receipt_hashes_verified": true
+    },
+    {
+      "fold": 2,
+      "fit_images": 632,
+      "validation_images": 163,
+      "models": 21,
+      "all_receipt_hashes_verified": true
+    },
+    {
+      "fold": 3,
+      "fit_images": 638,
+      "validation_images": 157,
+      "models": 21,
+      "all_receipt_hashes_verified": true
+    },
+    {
+      "fold": 4,
+      "fit_images": 640,
+      "validation_images": 155,
+      "models": 21,
+      "all_receipt_hashes_verified": true
+    }
+  ],
+  "binding_note": "Paths and imported artifact hash chain match learning_curve --legacy-base-frozen layout. Actual cache/dataset hash checks were already run by root; this bounded verification does not re-read official arrays."
+}

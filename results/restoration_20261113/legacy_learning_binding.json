@@ -1,0 +1,9 @@
+{
+  "complete": true,
+  "folds": 5,
+  "images": 795,
+  "training_scenes": 249,
+  "base_frozen_sha256": "5109b8e9f8c61138f76b1682775aa94317250212fd644aa451560df115217f19",
+  "train_cache_sha256": "a3c5d961282896b9e150c8b250e11289f26d736f477e000d4028ead04f616c68",
+  "scope": "Validated original fold/selection/provenance chain on regenerated training predictions; no fits run."
+}

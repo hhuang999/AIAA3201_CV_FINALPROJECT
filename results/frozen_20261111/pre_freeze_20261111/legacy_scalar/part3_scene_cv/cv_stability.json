@@ -1,0 +1,90 @@
+{
+  "median_image": {
+    "fold_absrel_gains_vs_median": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "folds_improved_vs_median": 0,
+    "fold_winner_count": 1,
+    "scene_groups_improved_vs_median": 0,
+    "scene_groups_worsened_vs_median": 0,
+    "worst_scene_absrel_gain_vs_median": 0.0,
+    "best_scene_absrel_gain_vs_median": 0.0,
+    "fold_scales": [
+      0.9614351648912765,
+      0.9569474850215818,
+      0.9507574458622088,
+      0.9532296980092725,
+      0.9618147310494618
+    ]
+  },
+  "log_mean": {
+    "fold_absrel_gains_vs_median": [
+      0.0008216596455591085,
+      0.0002516238218155109,
+      4.901011007817091e-05,
+      -0.0002369486019116046,
+      0.00022955887587912394
+    ],
+    "folds_improved_vs_median": 4,
+    "fold_winner_count": 1,
+    "scene_groups_improved_vs_median": 154,
+    "scene_groups_worsened_vs_median": 95,
+    "worst_scene_absrel_gain_vs_median": -0.002890894467298788,
+    "best_scene_absrel_gain_vs_median": 0.004018410116353677,
+    "fold_scales": [
+      0.9588085393150483,
+      0.955288057973357,
+      0.9511753865423351,
+      0.950051786993807,
+      0.9610509672994285
+    ]
+  },
+  "least_squares": {
+    "fold_absrel_gains_vs_median": [
+      0.004694511022507161,
+      0.0014065757673845103,
+      -0.0038669495197582032,
+      -0.0056958037491534885,
+      0.00255113882412121
+    ],
+    "folds_improved_vs_median": 3,
+    "fold_winner_count": 2,
+    "scene_groups_improved_vs_median": 127,
+    "scene_groups_worsened_vs_median": 122,
+    "worst_scene_absrel_gain_vs_median": -0.02682103573922326,
+    "best_scene_absrel_gain_vs_median": 0.035300843186855224,
+    "fold_scales": [
+      0.9413148778054068,
+      0.9371053919165067,
+      0.9312408551652828,
+      0.9246795537334727,
+      0.9520854366195761
+    ]
+  },
+  "image_absrel_unclipped": {
+    "fold_absrel_gains_vs_median": [
+      0.003690832019623641,
+      0.0013108798236253355,
+      -0.0022146274811593453,
+      -0.0020537054187778903,
+      0.003580483962539821
+    ],
+    "folds_improved_vs_median": 3,
+    "fold_winner_count": 1,
+    "scene_groups_improved_vs_median": 133,
+    "scene_groups_worsened_vs_median": 116,
+    "worst_scene_absrel_gain_vs_median": -0.01374277937054158,
+    "best_scene_absrel_gain_vs_median": 0.018848367649491327,
+    "fold_scales": [
+      0.9472524860950919,
+      0.9441136507755861,
+      0.9378768110951322,
+      0.9381915835072233,
+      0.9468248689324864
+    ]
+  }
+}

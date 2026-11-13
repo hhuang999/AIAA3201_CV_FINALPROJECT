@@ -1,0 +1,81 @@
+{
+  "complete": true,
+  "timestamp_utc": "2026-11-05T14:29:11.776383+00:00",
+  "checks": [
+    {
+      "command": [
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "6ed03cc425fda7cdc1c7f7d3abad4a9f74116ad7c74d6736fa067a18e3258bc2"
+    },
+    {
+      "command": [
+        "-B",
+        "/home/ai4s_group/XZG/coursework/CV/Project3-b-multiobjective-20261105/scripts/part3_prepare_multiobjective.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "f51e2758ea5e215b995263e7224ba3f17fff1a3bac1fa8b68f7e80795c239a97"
+    },
+    {
+      "command": [
+        "-B",
+        "/home/ai4s_group/XZG/coursework/CV/Project3-b-multiobjective-20261105/scripts/part3_select_multiobjective.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "a8f5598008b3e21979b5565952507e31d435776be6ba09c0aab788b4da282f30"
+    },
+    {
+      "command": [
+        "-B",
+        "/home/ai4s_group/XZG/coursework/CV/Project3-b-multiobjective-20261105/scripts/part3_audit_multiobjective.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "47a12fb77a570d302b5d4dceecf8af160f723b2919404bf6abd5cead12c40edb"
+    },
+    {
+      "command": [
+        "-B",
+        "scripts/part3_multiobjective_worker.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "6d6c030d92a4918e51adbcd2bf6d46be2026f98f6de630dcec53bd145b83db22"
+    },
+    {
+      "command": [
+        "-B",
+        "scripts/part3_multiobjective_final.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "327c9267ac1326f728b142a165d06ceb7384a3c54518ac087796ba9a519142db"
+    },
+    {
+      "command": [
+        "-B",
+        "scripts/part3_apply_frozen.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "052cb647bf1f01092e16a534b372b5406c4cbc131b59e362804a2a94663c1a44"
+    },
+    {
+      "command": [
+        "-B",
+        "scripts/verify_results.py"
+      ],
+      "exit_code": 0,
+      "captured_output_sha256": "a8e7458a8f4e211ffc4990b1722f2928724801d485453a77173b5ae0544588e9"
+    }
+  ],
+  "unit_tests_passed": 111
+}

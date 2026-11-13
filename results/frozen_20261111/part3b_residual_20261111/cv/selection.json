@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "primary": "residual_median_ratio_l1_a0.5",
+  "adopt_candidate": true,
+  "images": 795,
+  "scenes": 249,
+  "candidates": 14,
+  "folds": 5,
+  "historical_oof_max_difference": 8.881784197001252e-16,
+  "test_read": false,
+  "selection_scope": "Exploratory scene-disjoint training CV after historical test exposure; no independent confirmation claim",
+  "test_permission": "Only an eligible prefrozen candidate may proceed to a separately recorded final test",
+  "protocol_sha256": "faed982e7f8925caa42441a4a7b81f989caaaab32b854c09b1b6a75aab8965c4"
+}

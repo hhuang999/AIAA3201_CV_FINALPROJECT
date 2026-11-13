@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 from .calibration import apply_curve
+from .cache import load_predictions
 from .data import nyu_depth, nyu_image, open_nyu, splits
 from .evaluate import corrected_predictions
 from .metrics import CROP, METRIC_NAMES, valid_depth
@@ -119,7 +120,7 @@ def figures(args):
                           "training_oof_gain": direction * (oof.loc[cv_method, metric] - oof.loc["raw", metric]),
                           "test_gain": direction * (summary.loc[method, metric] - summary.loc["raw", metric])})
     pd.DataFrame(gains).to_csv(args.results / "generalization_gains.csv", index=False)
-    raw = np.load(args.predictions / "depth.npy", mmap_mode="r")
+    raw = load_predictions(args.predictions, required_ids=splits(args.data_root)["test"], expected_known_intrinsics=False, require_complete=True)
     with open_nyu(args.data_root) as handle:
         ids = splits(args.data_root)["test"]
         for i in (0, len(ids) // 2, len(ids) - 1):

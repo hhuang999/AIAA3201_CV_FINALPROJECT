@@ -1,0 +1,20 @@
+{
+  "phase": "train2",
+  "rows": [
+    {
+      "dataset_id": 2,
+      "array_equal": true,
+      "changed_pixels": 0,
+      "max_absolute_difference": 0.0
+    },
+    {
+      "dataset_id": 3,
+      "array_equal": true,
+      "changed_pixels": 0,
+      "max_absolute_difference": 0.0
+    }
+  ],
+  "all_exact": true,
+  "new_manifest_sha256": "6691e671110ed2fe55c6b377532c9c90f440d254032eca14dbd635fbac7c4f65",
+  "old_metadata_sha256": "a504f98b9fdbc8d6e9ff779ab8ed9b025740f02ced1360cfeaa36f8f9449e572"
+}

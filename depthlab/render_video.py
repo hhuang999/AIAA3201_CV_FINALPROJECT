@@ -11,20 +11,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from .infer_video import load_frames, load_video_predictions
+
 FOCUS = 0.55
 BLUR_LEVELS = 6
 MAX_SIGMA = 9.
-PALETTE = "magma"
+PALETTE = "inferno"
 
 
 def normalize_clip(depth):
+    depth = np.asarray(depth)
+    if depth.ndim != 3 or min(depth.shape) <= 0 or not np.isfinite(depth).all():
+        raise ValueError("Depth clip must be nonempty finite [T,H,W]")
     low, high = np.percentile(depth, [2, 98])
-    return np.clip((depth - low) / (high - low), 0, 1), (float(low), float(high))
+    return np.clip((depth - low) / max(float(high - low), 1e-6), 0, 1), (float(low), float(high))
 
 
 def background_blur(rgb, normalized):
     levels = [rgb.astype(np.float32)]
-    levels += [cv2.GaussianBlur(rgb.astype(np.float32), (0, 0), float(sigma))
+    levels += [cv2.GaussianBlur(rgb, (0, 0), float(sigma)).astype(np.float32)
                for sigma in np.linspace(0, MAX_SIGMA, BLUR_LEVELS)[1:]]
     strength = np.clip((FOCUS - normalized) / FOCUS, 0, 1) * (BLUR_LEVELS - 1)
     lower = np.floor(strength).astype(int)
@@ -47,17 +52,21 @@ def labeled_panels(panels, labels, frame, total, fps):
 
 
 def render(args):
-    frames = np.load(args.frames / "frames.npy")
-    info = json.loads((args.frames / "frames.json").read_text())
-    image = np.load(args.image_predictions / "depth.npz")["depth"]
-    video = np.load(args.video_predictions / "depth.npz")["depth"]
+    frames, info = load_frames(args.frames)
+    image, image_manifest = load_video_predictions(args.image_predictions, frames, info, "image")
+    video, video_manifest = load_video_predictions(args.video_predictions, frames, info, "video")
+    if len(frames) < 2:
+        raise ValueError("Rendering comparisons requires at least two frames")
     image_norm, image_bounds = normalize_clip(image)
     video_norm, video_bounds = normalize_clip(video)
     args.output.mkdir(parents=True, exist_ok=True)
     args.results.mkdir(parents=True, exist_ok=True)
     bounds = {"image": image_bounds, "video": video_bounds,
               "percentiles": [2, 98], "frames": len(frames), "fps": info["fps"],
-              "focus": FOCUS, "blur_levels": BLUR_LEVELS, "max_sigma_pixels": MAX_SIGMA}
+              "focus": FOCUS, "blur_levels": BLUR_LEVELS, "max_sigma_pixels": MAX_SIGMA,
+              "decoded_frames_sha256": info["decoded_frames_sha256"],
+              "image_depth_archive_sha256": image_manifest["depth_archive_sha256"],
+              "video_depth_archive_sha256": video_manifest["depth_archive_sha256"]}
     (args.results / "video_display.json").write_text(json.dumps(bounds, indent=2))
     temporal = []
     for name, depth in (("framewise", image_norm), ("video", video_norm)):
@@ -68,11 +77,11 @@ def render(args):
     application_path = args.output / "depth_aware_blur.mp4"
     kwargs = {"fps": info["fps"], "codec": "libx264", "macro_block_size": 1,
               "pixelformat": "yuv420p", "ffmpeg_params": ["-crf", "18"]}
-    cmap = plt.get_cmap(PALETTE)
+    palette = (np.asarray(matplotlib.colormaps[PALETTE].colors) * 255).astype(np.uint8)
     selected = {0, len(frames) // 2, len(frames) - 1}
     with imageio.get_writer(comparison_path, **kwargs) as comparison, imageio.get_writer(application_path, **kwargs) as application:
         for i, rgb in enumerate(frames):
-            colored = [(cmap(norm[i])[..., :3] * 255).astype(np.uint8) for norm in (image_norm, video_norm)]
+            colored = [palette[(norm[i] * 255).astype(np.uint8)] for norm in (image_norm, video_norm)]
             panel = labeled_panels([rgb, *colored], ["RGB", "Framewise relative depth", "Video relative depth"],
                                    i, len(frames), info["fps"])
             comparison.append_data(panel)
@@ -102,7 +111,7 @@ def render(args):
     fig, axes = plt.subplots(3, 3, figsize=(11, 8), layout="constrained")
     middle = len(frames) // 2
     zoom = (slice(70, 250), slice(200, 450))
-    for row, index in enumerate((middle - 1, middle, middle + 1)):
+    for row, index in enumerate((max(middle - 1, 0), middle, min(middle + 1, len(frames) - 1))):
         axes[row, 0].imshow(frames[index][zoom])
         for col, depth in enumerate((image_norm, video_norm), start=1):
             axes[row, col].imshow(depth[index][zoom], cmap=PALETTE, vmin=0, vmax=1)

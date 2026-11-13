@@ -1,0 +1,63 @@
+{
+  "input": "first24 official training predictions, 480x640, float64",
+  "scope": "calibration overhead only; excludes model inference, disk IO and transfers",
+  "cpu": "x86_64",
+  "threads": 2,
+  "methods": {
+    "median": {
+      "cpu_ms_per_image_three_passes": [
+        0.349662887553374,
+        0.3570186284681161,
+        0.3507161357750495
+      ],
+      "cpu_median_ms": 0.3507161357750495,
+      "gpu_mapping_ms_per_image_three_passes": [
+        0.016402142743269604,
+        0.01573228898147742,
+        0.016072920213143032
+      ],
+      "gpu_mapping_median_ms": 0.016072920213143032,
+      "gpu_peak_extra_allocated_mib": 4.6875,
+      "gpu_peak_total_allocated_mib": 60.9375,
+      "gpu_feature_extraction_included": false,
+      "gpu_name": "NVIDIA RTX A6000"
+    },
+    "spline_rmse": {
+      "cpu_ms_per_image_three_passes": [
+        6.349286995828152,
+        6.319222738966346,
+        6.320845413332184
+      ],
+      "cpu_median_ms": 6.320845413332184,
+      "gpu_mapping_ms_per_image_three_passes": [
+        0.23120719318588576,
+        0.22813801964124045,
+        0.22832932882010937
+      ],
+      "gpu_mapping_median_ms": 0.22832932882010937,
+      "gpu_peak_extra_allocated_mib": 16.4072265625,
+      "gpu_peak_total_allocated_mib": 72.6572265625,
+      "gpu_feature_extraction_included": false,
+      "gpu_name": "NVIDIA RTX A6000"
+    },
+    "ridge_10": {
+      "cpu_ms_per_image_three_passes": [
+        4.231179986769955,
+        4.205107456073165,
+        4.187085976203282
+      ],
+      "cpu_median_ms": 4.205107456073165,
+      "gpu_mapping_ms_per_image_three_passes": [
+        0.07426412776112556,
+        0.07067310313383739,
+        0.0705746157715718
+      ],
+      "gpu_mapping_median_ms": 0.07067310313383739,
+      "gpu_peak_extra_allocated_mib": 4.6875,
+      "gpu_peak_total_allocated_mib": 60.9375,
+      "gpu_feature_extraction_included": false,
+      "gpu_name": "NVIDIA RTX A6000"
+    }
+  },
+  "timing_note": "Shared server; timings are descriptive, not an isolated speed benchmark."
+}

@@ -1,0 +1,17 @@
+{
+  "complete": true,
+  "images": 795,
+  "scenes": 249,
+  "fractions": [
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "fit_trials": 15,
+  "historical_full_fit_reused": 5,
+  "historical_oof_max_difference": 8.881784197001252e-16,
+  "test_read": false,
+  "method_selection": false,
+  "interpretation": "Nested scene subsets within each existing training fold; identical held-out scenes. One fixed ordering per fold. Conditional scene intervals do not include refitting uncertainty. Exploratory learning curve, not new independent data."
+}

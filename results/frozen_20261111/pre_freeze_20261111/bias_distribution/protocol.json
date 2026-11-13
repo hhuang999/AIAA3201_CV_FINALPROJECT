@@ -1,0 +1,18 @@
+{
+  "created_utc": "2026-11-11T08:05:03.216196+00:00",
+  "source_sha256": "d5793d5c8f50b7f7936aeba5fc7141c1b7c62ae56d17af959c8951e48f4a61ca",
+  "prepared_manifest_sha256": "1e63c4ef2d5760c806207442c4134aa703f4b77ec09a14fd08d6a1e10bddc1a5",
+  "frozen_scale_sha256": "4099bd610afd59952f538360ddaca789b966fab6205e3df94a580038bc82fba0",
+  "saved_test_scores_sha256": "f1b690b35a19af35b85689cd4605c096a4a60d8c3779094bc7b1d46bd93cf32e",
+  "bins": [
+    0.001,
+    1.0,
+    2.0,
+    4.0,
+    6.0,
+    10.0
+  ],
+  "smoke": false,
+  "model_parameters_changed": false,
+  "scope": "Descriptive training-only signed-bias diagnostics and summaries of existing saved test scores. No selection, model fitting, inference or test-GT evaluation."
+}

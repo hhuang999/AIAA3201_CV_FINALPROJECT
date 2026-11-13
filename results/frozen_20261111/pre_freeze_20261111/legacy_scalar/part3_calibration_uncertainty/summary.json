@@ -1,0 +1,67 @@
+{
+  "scope": "training_only641fit154validation",
+  "repeats": 5000,
+  "official_test_used_for_fit_or_selection": false,
+  "selected_method_changed": false,
+  "all795_train_scale": 0.9562753491527104,
+  "all795_scene_bootstrap_scale": {
+    "mean": 0.9566628214493512,
+    "std": 0.005258251269667787,
+    "percentile95CI": [
+      0.94759120158096,
+      0.9672733096199638
+    ],
+    "min": 0.9401917698086619,
+    "max": 0.9747681988383653
+  },
+  "development_fit_images": 641,
+  "development_validation_images": 154,
+  "development_frozen_scale": 0.9614351648912765,
+  "development_scale_resampling": {
+    "mean": 0.960890663372915,
+    "std": 0.0056587268628757684,
+    "percentile95CI": [
+      0.9504474467915579,
+      0.9716573281132022
+    ],
+    "min": 0.9352209032911653,
+    "max": 0.9798610857334653
+  },
+  "development_raw_absrel": 0.12273925128438153,
+  "development_calibrated_absrel": 0.10391144410146659,
+  "conditional_fixed_scalar_gain": {
+    "mean": 0.018860797321794416,
+    "std": 0.0031864967917156267,
+    "percentile95CI": [
+      0.01242189510988283,
+      0.02486036053713701
+    ],
+    "min": 0.008009564225790966,
+    "max": 0.029757450036455232
+  },
+  "joint_fit_and_validation_scene_gain": {
+    "mean": 0.018896011805601874,
+    "std": 0.0037486950280260743,
+    "percentile95CI": [
+      0.011817290337770068,
+      0.026512258532714196
+    ],
+    "min": 0.008243247101584916,
+    "max": 0.03535078011856678
+  },
+  "vary_fit_scenes_only_gain": {
+    "mean": 0.01885798760838602,
+    "std": 0.001815058515914684,
+    "percentile95CI": [
+      0.015036994272975678,
+      0.021846988365042373
+    ],
+    "min": 0.011327040178463726,
+    "max": 0.02420918865412118
+  },
+  "joint_fraction_nonpositive_gain": 0.0,
+  "curve_max_abs_difference_from_direct": 9.832024083777924e-12,
+  "interpretation": "Positive gain favors calibration. Percentile intervals assume sampled training scenes represent the target population; no guarantee under new datasets or camera domain shift. These are development intervals, not new654test intervals.",
+  "seconds": 158.77554430440068,
+  "protocol_sha256": "15a5a726396454f600926b6b88357337e681970f1eee45ab43c422d07650cb28"
+}

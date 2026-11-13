@@ -1,0 +1,137 @@
+{
+  "created_utc": "2026-11-11T07:15:01.293318+00:00",
+  "scope": "official795_training_only",
+  "source_sha256": {
+    "scripts/part3_residual_study.py": "a5ebf1b244f22e7cb0c6102c3dfc9aefceae1be4f63699123e8e24dbb37bb86e",
+    "src/calibration/residual_scale.py": "909f01c84644db8ad8285d92ee178566052f83c64fc473e843444fd95ca9c14f",
+    "src/calibration/flexible.py": "3a49ed0f2a78515439271f00c49e81df840b2e59838c9630b2aa571b559c9b0b"
+  },
+  "prepared_manifest_sha256": "1e63c4ef2d5760c806207442c4134aa703f4b77ec09a14fd08d6a1e10bddc1a5",
+  "candidates": [
+    {
+      "name": "constant_median_ratio",
+      "kind": "constant",
+      "target": "median_ratio",
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_median_ratio_l0.1_a0.5",
+      "kind": "ridge",
+      "target": "median_ratio",
+      "lam": 0.1,
+      "shrinkage": 0.5,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_median_ratio_l0.1_a1",
+      "kind": "ridge",
+      "target": "median_ratio",
+      "lam": 0.1,
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_median_ratio_l1_a0.5",
+      "kind": "ridge",
+      "target": "median_ratio",
+      "lam": 1.0,
+      "shrinkage": 0.5,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_median_ratio_l1_a1",
+      "kind": "ridge",
+      "target": "median_ratio",
+      "lam": 1.0,
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_median_ratio_l10_a0.5",
+      "kind": "ridge",
+      "target": "median_ratio",
+      "lam": 10.0,
+      "shrinkage": 0.5,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_median_ratio_l10_a1",
+      "kind": "ridge",
+      "target": "median_ratio",
+      "lam": 10.0,
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "constant_rmse_ratio",
+      "kind": "constant",
+      "target": "rmse_ratio",
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_rmse_ratio_l0.1_a0.5",
+      "kind": "ridge",
+      "target": "rmse_ratio",
+      "lam": 0.1,
+      "shrinkage": 0.5,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_rmse_ratio_l0.1_a1",
+      "kind": "ridge",
+      "target": "rmse_ratio",
+      "lam": 0.1,
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_rmse_ratio_l1_a0.5",
+      "kind": "ridge",
+      "target": "rmse_ratio",
+      "lam": 1.0,
+      "shrinkage": 0.5,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_rmse_ratio_l1_a1",
+      "kind": "ridge",
+      "target": "rmse_ratio",
+      "lam": 1.0,
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_rmse_ratio_l10_a0.5",
+      "kind": "ridge",
+      "target": "rmse_ratio",
+      "lam": 10.0,
+      "shrinkage": 0.5,
+      "max_log_scale": 0.15
+    },
+    {
+      "name": "residual_rmse_ratio_l10_a1",
+      "kind": "ridge",
+      "target": "rmse_ratio",
+      "lam": 10.0,
+      "shrinkage": 1.0,
+      "max_log_scale": 0.15
+    }
+  ],
+  "smoke": false,
+  "target_definition": {
+    "median_ratio": "log median(GT / fold-specific B), per fit image",
+    "rmse_ratio": "log sum(B*GT)/sum(B^2), un-clipped squared-error target only"
+  },
+  "protocol": "Each outer fold uses its existing B trained on the other four folds. Residual targets, feature standardization and ridge coefficients use only fitting images. Validation uses full-resolution course masks.",
+  "adoption": "All three OOF means improve >1e-6 over current spline_rmse and all three means improve in every fold. Eligible candidate with lowest AbsRel is proposed. No candidate passing means retain original B and do not read test.",
+  "confidence": "10000 fixed-model scene bootstrap; ordinary95 intervals and one-sided .05/(14*3) lower bounds. Mean gate and simultaneous evidence are reported separately.",
+  "historical_test_exposure": true,
+  "test_predictions_or_labels_read": false,
+  "resources": {
+    "workers": 4,
+    "gpu": false,
+    "blas_threads": "1"
+  }
+}

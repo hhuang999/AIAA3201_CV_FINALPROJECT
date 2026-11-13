@@ -1,0 +1,29 @@
+{
+  "complete": true,
+  "smoke": false,
+  "protocol_sha256": "1efaad0f8a63953a8589d80659ad8a1c6fcddc15cf299d2d1a0f2c369de6c97d",
+  "historical_test_exposure": true,
+  "model_parameters_changed": false,
+  "saved_distributions": {
+    "images": 654,
+    "scenes": 215,
+    "methods": [
+      "raw",
+      "median",
+      "spline_rmse",
+      "residual_scale"
+    ],
+    "metrics": [
+      "abs_rel",
+      "rmse",
+      "d1"
+    ],
+    "bootstrap_seed": 20261111,
+    "bootstrap_repeats": 20000,
+    "historical_test_exposure": true,
+    "model_selection": false,
+    "deployment_changed": false,
+    "scope": "Previously saved scores only; no test GT reading, inference or rescoring",
+    "uncertainty": "Fixed-model scene bootstrap, preserving image weighting. Three-metric adjustment is per comparison; five comparisons are descriptive, not a family-wide selection test. Does not include refitting uncertainty."
+  }
+}

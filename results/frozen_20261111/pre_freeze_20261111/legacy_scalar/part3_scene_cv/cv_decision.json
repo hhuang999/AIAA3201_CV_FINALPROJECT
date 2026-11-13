@@ -1,0 +1,70 @@
+{
+  "timestamp_utc": "2026-10-31T14:37:55.009872+00:00",
+  "scope": "official795_train_fivefold_scene_disjoint",
+  "disclosure": "Exploratory continuation after original654test results were already known. Five-fold selection uses only official795training images and scene IDs; no official test metric is consulted by the CV phase.",
+  "rule": {
+    "primary": "minimum equal-image mean out-of-fold AbsRel across all795trainimages",
+    "ties": "within1e-12 AbsRel, lower RMSE then higher delta1 then method name",
+    "promotion": "winner must be median, or its scene-bootstrap gain over median has positive98.333333%CI lower bound (Bonferroni across3nonmedian alternatives)",
+    "secondary": "RMSE,delta1,fold winners,per-scene variation,tail error reported; not used to override primary except exact ties",
+    "reference": "original frozen median remains available; a selected follow-up artifact is separate",
+    "uncertainty": "conditional on frozen out-of-fold predictions; bootstrap does not refit fold scalars"
+  },
+  "best_mean_candidate": "image_absrel_unclipped",
+  "recommended_estimator": "median_image",
+  "clear_improvement_over_median_after_three_comparison_adjustment": false,
+  "winner_comparison_vs_median": {
+    "mean_absrel_gain": 0.0008271109003275705,
+    "fraction_images_improved": 0.49559748427672956,
+    "scene_bootstrap95CI": [
+      -0.00027293512318383247,
+      0.001916865196471101
+    ],
+    "bonferroni_three_comparisons98_333CI": [
+      -0.0005234408828634709,
+      0.002171429792683162
+    ],
+    "images": 795,
+    "scene_groups": 249,
+    "bootstrap_repeats": 10000,
+    "interpretation": "positive gain favors candidate; intervals condition on the fixed out-of-fold predictions and do not refit calibration"
+  },
+  "winner_metrics": {
+    "method": "image_absrel_unclipped",
+    "images": 795,
+    "abs_rel": 0.10475533570726847,
+    "rmse": 0.41971093252957975,
+    "d1": 0.8972101740421566,
+    "sq_rel": 0.07949279974761495,
+    "rmse_log": 0.1356426619334639,
+    "d2": 0.9797227178585137,
+    "d3": 0.9929199884843654,
+    "median_image_absrel": 0.08582094088006308,
+    "p90_image_absrel": 0.18806413508962608,
+    "worst_decile_image_absrel": 0.2651118252143786
+  },
+  "median_metrics": {
+    "method": "median_image",
+    "images": 795,
+    "abs_rel": 0.10558244660759604,
+    "rmse": 0.416424973081104,
+    "d1": 0.8974297092829513,
+    "sq_rel": 0.08030247339555167,
+    "rmse_log": 0.13512900509760062,
+    "d2": 0.979996340727805,
+    "d3": 0.9929926150192561,
+    "median_image_absrel": 0.08750530367444466,
+    "p90_image_absrel": 0.18915792164774672,
+    "worst_decile_image_absrel": 0.26861911576512865
+  },
+  "official_test_read_during_selection": false,
+  "protocol_sha256": "ae8711aa07dd9d4f5c88d7dc9cbc2902ff83b78dcacd0cb467f90fa0da598ec3",
+  "cv_table_sha256": "98f111ff6cc551aa4b17f6ed05f5edcb5de9094be2a8986a68794b565970a9f7",
+  "comparisons_sha256": "ab7109f10bb9f31b380ebbf4a6e6b57f4b497f1ba492b9b45250419f49ccb2de",
+  "source_sha256": {
+    "src/calibration/global_scale.py": "326cfa777a0c8e1993b9c7dac8c9e7cd6d70ffb8c1e8c07f06a3bb8ed0d116e3",
+    "src/eval/nyu.py": "07c920bd8a6b131bd11a69a47204b34ff234b94a7ca7654ca0f925a1883a1c60",
+    "scripts/eval_nyu_global_scale.py": "deba4dd8bc2c9df40c835a5d527947387132133d08ca62d1699655fb27062567",
+    "scripts/part3_scene_crossvalidation.py": "e8f9a47a0074c66cd4455c67ca746edb323acbe3799c0fcfcdec4f7ead4db6af"
+  }
+}

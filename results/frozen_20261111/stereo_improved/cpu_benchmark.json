@@ -1,0 +1,862 @@
+{
+  "complete": true,
+  "scene_count": 15,
+  "timed_passes_per_method": 3,
+  "measurements_per_method": 45,
+  "cpu_model": "AMD EPYC 7543 32-Core Processor",
+  "logical_cpu_count": 128,
+  "affinity_cpu_count": 128,
+  "opencv": "5.0.0",
+  "numpy": "2.2.6",
+  "opencv_threads_per_worker": 4,
+  "python": "3.10.20",
+  "linux": "5.15.0-91-generic",
+  "timing_scope": "Forward SGBM + reverse SGBM + explicit LR residual/mask; includes algorithm grayscale conversion, optional padding/cropping and original-bound rejection. Excludes RGB image decoding, calibration IO, metric GT evaluation, metric depth conversion, counting mask pixels, saving, process startup and full15-pair warmup.",
+  "memory_scope": "Linux ru_maxrss whole-worker high-water RSS; includes Python/OpenCV,15 cached RGB pairs and native SGBM workspaces. Reported increment is peak after operations minus high-water after loading inputs, not isolated exact allocator memory. Two worker processes exist; only one computes at a time.",
+  "schedule": "Each method warms all15 scenes once. Three identical seeded scene permutations; method execution order alternates baseline/padding, padding/baseline, baseline/padding. CPU workers run serially.",
+  "seed": 20261031,
+  "system_load_before": [
+    22.6591796875,
+    18.59765625,
+    15.712890625
+  ],
+  "system_load_after": [
+    20.72509765625,
+    18.314453125,
+    15.6513671875
+  ],
+  "methods": {
+    "baseline": {
+      "mean_ms_per_pair": 32.84077097777777,
+      "median_ms_per_pair": 34.310441,
+      "p95_ms_per_pair": 46.172120799999995,
+      "per_pass_mean_ms": [
+        32.01941853333334,
+        32.661147066666665,
+        33.84174733333334
+      ],
+      "peak_process_rss_mib": 97.8125,
+      "peak_rss_increment_over_input_load_mib": 19.15625,
+      "worker": {
+        "ready": true,
+        "padding": "none",
+        "input_image_bytes": 28482810,
+        "after_input_load_peak_rss_bytes": 82477056,
+        "after_warmup_peak_rss_bytes": 100573184,
+        "opencv_threads": 4,
+        "configuration": {
+          "block_size": 5,
+          "uniqueness_ratio": 10,
+          "speckle_window_size": 100,
+          "speckle_range": 2,
+          "disp12_max_diff": 1,
+          "padding_mode": "none",
+          "P1": 200,
+          "P2": 800,
+          "mode": "SGBM_3WAY",
+          "input": "grayscale",
+          "min_disparity": 0
+        },
+        "scenes": [
+          "Adirondack",
+          "ArtL",
+          "Jadeplant",
+          "Motorcycle",
+          "MotorcycleE",
+          "Piano",
+          "PianoL",
+          "Pipes",
+          "Playroom",
+          "Playtable",
+          "PlaytableP",
+          "Recycle",
+          "Shelves",
+          "Teddy",
+          "Vintage"
+        ]
+      }
+    },
+    "coverage_recovery": {
+      "mean_ms_per_pair": 37.10158615555556,
+      "median_ms_per_pair": 37.584092,
+      "p95_ms_per_pair": 57.84961979999998,
+      "per_pass_mean_ms": [
+        36.688619,
+        36.58588533333333,
+        38.03025413333334
+      ],
+      "peak_process_rss_mib": 99.40625,
+      "peak_rss_increment_over_input_load_mib": 21.20703125,
+      "worker": {
+        "ready": true,
+        "padding": "reflect101",
+        "input_image_bytes": 28482810,
+        "after_input_load_peak_rss_bytes": 81997824,
+        "after_warmup_peak_rss_bytes": 103231488,
+        "opencv_threads": 4,
+        "configuration": {
+          "block_size": 5,
+          "uniqueness_ratio": 10,
+          "speckle_window_size": 100,
+          "speckle_range": 2,
+          "disp12_max_diff": 1,
+          "padding_mode": "reflect101",
+          "P1": 200,
+          "P2": 800,
+          "mode": "SGBM_3WAY",
+          "input": "grayscale",
+          "min_disparity": 0
+        },
+        "scenes": [
+          "Adirondack",
+          "ArtL",
+          "Jadeplant",
+          "Motorcycle",
+          "MotorcycleE",
+          "Piano",
+          "PianoL",
+          "Pipes",
+          "Playroom",
+          "Playtable",
+          "PlaytableP",
+          "Recycle",
+          "Shelves",
+          "Teddy",
+          "Vintage"
+        ]
+      }
+    }
+  },
+  "padding_to_baseline_mean_time_ratio": 1.129741630629224,
+  "per_scene": [
+    {
+      "scene": "Adirondack",
+      "baseline_mean_ms": 33.955523666666664,
+      "padding_mean_ms": 38.372009999999996,
+      "ratio": 1.1300668008153527
+    },
+    {
+      "scene": "ArtL",
+      "baseline_mean_ms": 8.853492333333334,
+      "padding_mean_ms": 10.785013666666666,
+      "ratio": 1.2181649072040384
+    },
+    {
+      "scene": "Jadeplant",
+      "baseline_mean_ms": 41.814255,
+      "padding_mean_ms": 50.79538566666667,
+      "ratio": 1.214786337019915
+    },
+    {
+      "scene": "Motorcycle",
+      "baseline_mean_ms": 35.85573266666667,
+      "padding_mean_ms": 39.645363,
+      "ratio": 1.1056910583466162
+    },
+    {
+      "scene": "MotorcycleE",
+      "baseline_mean_ms": 36.63737233333333,
+      "padding_mean_ms": 41.583029333333336,
+      "ratio": 1.1349894024878078
+    },
+    {
+      "scene": "Piano",
+      "baseline_mean_ms": 33.510162,
+      "padding_mean_ms": 37.182937333333335,
+      "ratio": 1.1096018375958114
+    },
+    {
+      "scene": "PianoL",
+      "baseline_mean_ms": 35.019943000000005,
+      "padding_mean_ms": 37.218408333333336,
+      "ratio": 1.0627775246045754
+    },
+    {
+      "scene": "Pipes",
+      "baseline_mean_ms": 35.979654000000004,
+      "padding_mean_ms": 38.69851966666666,
+      "ratio": 1.0755667541068255
+    },
+    {
+      "scene": "Playroom",
+      "baseline_mean_ms": 34.424433,
+      "padding_mean_ms": 40.70647266666666,
+      "ratio": 1.1824878180758027
+    },
+    {
+      "scene": "Playtable",
+      "baseline_mean_ms": 30.675379333333336,
+      "padding_mean_ms": 33.85797233333333,
+      "ratio": 1.1037507300371552
+    },
+    {
+      "scene": "PlaytableP",
+      "baseline_mean_ms": 31.181337000000003,
+      "padding_mean_ms": 34.43560166666666,
+      "ratio": 1.1043657835026979
+    },
+    {
+      "scene": "Recycle",
+      "baseline_mean_ms": 37.41461066666667,
+      "padding_mean_ms": 37.900496,
+      "ratio": 1.0129865131475553
+    },
+    {
+      "scene": "Shelves",
+      "baseline_mean_ms": 34.00982333333333,
+      "padding_mean_ms": 37.122980000000005,
+      "ratio": 1.0915369843634395
+    },
+    {
+      "scene": "Teddy",
+      "baseline_mean_ms": 15.651296333333335,
+      "padding_mean_ms": 16.581825,
+      "ratio": 1.0594537760226845
+    },
+    {
+      "scene": "Vintage",
+      "baseline_mean_ms": 47.62855,
+      "padding_mean_ms": 61.637777666666665,
+      "ratio": 1.2941350863435201
+    }
+  ],
+  "measurements": [
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "MotorcycleE",
+      "milliseconds": 35.989877,
+      "valid_pixel_count": 173145
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Recycle",
+      "milliseconds": 34.485804,
+      "valid_pixel_count": 254624
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Motorcycle",
+      "milliseconds": 36.463326,
+      "valid_pixel_count": 278210
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "ArtL",
+      "milliseconds": 8.774389,
+      "valid_pixel_count": 44453
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Vintage",
+      "milliseconds": 49.080395,
+      "valid_pixel_count": 166965
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Playroom",
+      "milliseconds": 33.804571,
+      "valid_pixel_count": 211827
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Teddy",
+      "milliseconds": 14.297979,
+      "valid_pixel_count": 123032
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "PianoL",
+      "milliseconds": 32.016438,
+      "valid_pixel_count": 132954
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Pipes",
+      "milliseconds": 34.310441,
+      "valid_pixel_count": 239460
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Adirondack",
+      "milliseconds": 34.342431,
+      "valid_pixel_count": 258859
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Shelves",
+      "milliseconds": 33.889222,
+      "valid_pixel_count": 263176
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Playtable",
+      "milliseconds": 30.57363,
+      "valid_pixel_count": 220738
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "PlaytableP",
+      "milliseconds": 28.986149,
+      "valid_pixel_count": 225370
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Piano",
+      "milliseconds": 31.868077,
+      "valid_pixel_count": 244372
+    },
+    {
+      "method": "baseline",
+      "pass": 0,
+      "scene": "Jadeplant",
+      "milliseconds": 41.408549,
+      "valid_pixel_count": 123439
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "MotorcycleE",
+      "milliseconds": 43.058359,
+      "valid_pixel_count": 202224
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Recycle",
+      "milliseconds": 36.637997,
+      "valid_pixel_count": 309266
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Motorcycle",
+      "milliseconds": 38.73717,
+      "valid_pixel_count": 324988
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "ArtL",
+      "milliseconds": 10.547604,
+      "valid_pixel_count": 56810
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Vintage",
+      "milliseconds": 61.446889,
+      "valid_pixel_count": 251717
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Playroom",
+      "milliseconds": 40.596337,
+      "valid_pixel_count": 242617
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Teddy",
+      "milliseconds": 16.328261,
+      "valid_pixel_count": 145394
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "PianoL",
+      "milliseconds": 37.01892,
+      "valid_pixel_count": 144972
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Pipes",
+      "milliseconds": 38.755204,
+      "valid_pixel_count": 275702
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Adirondack",
+      "milliseconds": 37.584092,
+      "valid_pixel_count": 301437
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Shelves",
+      "milliseconds": 35.772865,
+      "valid_pixel_count": 288242
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Playtable",
+      "milliseconds": 34.056629,
+      "valid_pixel_count": 252679
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "PlaytableP",
+      "milliseconds": 33.192199,
+      "valid_pixel_count": 258715
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Piano",
+      "milliseconds": 35.955071,
+      "valid_pixel_count": 275386
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 0,
+      "scene": "Jadeplant",
+      "milliseconds": 50.641688,
+      "valid_pixel_count": 203815
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Recycle",
+      "milliseconds": 36.889655,
+      "valid_pixel_count": 309266
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "PianoL",
+      "milliseconds": 37.216164,
+      "valid_pixel_count": 144972
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "ArtL",
+      "milliseconds": 10.812506,
+      "valid_pixel_count": 56810
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "MotorcycleE",
+      "milliseconds": 39.509525,
+      "valid_pixel_count": 202224
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Pipes",
+      "milliseconds": 38.230889,
+      "valid_pixel_count": 275702
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Shelves",
+      "milliseconds": 36.242746,
+      "valid_pixel_count": 288242
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Vintage",
+      "milliseconds": 59.538829,
+      "valid_pixel_count": 251717
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Playroom",
+      "milliseconds": 40.609101,
+      "valid_pixel_count": 242617
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Playtable",
+      "milliseconds": 33.553054,
+      "valid_pixel_count": 252679
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Adirondack",
+      "milliseconds": 36.978894,
+      "valid_pixel_count": 301437
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "PlaytableP",
+      "milliseconds": 33.003261,
+      "valid_pixel_count": 258715
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Motorcycle",
+      "milliseconds": 40.421857,
+      "valid_pixel_count": 324988
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Piano",
+      "milliseconds": 38.318746,
+      "valid_pixel_count": 275386
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Teddy",
+      "milliseconds": 16.37027,
+      "valid_pixel_count": 145394
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 1,
+      "scene": "Jadeplant",
+      "milliseconds": 51.092783,
+      "valid_pixel_count": 203815
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Recycle",
+      "milliseconds": 33.4984,
+      "valid_pixel_count": 254624
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "PianoL",
+      "milliseconds": 38.83746,
+      "valid_pixel_count": 132954
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "ArtL",
+      "milliseconds": 8.490741,
+      "valid_pixel_count": 44453
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "MotorcycleE",
+      "milliseconds": 35.671343,
+      "valid_pixel_count": 173145
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Pipes",
+      "milliseconds": 36.111116,
+      "valid_pixel_count": 239460
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Shelves",
+      "milliseconds": 33.654235,
+      "valid_pixel_count": 263176
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Vintage",
+      "milliseconds": 46.650244,
+      "valid_pixel_count": 166965
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Playroom",
+      "milliseconds": 33.508238,
+      "valid_pixel_count": 211827
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Playtable",
+      "milliseconds": 29.346852,
+      "valid_pixel_count": 220738
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Adirondack",
+      "milliseconds": 32.807429,
+      "valid_pixel_count": 258859
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "PlaytableP",
+      "milliseconds": 31.346928,
+      "valid_pixel_count": 225370
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Motorcycle",
+      "milliseconds": 35.453199,
+      "valid_pixel_count": 278210
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Piano",
+      "milliseconds": 35.603073,
+      "valid_pixel_count": 244372
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Teddy",
+      "milliseconds": 16.854088,
+      "valid_pixel_count": 123032
+    },
+    {
+      "method": "baseline",
+      "pass": 1,
+      "scene": "Jadeplant",
+      "milliseconds": 42.08386,
+      "valid_pixel_count": 123439
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Vintage",
+      "milliseconds": 47.155011,
+      "valid_pixel_count": 166965
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "ArtL",
+      "milliseconds": 9.295347,
+      "valid_pixel_count": 44453
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Shelves",
+      "milliseconds": 34.486013,
+      "valid_pixel_count": 263176
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "PlaytableP",
+      "milliseconds": 33.210934,
+      "valid_pixel_count": 225370
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Playroom",
+      "milliseconds": 35.96049,
+      "valid_pixel_count": 211827
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Recycle",
+      "milliseconds": 44.259628,
+      "valid_pixel_count": 254624
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Pipes",
+      "milliseconds": 37.517405,
+      "valid_pixel_count": 239460
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Playtable",
+      "milliseconds": 32.105656,
+      "valid_pixel_count": 220738
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Piano",
+      "milliseconds": 33.059336,
+      "valid_pixel_count": 244372
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Jadeplant",
+      "milliseconds": 41.950356,
+      "valid_pixel_count": 123439
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "PianoL",
+      "milliseconds": 34.205931,
+      "valid_pixel_count": 132954
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Motorcycle",
+      "milliseconds": 35.650673,
+      "valid_pixel_count": 278210
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "MotorcycleE",
+      "milliseconds": 38.250897,
+      "valid_pixel_count": 173145
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Teddy",
+      "milliseconds": 15.801822,
+      "valid_pixel_count": 123032
+    },
+    {
+      "method": "baseline",
+      "pass": 2,
+      "scene": "Adirondack",
+      "milliseconds": 34.716711,
+      "valid_pixel_count": 258859
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Vintage",
+      "milliseconds": 63.927615,
+      "valid_pixel_count": 251717
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "ArtL",
+      "milliseconds": 10.994931,
+      "valid_pixel_count": 56810
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Shelves",
+      "milliseconds": 39.353329,
+      "valid_pixel_count": 288242
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "PlaytableP",
+      "milliseconds": 37.111345,
+      "valid_pixel_count": 258715
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Playroom",
+      "milliseconds": 40.91398,
+      "valid_pixel_count": 242617
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Recycle",
+      "milliseconds": 40.173836,
+      "valid_pixel_count": 309266
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Pipes",
+      "milliseconds": 39.109466,
+      "valid_pixel_count": 275702
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Playtable",
+      "milliseconds": 33.964234,
+      "valid_pixel_count": 252679
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Piano",
+      "milliseconds": 37.274995,
+      "valid_pixel_count": 275386
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Jadeplant",
+      "milliseconds": 50.651686,
+      "valid_pixel_count": 203815
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "PianoL",
+      "milliseconds": 37.420141,
+      "valid_pixel_count": 144972
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Motorcycle",
+      "milliseconds": 39.777062,
+      "valid_pixel_count": 324988
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "MotorcycleE",
+      "milliseconds": 42.181204,
+      "valid_pixel_count": 202224
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Teddy",
+      "milliseconds": 17.046944,
+      "valid_pixel_count": 145394
+    },
+    {
+      "method": "coverage_recovery",
+      "pass": 2,
+      "scene": "Adirondack",
+      "milliseconds": 40.553044,
+      "valid_pixel_count": 301437
+    }
+  ],
+  "wall_seconds": 6.4131693840026855,
+  "source_sha256": {
+    "scripts/benchmark_stereo_cpu.py": "891289cf18b8ed4b61e6c466e9866721a4b9ce28d356c92d9b7c1ab5db5dad64",
+    "src/stereo/sgbm.py": "b667bb86f4cf2db3f18bd88d57cfa8b5e12cbbbc11998087815687579aac7b8e",
+    "src/stereo/middlebury.py": "5138fce34fffabf59cff17fad06737365aa6e5e819498200ee97ffc9ad446112"
+  },
+  "evaluated_configuration_sha256": "609ed6277db8e93bae2b03a34287321b3fff3e70ca41709f54e86ebfc6996dc6"
+}

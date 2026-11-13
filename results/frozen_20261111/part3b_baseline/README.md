@@ -1,0 +1,1 @@
+These are preserved historical B results, bound to the identical original FP16 predictions. They are not a new model inference run. The new Huber test ablation independently reproduces raw and median metrics on all654test images.

@@ -1,0 +1,54 @@
+{
+  "timestamp_utc": "2026-11-05T14:13:26.739511+00:00",
+  "primary": "spline_rmse",
+  "certainty": "provisional_mean_only",
+  "frozen_ablation_methods": [
+    "spline_absrel",
+    "ridge_10",
+    "spline_rmse"
+  ],
+  "images": 795,
+  "scenes": 249,
+  "folds": 5,
+  "candidates": 18,
+  "bootstrap_repeats": 20000,
+  "simultaneous_interval": "One-sided percentile lower at .05/(18*3); conditional scene cluster bootstrap; no refit inside bootstrap",
+  "tail_percentile": 0.09259259259259259,
+  "history": "Prior test exposure disclosed. All selection calculations here use only official training OOF predictions.",
+  "test_read": false,
+  "part1_part2_changed": false,
+  "fold_evidence": [
+    {
+      "fold": 0,
+      "completion_sha256": "69d313f9c65c7c2ac87aaa923170b0e46050580e0949572c08703119c9086cb9",
+      "metrics_sha256": "851d32a31b45d6fe26cdea57ff511cff7d14f911f0feaa44ce33c7942e65c44d",
+      "models_sha256": "cf80bf498bb93aed5428a0dd90316318b312a80816778027e550d9fcd052cc9c"
+    },
+    {
+      "fold": 1,
+      "completion_sha256": "0b8ac4d82e7e976b5583853b3fbe267ade3b1e63450f2854209b48b5c9176c91",
+      "metrics_sha256": "8ee91e3f4841caade9d2916a1ab4bbde292d4922a744a28edc5fdc5eb3369fda",
+      "models_sha256": "38ae932f9b4dc71185f253391cbe1f356b7f35be6051ac6cbafc13f3e5e2308c"
+    },
+    {
+      "fold": 2,
+      "completion_sha256": "bf87bfdb3bb1e0feec2409b0ed3a975e34eea202fc915289c866aa67b59e957a",
+      "metrics_sha256": "960a907d71e7b5f672ef374aab2b682164fc1115cee1e9b6b69f7e70a789853c",
+      "models_sha256": "d028fe3cd8dd5017b1cbc57f5049e0800c8b3506cb01467a6200d9a8441fdecd"
+    },
+    {
+      "fold": 3,
+      "completion_sha256": "9c4c591c31a82efafb280801d8f0e0c6e6226600ef2a6b9c8e8a5cc8914c4a66",
+      "metrics_sha256": "6972ce4d518278855520007338927052f1e910ea35d2d4f12e54346f7dcd8f05",
+      "models_sha256": "03b108012ffbc9e8ffeed25f2bfe9a9b64091799a2acace29ed1db0ccc77155b"
+    },
+    {
+      "fold": 4,
+      "completion_sha256": "b382cffcbbb37c8a171dfd0a203c5161b37c9365dd04f023ad5e0bb27299d03d",
+      "metrics_sha256": "7341168e4a4416c5a909c9be0f1555990a6e9f747aa28ad55dc174c6c70823c9",
+      "models_sha256": "d673194dc046043e2f753e1e8c67e28b1a699818db738abcc1ce143d35ec8606"
+    }
+  ],
+  "prepared_manifest_sha256": "1e63c4ef2d5760c806207442c4134aa703f4b77ec09a14fd08d6a1e10bddc1a5",
+  "source_sha256": "776ae7bb43621e3d74c94b8b4e9ea10faebcef3e13fa5f7f7f12076ba713c7e2"
+}
