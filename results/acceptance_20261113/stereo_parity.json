@@ -1,0 +1,548 @@
+{
+  "complete": true,
+  "scenes": 15,
+  "configurations": 3,
+  "byte_identical_arrays": 135,
+  "files": [
+    {
+      "path": "arrays/reflect_3way/Adirondack_depth.npy",
+      "sha256": "bb77f58513ef328768698f271885761ef5dbd8b27eb45abc440c94813156f3f6"
+    },
+    {
+      "path": "arrays/reflect_3way/Adirondack_disparity.npy",
+      "sha256": "d1c8cb90faa00319da4a43815a5bc5e10e8c59038eadaa92704d8859dbdc066d"
+    },
+    {
+      "path": "arrays/reflect_3way/Adirondack_valid.npy",
+      "sha256": "34b340ce687069e65fda9924a7fcc55ef11b30ffb1acb962315d5acc15a602eb"
+    },
+    {
+      "path": "arrays/reflect_3way/ArtL_depth.npy",
+      "sha256": "3150cc642eccb782edd9aa3cbd4fa446e8c94a0155b8e8b28056e09ec499fdf8"
+    },
+    {
+      "path": "arrays/reflect_3way/ArtL_disparity.npy",
+      "sha256": "b11d72565740db248460875e8fb74beaf6ad8a28b871c20af91cb1bb83851c24"
+    },
+    {
+      "path": "arrays/reflect_3way/ArtL_valid.npy",
+      "sha256": "371d38fb58fbbcdf0711d7471f3c6190ee1c65bb1fe0c90df533d7701002669b"
+    },
+    {
+      "path": "arrays/reflect_3way/Jadeplant_depth.npy",
+      "sha256": "f39c013dfc416755c4fa015aa92a31cf45d121575a594edaf4cfee6890aa0b76"
+    },
+    {
+      "path": "arrays/reflect_3way/Jadeplant_disparity.npy",
+      "sha256": "c8f543a7966c9e5dec5ae45765169f2dc16b27e4fbef43fa7e0e3e1527239936"
+    },
+    {
+      "path": "arrays/reflect_3way/Jadeplant_valid.npy",
+      "sha256": "ef6dc2c1dc6759d56da5cd1599e334cbb8dd7a7d3938801c84b663e181263a68"
+    },
+    {
+      "path": "arrays/reflect_3way/MotorcycleE_depth.npy",
+      "sha256": "bb565e0799d24e9bb4d9a1a4df731dafae3f3defa82f82fc0581ffbac9ab97f0"
+    },
+    {
+      "path": "arrays/reflect_3way/MotorcycleE_disparity.npy",
+      "sha256": "65d4a5ad3b9159a2c804007954a691f0f553e868048218faecc9e0665dbee5b5"
+    },
+    {
+      "path": "arrays/reflect_3way/MotorcycleE_valid.npy",
+      "sha256": "c1a073bebecee0ebe319bd07afc8f2be5bed4a197d01780be5f039f8c7b97e57"
+    },
+    {
+      "path": "arrays/reflect_3way/Motorcycle_depth.npy",
+      "sha256": "b9cacba352aa5376be03c6abffd111698e1c10f64bbb54bb71b47b3bafd4b72c"
+    },
+    {
+      "path": "arrays/reflect_3way/Motorcycle_disparity.npy",
+      "sha256": "25934d62e8cc3a2e3092211df1a6cd291aea73799e8ac283477fe1301f10a79f"
+    },
+    {
+      "path": "arrays/reflect_3way/Motorcycle_valid.npy",
+      "sha256": "4625430cdf3641d1f76ea12bbcf207b06405505c59152db9c4a89cc7885ecab6"
+    },
+    {
+      "path": "arrays/reflect_3way/PianoL_depth.npy",
+      "sha256": "9201f951898fe1a8f17e78b6faacf50a75dee8a401ba851c957800fcb3c0576b"
+    },
+    {
+      "path": "arrays/reflect_3way/PianoL_disparity.npy",
+      "sha256": "d511db59660ad39f7bc75f3ddf6430c430f4829331c5419173c885d0fa3489b0"
+    },
+    {
+      "path": "arrays/reflect_3way/PianoL_valid.npy",
+      "sha256": "dd14c58c3cb2b345c8ba141a8446aa191a2afdf424b5bcfb075ecd6adaa91787"
+    },
+    {
+      "path": "arrays/reflect_3way/Piano_depth.npy",
+      "sha256": "6a670b06bf711cd5db54d53c027b13f76dc0d0626c0ef89b5389cb2d3f35cf88"
+    },
+    {
+      "path": "arrays/reflect_3way/Piano_disparity.npy",
+      "sha256": "33ea5302a3e6473311a74b57698f7ccc90348ff560a04564d5755b9ec089d276"
+    },
+    {
+      "path": "arrays/reflect_3way/Piano_valid.npy",
+      "sha256": "4e83c538ecfee87196ecf3afc400d5f93e1cd2fff0ffdae76fbcb577daf5b849"
+    },
+    {
+      "path": "arrays/reflect_3way/Pipes_depth.npy",
+      "sha256": "fd714afd3b86e4dc39da360feb6e7e9421a740061f69937f256a1a18078b567d"
+    },
+    {
+      "path": "arrays/reflect_3way/Pipes_disparity.npy",
+      "sha256": "28c5fd748e73e0845f555e74c46b0fedf38d8a17a74a5a9ee6b98fd1e5a1f15d"
+    },
+    {
+      "path": "arrays/reflect_3way/Pipes_valid.npy",
+      "sha256": "2792da98540aeddc88ca1405cf195aa6ff1a10ade1006eef0330caa5c54b9f1b"
+    },
+    {
+      "path": "arrays/reflect_3way/Playroom_depth.npy",
+      "sha256": "293d7e5e8a5b6626f33cfab27e081a101d9af073c9b83431c43af0977c01116d"
+    },
+    {
+      "path": "arrays/reflect_3way/Playroom_disparity.npy",
+      "sha256": "f6788519ccb2dd873fbf4950a0432f715f3ea5ca69f4576faffa54d46dfaef7b"
+    },
+    {
+      "path": "arrays/reflect_3way/Playroom_valid.npy",
+      "sha256": "faa7733d9d45c573789d2d1df604bc7097c2a1f8124f454282459b81f1d24ace"
+    },
+    {
+      "path": "arrays/reflect_3way/PlaytableP_depth.npy",
+      "sha256": "0523140ccee91597504b21e6d2343e0098c2f6dace208c833ad79b852702c9e0"
+    },
+    {
+      "path": "arrays/reflect_3way/PlaytableP_disparity.npy",
+      "sha256": "ee2bf80d899d5293b67eaa07e1c2ac57c2a809bdef6d3bd14af93ae74c7cd16f"
+    },
+    {
+      "path": "arrays/reflect_3way/PlaytableP_valid.npy",
+      "sha256": "1a9a1f36a5447b6027131ae9278bfc589827557229f29f00827cd87a911fab1d"
+    },
+    {
+      "path": "arrays/reflect_3way/Playtable_depth.npy",
+      "sha256": "c2335394ebd507c3703b3ce64a962235b0fa5f78e6e2d8b962e2eba5fd39cd88"
+    },
+    {
+      "path": "arrays/reflect_3way/Playtable_disparity.npy",
+      "sha256": "2189c0fa2195aecf2e6fd9766f07f275d94db7991d1ade3d76ff6f02d930267e"
+    },
+    {
+      "path": "arrays/reflect_3way/Playtable_valid.npy",
+      "sha256": "0253c93379b29fa96b418434e6c36fb4eab004e5261c8bca386736109ef4d61d"
+    },
+    {
+      "path": "arrays/reflect_3way/Recycle_depth.npy",
+      "sha256": "f94b693379e9364e73acd9fdd2e3a5c1ab8d50e9dbfe18e20e89e9040ab16164"
+    },
+    {
+      "path": "arrays/reflect_3way/Recycle_disparity.npy",
+      "sha256": "820742a4478cb28d0d5c573fdb2fd6992f494b2bb6aad1a1db96e24d29376f6c"
+    },
+    {
+      "path": "arrays/reflect_3way/Recycle_valid.npy",
+      "sha256": "269f5f72f77f71556e1c3b96d1e254fb128205eaa2e70853502e6d695c0ab1b0"
+    },
+    {
+      "path": "arrays/reflect_3way/Shelves_depth.npy",
+      "sha256": "a1ccf2d350295ddd22fd764d4962544fae2dceb6254290de1762abd01f59aa66"
+    },
+    {
+      "path": "arrays/reflect_3way/Shelves_disparity.npy",
+      "sha256": "5f23c00f34a88233e28faea07eb8a00c0f641e58237e38c85d720ee9ef6f6480"
+    },
+    {
+      "path": "arrays/reflect_3way/Shelves_valid.npy",
+      "sha256": "da41e7e8952a565eb3030d29243f7975908bebce66d33baa95bb55b8027bc7ba"
+    },
+    {
+      "path": "arrays/reflect_3way/Teddy_depth.npy",
+      "sha256": "c7f1d43be188404eb5760851518c08bb4b647a7960ffcbc34f5a4a3ec02c3399"
+    },
+    {
+      "path": "arrays/reflect_3way/Teddy_disparity.npy",
+      "sha256": "ab11363929d55ceb1d89d7c849e684dddacea5f80ec1e16b2f0ea6463e57c73d"
+    },
+    {
+      "path": "arrays/reflect_3way/Teddy_valid.npy",
+      "sha256": "4cc4c3ecf04669c3ec3f3525fc6938f954b3a9752852e07e2bbb59a42457559d"
+    },
+    {
+      "path": "arrays/reflect_3way/Vintage_depth.npy",
+      "sha256": "02e6afa2c861d96bf8a24a929850316bc532be78609941a5787c8b59351bbd46"
+    },
+    {
+      "path": "arrays/reflect_3way/Vintage_disparity.npy",
+      "sha256": "6690f25d871fe7946bd6e32eb4737c4d5f09b2a0e2727bd3ac285bf2a42e4351"
+    },
+    {
+      "path": "arrays/reflect_3way/Vintage_valid.npy",
+      "sha256": "ba74cae013c23dd263a45e56a266f9fad8baedf3e84f05ea26934b69b0616242"
+    },
+    {
+      "path": "arrays/reflect_hh4/Adirondack_depth.npy",
+      "sha256": "83116accef45313057581191271b2a5c748997ec59dcbcea98dccfdfbf64b632"
+    },
+    {
+      "path": "arrays/reflect_hh4/Adirondack_disparity.npy",
+      "sha256": "834a7ca83b7fe69d897a0a64db6c18a2ab90e6a777ec932ca21374d93416832e"
+    },
+    {
+      "path": "arrays/reflect_hh4/Adirondack_valid.npy",
+      "sha256": "6f5b8a6b04364c3570ad87485df3e9b2c891577fe44d71c4e499ffb89cfb9699"
+    },
+    {
+      "path": "arrays/reflect_hh4/ArtL_depth.npy",
+      "sha256": "1720f5dea45c1373f5f30865c1dd1b84d519e43e319a32bd1da5e5bd43099e85"
+    },
+    {
+      "path": "arrays/reflect_hh4/ArtL_disparity.npy",
+      "sha256": "d35fcd9d500b58b387174945fd28410e43883363123b834e6e222ee936498f18"
+    },
+    {
+      "path": "arrays/reflect_hh4/ArtL_valid.npy",
+      "sha256": "1ea14bcd6849dac7ea75252125761c132a94856d6b9829388a3837c712102139"
+    },
+    {
+      "path": "arrays/reflect_hh4/Jadeplant_depth.npy",
+      "sha256": "ea34a495d40cf4695f0fdf51d7ec91a8912243b3ec9b579a82749b56f06bdff9"
+    },
+    {
+      "path": "arrays/reflect_hh4/Jadeplant_disparity.npy",
+      "sha256": "6ce6cbb781fdd3805957baadf7ba4364871f0fb5a2abdf0bcee7d1b6c30d49e2"
+    },
+    {
+      "path": "arrays/reflect_hh4/Jadeplant_valid.npy",
+      "sha256": "8b5bedac83f8194cc1123d072164ea4d6d4b9ba1bcdaa3c35162c3295ffe129d"
+    },
+    {
+      "path": "arrays/reflect_hh4/MotorcycleE_depth.npy",
+      "sha256": "5c50badc3f423152952e3ed71b6b07ea38e5568f3068447d0afadd95a642e0fe"
+    },
+    {
+      "path": "arrays/reflect_hh4/MotorcycleE_disparity.npy",
+      "sha256": "7debe3256e3e661b822277ca9e6520d528942c121571b742f81b1fc8999d7362"
+    },
+    {
+      "path": "arrays/reflect_hh4/MotorcycleE_valid.npy",
+      "sha256": "1011d76d7bba221c1b1fe2415b04abb9ee939b3939e82b1265daa90735780bb7"
+    },
+    {
+      "path": "arrays/reflect_hh4/Motorcycle_depth.npy",
+      "sha256": "a7a9695ca6066fb4a50f3cdfc50f24909aef140b40b103b0905e5238ff49d940"
+    },
+    {
+      "path": "arrays/reflect_hh4/Motorcycle_disparity.npy",
+      "sha256": "2bf530a46a32450c4e53fd92eddd4defac7faad4f4b91f16e140c32c4be8e9c6"
+    },
+    {
+      "path": "arrays/reflect_hh4/Motorcycle_valid.npy",
+      "sha256": "9fd1a5ace0f9f75d359b0831962f1232ff3e3ffbe914dd0e21d5415436c5abfd"
+    },
+    {
+      "path": "arrays/reflect_hh4/PianoL_depth.npy",
+      "sha256": "45cccb24b774d8437eac2dfa3b9535e36a5a38db4752b2b3aad858337dd65d67"
+    },
+    {
+      "path": "arrays/reflect_hh4/PianoL_disparity.npy",
+      "sha256": "b93df0f4b51dd13c3e0b48b66bef1ce9519fce8a4cb6e6fbca4062b442582329"
+    },
+    {
+      "path": "arrays/reflect_hh4/PianoL_valid.npy",
+      "sha256": "c5ce6576bd5884efb5fc0180ca6c98d502824d964e91af8369e7b5026f156edd"
+    },
+    {
+      "path": "arrays/reflect_hh4/Piano_depth.npy",
+      "sha256": "b42f33747a528ba86f724ea814400e52999cd95d4e31523ffb3035d35f5fdfc2"
+    },
+    {
+      "path": "arrays/reflect_hh4/Piano_disparity.npy",
+      "sha256": "7e208c5490336aec34f5fc53991cfa6508ff089691c84138ca29a2b4adf22a80"
+    },
+    {
+      "path": "arrays/reflect_hh4/Piano_valid.npy",
+      "sha256": "3b80172f34febc95a6cd56687f75b77660fb4ebb29fd95d7cfca4a269472d7bc"
+    },
+    {
+      "path": "arrays/reflect_hh4/Pipes_depth.npy",
+      "sha256": "296b35b041a8815d079bb724e5ca73dafaef13af183db2bbcf04b04fccc6d44a"
+    },
+    {
+      "path": "arrays/reflect_hh4/Pipes_disparity.npy",
+      "sha256": "4f89239eeb894e1387fd3f0eedeb4e04ae99c5d2bdf6f4c3e076d5d7f598038f"
+    },
+    {
+      "path": "arrays/reflect_hh4/Pipes_valid.npy",
+      "sha256": "50ffca76c668d020db9dbe748bfbb096f8552b43b00aac652134ca72f4424e96"
+    },
+    {
+      "path": "arrays/reflect_hh4/Playroom_depth.npy",
+      "sha256": "60d588214abc1b3ddbfe8cab612939a01acb50f137b57db3df8097162ca72bae"
+    },
+    {
+      "path": "arrays/reflect_hh4/Playroom_disparity.npy",
+      "sha256": "1ba97916224852e9d9e22c1e446cbd229bd576b8a3278093855506e9a64a61ba"
+    },
+    {
+      "path": "arrays/reflect_hh4/Playroom_valid.npy",
+      "sha256": "a037a9cda37acf7119c854aa80ec4b2ee0a42f52052a46e52b1f57dd29aa4345"
+    },
+    {
+      "path": "arrays/reflect_hh4/PlaytableP_depth.npy",
+      "sha256": "37fe1c8bd1049388902e125849df9b552e2b8ee749adb6271ad5ec9af676a470"
+    },
+    {
+      "path": "arrays/reflect_hh4/PlaytableP_disparity.npy",
+      "sha256": "2ba55cddd2895973b9fae91478f3626f20b1ff02d83ea01aee8097adb0f4e614"
+    },
+    {
+      "path": "arrays/reflect_hh4/PlaytableP_valid.npy",
+      "sha256": "eb56c3fb50659f4efe25669647c09c8105b9ef91808d6b508916afbbb9182fa6"
+    },
+    {
+      "path": "arrays/reflect_hh4/Playtable_depth.npy",
+      "sha256": "77067926976c8d3ca15f4eb6377a28448dbf35b00ef1774ff00aef229562fa9f"
+    },
+    {
+      "path": "arrays/reflect_hh4/Playtable_disparity.npy",
+      "sha256": "5bd808a7a943f577459e963b57933d5b7ee2286d944d9f246191aece1706edcd"
+    },
+    {
+      "path": "arrays/reflect_hh4/Playtable_valid.npy",
+      "sha256": "f17b184b7bd26f2a956a86ad772030569cbf0a55df9961ba77c9b2df5b554c05"
+    },
+    {
+      "path": "arrays/reflect_hh4/Recycle_depth.npy",
+      "sha256": "16c73d0595202bdd68912c48c884d4a6145b1a57961b2c43804406934634ee09"
+    },
+    {
+      "path": "arrays/reflect_hh4/Recycle_disparity.npy",
+      "sha256": "79afcf8a7400442e773725dda5999a2f6a4292f8906a6b1752d8c5cc03ed0114"
+    },
+    {
+      "path": "arrays/reflect_hh4/Recycle_valid.npy",
+      "sha256": "8009cd76a2633f5bbdbcab28d74eff9dc4d535c432d292722db6d57d62c59617"
+    },
+    {
+      "path": "arrays/reflect_hh4/Shelves_depth.npy",
+      "sha256": "7192e9d1b74391f8d58bf738e7b3612156931d9dd45d064e9b4d4220a1a70b63"
+    },
+    {
+      "path": "arrays/reflect_hh4/Shelves_disparity.npy",
+      "sha256": "6d850789d1a55ba29883815a06e57c893b1819831828a6ea7e403c429a3c27ca"
+    },
+    {
+      "path": "arrays/reflect_hh4/Shelves_valid.npy",
+      "sha256": "e26aa71f36aa79ce653861e8172a07ab94069a9037887db1ff13fb9eba3879e0"
+    },
+    {
+      "path": "arrays/reflect_hh4/Teddy_depth.npy",
+      "sha256": "1e18268f4af35d2697d0f31a91af90b05bcf73f1a10a457228e20ceb83e9e9ea"
+    },
+    {
+      "path": "arrays/reflect_hh4/Teddy_disparity.npy",
+      "sha256": "c4617f13cf62c865b9b9d6ec9ad7b9c7d8073195eaf7026208e627f5079d184e"
+    },
+    {
+      "path": "arrays/reflect_hh4/Teddy_valid.npy",
+      "sha256": "a2d57a41ff1ce63097ebb29add1dbaec16c2a6361354da407999cea2590e8e1f"
+    },
+    {
+      "path": "arrays/reflect_hh4/Vintage_depth.npy",
+      "sha256": "3a72009b753f38024b63aec11e70a867f4d6ea5af8f786472ad78a7c958d4510"
+    },
+    {
+      "path": "arrays/reflect_hh4/Vintage_disparity.npy",
+      "sha256": "90e8868571df7409d95fd9ec2339663f99ddb135e7f68e7b2ce4251c464aba09"
+    },
+    {
+      "path": "arrays/reflect_hh4/Vintage_valid.npy",
+      "sha256": "a55e9cb04cc70b2b025324918cf1e89d7aa70811bc498f4c0143356cff8a5c9a"
+    },
+    {
+      "path": "arrays/unpad_3way/Adirondack_depth.npy",
+      "sha256": "09e532ccca32b8f06db9a68fc2817be26878ccc89b05f93ac1176ed2eaec6cd7"
+    },
+    {
+      "path": "arrays/unpad_3way/Adirondack_disparity.npy",
+      "sha256": "d41fb213210bda890d145abb610363474dad0cc0ceeb23b71b2e662ec6d4bdb3"
+    },
+    {
+      "path": "arrays/unpad_3way/Adirondack_valid.npy",
+      "sha256": "9164e977aa670b996615419b063ba598ec1af8d6e4211bfb59247bc8addbbe05"
+    },
+    {
+      "path": "arrays/unpad_3way/ArtL_depth.npy",
+      "sha256": "e703cbe0a3c5375b33f104df70814d47c3d04621ec23cc02974f559a9e2214a8"
+    },
+    {
+      "path": "arrays/unpad_3way/ArtL_disparity.npy",
+      "sha256": "c091655cfa7be79cade3d4d0425b59e52b7fc8b14c05edbafaacfca3c5e144f6"
+    },
+    {
+      "path": "arrays/unpad_3way/ArtL_valid.npy",
+      "sha256": "42e26b24a7f38d0469809ee1a74312796534ac37f647be2aed617135e1b79ce0"
+    },
+    {
+      "path": "arrays/unpad_3way/Jadeplant_depth.npy",
+      "sha256": "3ae1a4669dbaba271ea469ea74f9dbf98451a868fdd4792bd3244840ee16954f"
+    },
+    {
+      "path": "arrays/unpad_3way/Jadeplant_disparity.npy",
+      "sha256": "747ac5c165b97e6a881d102db4828747c42848008a5b2f99064ed65592a5cb47"
+    },
+    {
+      "path": "arrays/unpad_3way/Jadeplant_valid.npy",
+      "sha256": "2f5478c673b6bf7dbcf0bce37b339a28a1766255b09cdc8026e5aa3ac95c0fe1"
+    },
+    {
+      "path": "arrays/unpad_3way/MotorcycleE_depth.npy",
+      "sha256": "f9f9eaa3a8de9518e047a55a4127acad6206d0b7311bce3958d7522db4b41d78"
+    },
+    {
+      "path": "arrays/unpad_3way/MotorcycleE_disparity.npy",
+      "sha256": "9c33a6c4c3e857cb0ff0498ce9828209e7846a85924fe8fb140eee7348433cf2"
+    },
+    {
+      "path": "arrays/unpad_3way/MotorcycleE_valid.npy",
+      "sha256": "e90f95b732584eca5ba93eeaed906b4dd4563ea0cf5065c5946e8fff43093bdf"
+    },
+    {
+      "path": "arrays/unpad_3way/Motorcycle_depth.npy",
+      "sha256": "220cfd02d391f48b7449d9f52f614ea5cc2b080820a37c83563b551cec34dade"
+    },
+    {
+      "path": "arrays/unpad_3way/Motorcycle_disparity.npy",
+      "sha256": "55b98addba64184def5042e1018500d80c2a1c27629ba193e7138c860dc36d33"
+    },
+    {
+      "path": "arrays/unpad_3way/Motorcycle_valid.npy",
+      "sha256": "221d4cc0fec867e1bbda0902acf1b2ee853ad0297b11c0f2d1d58065e0451820"
+    },
+    {
+      "path": "arrays/unpad_3way/PianoL_depth.npy",
+      "sha256": "76b142e74fc163f4c82de48b3e730beafd3276dfb57dfd7af712722749f20574"
+    },
+    {
+      "path": "arrays/unpad_3way/PianoL_disparity.npy",
+      "sha256": "2a85bf8495fb9250cd6a17f8c72fac6fff25cfa2d23b41becf11f4c09d420f17"
+    },
+    {
+      "path": "arrays/unpad_3way/PianoL_valid.npy",
+      "sha256": "50f30d385213ebdecdeab738bb219ac68a2db0ab6ad3b98cfc44412232c3e18a"
+    },
+    {
+      "path": "arrays/unpad_3way/Piano_depth.npy",
+      "sha256": "a93618cdf5ea9069b87d7f598803b20c25b2a9ef2b4addae6d08a015a207373c"
+    },
+    {
+      "path": "arrays/unpad_3way/Piano_disparity.npy",
+      "sha256": "9209b12015f30c5e7164b6248cbd4dc1a87a001adf998da74dbee5acbd4fade3"
+    },
+    {
+      "path": "arrays/unpad_3way/Piano_valid.npy",
+      "sha256": "f46b17b0e0ac4a8288e9cc7251e5c2c58b6de88b1b56b18c9db3f850db4681f9"
+    },
+    {
+      "path": "arrays/unpad_3way/Pipes_depth.npy",
+      "sha256": "95b68e6825f21df0d3da1e2bbf8e611d4ec904195d7509f749dc0b90c114aed4"
+    },
+    {
+      "path": "arrays/unpad_3way/Pipes_disparity.npy",
+      "sha256": "bf3a73a979c95f873cbe584eb1d510d4a2c56fc067173106a3289593c2f2824a"
+    },
+    {
+      "path": "arrays/unpad_3way/Pipes_valid.npy",
+      "sha256": "93cc1d527e78bba8ddf48ea7fcbd9470eb9149dbc9ec64ead7e8f5e8b109445f"
+    },
+    {
+      "path": "arrays/unpad_3way/Playroom_depth.npy",
+      "sha256": "e29b1d743d5f9e61193847866e56e12aa9ef0e4780c98bef9ca5c88cfc95ff26"
+    },
+    {
+      "path": "arrays/unpad_3way/Playroom_disparity.npy",
+      "sha256": "5f10dd0c7899c89bf395227aadb7e1379970bf4708db11a3d5d164b477b3f271"
+    },
+    {
+      "path": "arrays/unpad_3way/Playroom_valid.npy",
+      "sha256": "ef78ddd2919b99e41959d7d7ec810c702a8516580545194ed252ed8126837715"
+    },
+    {
+      "path": "arrays/unpad_3way/PlaytableP_depth.npy",
+      "sha256": "2356eeb8ec384936d5f5e702e5142272ffa37b755e9bc0937663d92e0bfc8763"
+    },
+    {
+      "path": "arrays/unpad_3way/PlaytableP_disparity.npy",
+      "sha256": "dc96083ae7c2e18227e747cda59e4588789a31fbd4676b1c57ace554840d8c07"
+    },
+    {
+      "path": "arrays/unpad_3way/PlaytableP_valid.npy",
+      "sha256": "70d5401947a6cba773dbdcca75e0d4734cdcb0a216e93d75fba55e5f3df55c41"
+    },
+    {
+      "path": "arrays/unpad_3way/Playtable_depth.npy",
+      "sha256": "9da023f20e2109b5d421b329a60dfcfc01f29820414c08c6f403f38a21fd32f1"
+    },
+    {
+      "path": "arrays/unpad_3way/Playtable_disparity.npy",
+      "sha256": "7947345f39527dbbeea96c3cc6268cd1be916e6312f856175af68ec827088733"
+    },
+    {
+      "path": "arrays/unpad_3way/Playtable_valid.npy",
+      "sha256": "a4dda243c371f1adc78806e6f041d8fd4c5e62e3f74c6ed3105164130f6e2c23"
+    },
+    {
+      "path": "arrays/unpad_3way/Recycle_depth.npy",
+      "sha256": "87bcb91b8fe58ad23fd6c63af63ef10ddccff9081d83ba6b922432b3b62784ca"
+    },
+    {
+      "path": "arrays/unpad_3way/Recycle_disparity.npy",
+      "sha256": "7ce6cf9278848ee023a051865729334c8ce00f809f268cfdab4fe86dd510ebca"
+    },
+    {
+      "path": "arrays/unpad_3way/Recycle_valid.npy",
+      "sha256": "cac8d0b69d80891d6d61a2710a1e5176978919cb9bc3c697905bb21404e25ddc"
+    },
+    {
+      "path": "arrays/unpad_3way/Shelves_depth.npy",
+      "sha256": "eec8fccf578eed0ee75dc2735e0a59885621f3c472867d211e0ecf3b258b6e72"
+    },
+    {
+      "path": "arrays/unpad_3way/Shelves_disparity.npy",
+      "sha256": "f999f65c8a5cdf9f25d563b889dd3f1e6b55fe89fa0e154b060ba2f351ee7e5a"
+    },
+    {
+      "path": "arrays/unpad_3way/Shelves_valid.npy",
+      "sha256": "8e23fa5745e3102884ecf9fcccd332fdbed392ef6dce8aba166e57c4b75422a5"
+    },
+    {
+      "path": "arrays/unpad_3way/Teddy_depth.npy",
+      "sha256": "2bd000351c80fd071b038aac9e43c2862375f7a7754885c5033b7733b40b64b9"
+    },
+    {
+      "path": "arrays/unpad_3way/Teddy_disparity.npy",
+      "sha256": "dfa0970a3c43e5073741eb44ef80bcf9973862449c83b320fb4b8adabeee3233"
+    },
+    {
+      "path": "arrays/unpad_3way/Teddy_valid.npy",
+      "sha256": "5969e3aca7d12006b9b486d59eed9efdd0aac02791e246e85b997a267c4fee2d"
+    },
+    {
+      "path": "arrays/unpad_3way/Vintage_depth.npy",
+      "sha256": "242fae687bbef32a8e111fd3e0c600f2f349f7440de813630401ebd4845a46f5"
+    },
+    {
+      "path": "arrays/unpad_3way/Vintage_disparity.npy",
+      "sha256": "ec83c107156df90aac3e2bb3bca996c54fcad015c9190c093d6026d769b1f915"
+    },
+    {
+      "path": "arrays/unpad_3way/Vintage_valid.npy",
+      "sha256": "01ed72636f12d153051c2b02b2120451f0f5cf8cbbf78548ea81cd02e88d9864"
+    }
+  ]
+}

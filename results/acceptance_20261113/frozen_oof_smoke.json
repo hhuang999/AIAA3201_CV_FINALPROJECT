@@ -1,0 +1,103 @@
+{
+  "complete": true,
+  "smoke": true,
+  "scope": "Fixed-parameter training-fold acceptance replay",
+  "test_depths_read": false,
+  "new_fit": false,
+  "deployment_changed": false,
+  "historical_test_exposure": true,
+  "independent_holdout_claim": false,
+  "images": 10,
+  "training_scenes": 249,
+  "methods": [
+    "raw",
+    "median",
+    "spline_rmse",
+    "constant_median_ratio",
+    "residual_median_ratio_l0.1_a0.5",
+    "residual_median_ratio_l0.1_a1",
+    "residual_median_ratio_l1_a0.5",
+    "residual_median_ratio_l1_a1",
+    "residual_median_ratio_l10_a0.5",
+    "residual_median_ratio_l10_a1",
+    "constant_rmse_ratio",
+    "residual_rmse_ratio_l0.1_a0.5",
+    "residual_rmse_ratio_l0.1_a1",
+    "residual_rmse_ratio_l1_a0.5",
+    "residual_rmse_ratio_l1_a1",
+    "residual_rmse_ratio_l10_a0.5",
+    "residual_rmse_ratio_l10_a1"
+  ],
+  "metric_rows": 170,
+  "max_absolute_metric_difference": {
+    "abs_rel": 0.0,
+    "rmse": 0.0,
+    "d1": 0.0
+  },
+  "max_absolute_scale_difference": 0.0,
+  "tolerance": 1e-12,
+  "folds": [
+    {
+      "fold": 0,
+      "fit_images": 641,
+      "validation_images": 154,
+      "fit_scenes": 199,
+      "validation_scenes": 50,
+      "scene_overlap": 0,
+      "models_sha256": "76222650c48be62a3774db74761e775d2d459668d06c45c92c4dfc52efc89f6d"
+    },
+    {
+      "fold": 1,
+      "fit_images": 629,
+      "validation_images": 166,
+      "fit_scenes": 199,
+      "validation_scenes": 50,
+      "scene_overlap": 0,
+      "models_sha256": "081a9a0fa2c435e0efd375362cf346bc7ec52fdabd90cbf2eccb919d9bd82f69"
+    },
+    {
+      "fold": 2,
+      "fit_images": 632,
+      "validation_images": 163,
+      "fit_scenes": 199,
+      "validation_scenes": 50,
+      "scene_overlap": 0,
+      "models_sha256": "faf2b1c504f6968fde29a2d2e4b763c8b8f6fd7d5433dd7f4ee65cf348120118"
+    },
+    {
+      "fold": 3,
+      "fit_images": 638,
+      "validation_images": 157,
+      "fit_scenes": 199,
+      "validation_scenes": 50,
+      "scene_overlap": 0,
+      "models_sha256": "c2c256404d2f3b7fbf99e2f5b43ca9038f81cd6e1a7f1ffbf4ea4a6448b99ce8"
+    },
+    {
+      "fold": 4,
+      "fit_images": 640,
+      "validation_images": 155,
+      "fit_scenes": 200,
+      "validation_scenes": 49,
+      "scene_overlap": 0,
+      "models_sha256": "26287f11dbf37e4ed4315385a25299c43581ab421971d7aadb6da7950ced8221"
+    }
+  ],
+  "gate_reproduction": null,
+  "source_commit": "f9693224f0c9d079215f2b4175eaff31c21a2b31",
+  "source_root": "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/acceptance_checkout_20261113",
+  "prediction_cache": "outputs/restored_20261113/parity_nyu_train",
+  "frozen_model_sha256": "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5",
+  "reference_csv_sha256": "fb18de526c8fc0fc8008394ab290f38ce6bf6cce4679c0dc7013e5315579677a",
+  "replayed_csv_sha256": "5bce20d03fc572d5c4760f4363d3fcea037ee2ca36fffb6c2bc1ab0b5fe7b924",
+  "audit_script_sha256": "82999573e9352afb8d614c511c585c07efba99483b925ac9c7d1dca885c04bd5",
+  "current_modules_sha256": {
+    "cache.py": "b7b8b0ab26ec34d6076f1a2743a2dbe41a406246fd36c40c5464ace69cb08c7e",
+    "calibration.py": "5b4b649b2d624a2e5c3bb37cf1708051e8a9c8adfdbbbc8c958cd373016ffcec",
+    "data.py": "2b569493404e30c7029cfc9b89f5cf5f098bc17f50af8c17a8a75b3e2afffa30",
+    "frozen.py": "abe45962f70e31c6f174e973a353240bd85098b37c937b74de72e3b08ae77850",
+    "learning_curve.py": "f81994e2654d070b39dfe68c8b367709c14742a9460a3d50f01a3d1be6a86434",
+    "metrics.py": "381e58dd887687e9534a2b0ff4054d92236686db08ab9478968c9b70949c3f39"
+  },
+  "elapsed_seconds": 42.24243061617017
+}

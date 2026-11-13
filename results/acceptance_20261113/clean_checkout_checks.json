@@ -1,0 +1,153 @@
+[
+  {
+    "name": "source_manifest",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.verify"
+    ],
+    "exit": 0,
+    "seconds": 0.08833982422947884,
+    "stdout": "{\n  \"complete\": true,\n  \"verified_files\": 336,\n  \"manifest_sha256\": \"16ff9a8eb2b373758f6fe01cf8cdd3eca093568de632d685cac957663b644156\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "full_tests",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--tb=short"
+    ],
+    "exit": 0,
+    "seconds": 9.393218215554953,
+    "stdout": "........................................................................ [ 41%]\n........................................................................ [ 82%]\n..............................                                           [100%]\n=============================== warnings summary ===============================\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\n  /home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/lib/python3.10/site-packages/triton/runtime/autotuner.py:97: DeprecationWarning: warmup, rep, and use_cuda_graph parameters are deprecated. See https://github.com/triton-lang/triton/pull/4496 for details.\n    warnings.warn((\"warmup, rep, and use_cuda_graph parameters are deprecated. See \"\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n174 passed, 4 warnings in 8.06s\n",
+    "stderr": ""
+  },
+  {
+    "name": "prepare_course_inputs",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.prepare",
+      "--data-root",
+      "data",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/acceptance_20261113/prepared_inputs.json"
+    ],
+    "exit": 0,
+    "seconds": 0.5019620973616838,
+    "stdout": "{'train_images': 795, 'test_images': 654, 'train_scenes': 249, 'test_scenes': 215, 'scene_overlap': 0, 'stereo_scenes': ['Adirondack', 'ArtL', 'Jadeplant', 'Motorcycle', 'MotorcycleE', 'Piano', 'PianoL', 'Pipes', 'Playroom', 'Playtable', 'PlaytableP', 'Recycle', 'Shelves', 'Teddy', 'Vintage'], 'video_frames': 70, 'video_fps': 24.0, 'video_width': 960, 'video_height': 540}\n",
+    "stderr": ""
+  },
+  {
+    "name": "part1_15_scenes",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.stereo",
+      "--data-root",
+      "data",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/acceptance_20261113/stereo_clean",
+      "--no-images"
+    ],
+    "exit": 0,
+    "seconds": 9.896634049713612,
+    "stdout": "Stereo Adirondack\nStereo ArtL\nStereo Jadeplant\nStereo Motorcycle\nStereo MotorcycleE\nStereo Piano\nStereo PianoL\nStereo Pipes\nStereo Playroom\nStereo Playtable\nStereo PlaytableP\nStereo Recycle\nStereo Shelves\nStereo Teddy\nStereo Vintage\n                 mae_px  valid_fraction  cpu_seconds\nconfiguration                                       \nreflect_3way   1.360796        0.743285     0.064615\nreflect_hh4    1.298394        0.746424     0.169500\nunpad_3way     1.418805        0.621968     0.051317\n",
+    "stderr": ""
+  },
+  {
+    "name": "nyu_complete_cache_reuse",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.infer_nyu",
+      "--data-root",
+      "data",
+      "--source",
+      "third_party/UniDepth",
+      "--weights",
+      "data/weights/unidepth_v2_vits14",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_nyu_all"
+    ],
+    "exit": 0,
+    "seconds": 58.412012530490756,
+    "stdout": "Already complete; checksums verified without loading model\n",
+    "stderr": ""
+  },
+  {
+    "name": "decoded70_cache_reuse",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.infer_video",
+      "--method",
+      "decode",
+      "--video",
+      "data/davis_rollercoaster.mp4",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_frames70"
+    ],
+    "exit": 0,
+    "seconds": 2.6476446595042944,
+    "stdout": "Reused 70 verified decoded frames at 24.0 FPS\n",
+    "stderr": ""
+  },
+  {
+    "name": "image_complete_cache_reuse",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.infer_video",
+      "--method",
+      "image",
+      "--source",
+      "third_party/Depth-Anything-V2",
+      "--weights",
+      "data/weights/depth_anything_v2_small/depth_anything_v2_vits.pth",
+      "--frames",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_frames70",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_dav2_70"
+    ],
+    "exit": 0,
+    "seconds": 2.9112860690802336,
+    "stdout": "Already complete; input and archive SHA256 verified without loading model\n",
+    "stderr": ""
+  },
+  {
+    "name": "video_complete_cache_reuse",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.infer_video",
+      "--method",
+      "video",
+      "--source",
+      "third_party/Video-Depth-Anything",
+      "--weights",
+      "data/weights/video_depth_anything_small/video_depth_anything_vits.pth",
+      "--frames",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_frames70",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/restored_20261113/parity_vda_70"
+    ],
+    "exit": 0,
+    "seconds": 2.78652816824615,
+    "stdout": "Already complete; input and archive SHA256 verified without loading model\n",
+    "stderr": ""
+  }
+]

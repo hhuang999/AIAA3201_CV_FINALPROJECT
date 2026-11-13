@@ -1,0 +1,56 @@
+{
+  "schema": "part123b_final_acceptance_v1",
+  "complete": true,
+  "created_utc": "2026-11-13T13:22:03.949928+00:00",
+  "accepted_code_commit": "f9693224f0c9d079215f2b4175eaff31c21a2b31",
+  "branch": "codex/part3b",
+  "github_account": "hjjs4",
+  "scope": "Existing committed implementation and frozen results; evidence-only acceptance",
+  "teacher_pdf_sha256": "ea65076917e87febb0c3c67773b9fc6edf304e2821a74266a03f22ef33abc226",
+  "requirements_changed": false,
+  "existing_tracked_files_unchanged": 337,
+  "source_archive_sha256": "031bbd057ed026cf37257786c820eacd6ed170e8f26ccb08da4afe1f3b2fc051",
+  "clean_source_command_checks_passed": 8,
+  "tests_passed": 174,
+  "part1": {
+    "scenes": 15,
+    "configurations": 3,
+    "arrays_byte_identical": 135
+  },
+  "part2": {
+    "cache_entrypoints_verified": [
+      "nyu_all_1449",
+      "decode_70",
+      "dav2_70",
+      "vda_70"
+    ],
+    "fresh_gpu_inference_this_round": false,
+    "prior_fresh_inference_evidence": "results/restoration_20261113/validation.json"
+  },
+  "part3b": {
+    "smoke_images": 10,
+    "training_images_replayed": 795,
+    "training_scenes": 249,
+    "folds": 5,
+    "methods": 17,
+    "metric_rows": 13515,
+    "max_absolute_metric_difference": {
+      "abs_rel": 2.498001805406602e-16,
+      "rmse": 8.881784197001252e-16,
+      "d1": 0.0
+    },
+    "max_absolute_residual_scale_difference": 2.220446049250313e-16,
+    "same_primary_and_eligibility": true,
+    "fit_validation_scene_overlap": 0,
+    "frozen_model_sha256": "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5"
+  },
+  "new_fit": false,
+  "new_test_evaluation": false,
+  "numerical_source_changed": false,
+  "course_report_figures_and_final_videos_modified": false,
+  "prior_fixed_test_evidence": "results/final_review_20261113/validation.json",
+  "historical_test_exposure": true,
+  "independent_holdout_claim": false,
+  "runtime_artifacts": "outputs/acceptance_20261113",
+  "acceptance_note": "docs/FINAL_ACCEPTANCE_20261113.md"
+}
