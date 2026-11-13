@@ -12,6 +12,7 @@ import numpy as np
 
 from .cache import atomic_json, load_predictions, sha256
 from .calibration_study import fresh_output, write_csv
+from .calibration import validate_training_cache
 from .data import nyu_depth, open_nyu, scene_names, splits
 from .frozen import load_frozen
 from .metrics import CROP, valid_depth
@@ -60,6 +61,7 @@ def training_bias(data_root, predictions, frozen, output, smoke=False, reference
         if sha256(root / filename) != frozen[key]:
             raise ValueError("Frozen training provenance mismatch: " + key)
     cache = load_predictions(folder, required_ids=ids, expected_known_intrinsics=False, require_complete=True)
+    validate_training_cache(root, cache)
     scale = frozen["controls"]["median"]["scale"]
     if reference_ratios is not None:
         reference_ratios = np.asarray(reference_ratios, dtype=np.float64)
@@ -221,7 +223,7 @@ def run(args):
                 "model_parameters_changed": False, "model_selection": False, "test_gt_read": False,
                 "smoke": args.smoke_only, "bins": list(EDGES),
                 "source_sha256": {name: sha256(Path(__file__).parent / name) for name in
-                                  ("calibration_analysis.py", "calibration_study.py", "frozen.py", "cache.py", "data.py", "metrics.py")}}
+                                  ("calibration_analysis.py", "calibration_study.py", "calibration.py", "frozen.py", "cache.py", "data.py", "metrics.py")}}
     if args.saved_scores:
         protocol["saved_scores_sha256"] = sha256(args.saved_scores)
     if args.frozen:

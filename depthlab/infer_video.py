@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 from time import perf_counter
+from types import MethodType
 
 import cv2
 import numpy as np
@@ -20,6 +21,7 @@ from .inference_backend import use_pytorch_attention
 INPUT_SIZE = 518
 MAX_FRAMES = 100
 MAX_RESOLUTION = 640
+DECODER = "OpenCV VideoCapture; BGR to RGB; INTER_LINEAR resize"
 REVISIONS = {"image": "a561b849ebae10a6f5ef49e26c83cbbcd36c71bf",
              "video": "4f5ae23172ba60fd7bc11ef671cca678842c7072"}
 PINNED_WEIGHTS = {
@@ -84,6 +86,33 @@ def load_video_predictions(folder, frames, info, expected_method=None):
 def decode(path, output, limit):
     if limit <= 0:
         raise ValueError("Frame limit must be positive")
+    path, output = Path(path), Path(output)
+    input_sha256 = sha256(path)
+    output.mkdir(parents=True, exist_ok=True)
+    with cache_lock(output / ".writer.lock"):
+        artifacts = [output / name for name in ("frames.npy", "frames.json")]
+        if any(item.exists() for item in artifacts):
+            if not all(item.is_file() for item in artifacts):
+                raise ValueError("Incomplete decoded frame cache; use a new output directory")
+            frames, info = load_frames(output)
+            expected = {"input_sha256": input_sha256, "requested_max_len": limit,
+                        "max_resolution": MAX_RESOLUTION, "decoder": DECODER}
+            if any(info.get(key) != value for key, value in expected.items()):
+                raise ValueError("Decoded frame source/options differ; use a new output directory")
+            count, original = info.get("source_frames"), info.get("original_hw")
+            if (type(count) is not int or count <= 0 or len(frames) != min(limit, count)
+                    or not isinstance(original, list) or len(original) != 2
+                    or any(type(value) is not int or value <= 0 for value in original)):
+                raise ValueError("Decoded frame source count/dimensions are inconsistent")
+            scale = min(1., MAX_RESOLUTION / max(original))
+            if list(frames.shape[1:3]) != [round(value * scale) for value in original]:
+                raise ValueError("Decoded frame dimensions disagree with resize policy")
+            print("Reused", len(frames), "verified decoded frames at", info["fps"], "FPS", flush=True)
+            return
+        _decode_new(path, output, limit, input_sha256)
+
+
+def _decode_new(path, output, limit, input_sha256):
     reader = cv2.VideoCapture(str(path))
     frames = []
     try:
@@ -108,14 +137,11 @@ def decode(path, output, limit):
     if not frames:
         raise ValueError("Empty input video")
     frames = np.stack(frames)
-    output.mkdir(parents=True, exist_ok=True)
-    if any((output / name).exists() for name in ("frames.npy", "frames.json")):
-        raise ValueError("Decoded frame artifacts already exist; use a new output directory")
     np.save(output / "frames.npy", frames)
     atomic_json(output / "frames.json", {"frames": len(frames), "fps": fps, "source_frames": source_count,
-        "original_hw": [h, w], "decoded_hw": list(frames.shape[1:3]), "input_sha256": sha256(path),
+        "original_hw": [h, w], "decoded_hw": list(frames.shape[1:3]), "input_sha256": input_sha256,
         "decoded_frames_sha256": array_sha256(frames), "requested_max_len": limit,
-        "max_resolution": MAX_RESOLUTION, "decoder": "OpenCV VideoCapture; BGR to RGB; INTER_LINEAR resize"})
+        "max_resolution": MAX_RESOLUTION, "decoder": DECODER})
     print("Decoded", len(frames), "frames at", fps, "FPS", flush=True)
 
 
@@ -130,6 +156,33 @@ def save_depth_archive(folder, depth, fps):
     finally:
         if os.path.exists(temporary):
             os.unlink(temporary)
+
+
+def bind_dav2_input_device(model, device):
+    """Keep upstream CUDA inference untouched; honor explicit non-CUDA devices.
+
+    The pinned DAV2 helper otherwise chooses an accelerator by availability.
+    Its preprocessing is reproduced with the same upstream transform classes,
+    binding only the final input transfer to the requested model device.
+    """
+    if device.type == "cuda":
+        return
+    from depth_anything_v2.dpt import Compose, Resize, NormalizeImage, PrepareForNet
+
+    def image2tensor(self, raw_image, input_size=INPUT_SIZE):
+        transform = Compose([
+            Resize(width=input_size, height=input_size, resize_target=False,
+                   keep_aspect_ratio=True, ensure_multiple_of=14,
+                   resize_method="lower_bound", image_interpolation_method=cv2.INTER_CUBIC),
+            NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            PrepareForNet(),
+        ])
+        h, w = raw_image.shape[:2]
+        image = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB) / 255.0
+        image = transform({"image": image})["image"]
+        return torch.from_numpy(image).unsqueeze(0).to(device), (h, w)
+
+    model.image2tensor = MethodType(image2tensor, model)
 
 
 def infer(args):
@@ -164,6 +217,8 @@ def infer(args):
         if device.type == "cuda":
             torch.cuda.set_device(device)
         model = model.to(device).eval()
+        if args.method == "image":
+            bind_dav2_input_device(model, device)
         shape = {}
         hook = model.pretrained.patch_embed.register_forward_pre_hook(lambda module, inputs: shape.update(network_hw=list(inputs[0].shape[-2:])))
         fps = info["fps"]

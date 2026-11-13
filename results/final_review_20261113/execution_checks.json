@@ -1,0 +1,92 @@
+[
+  {
+    "check": "full_pytest",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--tb=short"
+    ],
+    "exit": 0,
+    "seconds": 8.844095561653376,
+    "stdout": "........................................................................ [ 41%]\n........................................................................ [ 82%]\n..............................                                           [100%]\n=============================== warnings summary ===============================\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\ntests/test_video_recovery.py::test_cpu_binding_avoids_upstream_accelerator_selection_and_preserves_pixels\n  /home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/lib/python3.10/site-packages/triton/runtime/autotuner.py:97: DeprecationWarning: warmup, rep, and use_cuda_graph parameters are deprecated. See https://github.com/triton-lang/triton/pull/4496 for details.\n    warnings.warn((\"warmup, rep, and use_cuda_graph parameters are deprecated. See \"\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n174 passed, 4 warnings in 7.62s\n",
+    "stderr": ""
+  },
+  {
+    "check": "decode_one_real_frame",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.infer_video",
+      "--method",
+      "decode",
+      "--video",
+      "data/davis_rollercoaster.mp4",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/final_review_20261113/cpu_frames",
+      "--limit",
+      "1"
+    ],
+    "exit": 0,
+    "seconds": 1.7043940220028162,
+    "stdout": "Decoded 1 frames at 24.0 FPS\n",
+    "stderr": ""
+  },
+  {
+    "check": "real_dav2_cpu_inference",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.infer_video",
+      "--method",
+      "image",
+      "--source",
+      "third_party/Depth-Anything-V2",
+      "--weights",
+      "data/weights/depth_anything_v2_small/depth_anything_v2_vits.pth",
+      "--frames",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/final_review_20261113/cpu_frames",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/final_review_20261113/cpu_image",
+      "--device",
+      "cpu"
+    ],
+    "exit": 0,
+    "seconds": 8.120658392086625,
+    "stdout": "{'method': 'image', 'source_revision': 'a561b849ebae10a6f5ef49e26c83cbbcd36c71bf', 'source': {'revision': 'a561b849ebae10a6f5ef49e26c83cbbcd36c71bf', 'tracked_source_clean': True}, 'weights': {'depth_anything_v2_vits.pth': '715fade13be8f229f8a70cc02066f656f2423a59effd0579197bbf57860e1378'}, 'gpu': 'CPU', 'torch': '2.8.0+cu128', 'cuda': '12.8', 'precision': 'FP32', 'input_size': 518, 'network_hw': [518, 924], 'frames': 1, 'fps': 24.0, 'decoded_hw': [360, 640], 'decoded_frames_sha256': '0193b4c223bdc27b57f96614324331441202e45e7f0e25361895c695c9b182c6', 'input_sha256': '7268cbecd9806a1e90a416de50dc02e50b4ae01428d5971837cf679dd0c87cb8', 'mean_seconds': 1.7891267258673906, 'attention_backend': {'implementation': 'upstream PyTorch attention branches', 'xformers_attention_enabled': False, 'configured_modules': ['depth_anything_v2.dinov2_layers.attention', 'depth_anything_v2.dinov2_layers.block']}, 'seed': 0, 'preprocessing': 'official infer_image / infer_video_depth; same decoded uint8 RGB; input_size=518', 'peak_allocated_mib': None, 'peak_reserved_mib': None, 'scope': 'synchronized infer_image including preprocessing and CPU output transfer; excludes decoding and encoding', 'warmup_frames': 1}\n",
+    "stderr": ""
+  },
+  {
+    "check": "full_frozen_cpu_replay",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.evaluate",
+      "--data-root",
+      "data",
+      "--predictions",
+      "outputs/restored_20261113/parity_nyu_all",
+      "--parameters",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/results/frozen_20261111/part3b_residual_20261111/final/frozen_model.json",
+      "--expected-model-sha256",
+      "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5",
+      "--reference",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/results/frozen_20261111/part3b_residual_20261111/final/test/per_image.csv",
+      "--reference-depth",
+      "/home/ai4s_group/XZG/coursework/CV/Project3-final-20261111/outputs/part3b_residual_20261111/final/test/primary_depth.npy",
+      "--output",
+      "/home/ai4s_group/XZG/coursework/CV/AIAA3201_CV_FINALPROJECT/outputs/final_review_20261113/frozen_replay"
+    ],
+    "exit": 0,
+    "seconds": 91.42878332734108,
+    "stdout": "Frozen replay test 1 / 654\nFrozen replay test 101 / 654\nFrozen replay test 201 / 654\nFrozen replay test 301 / 654\nFrozen replay test 401 / 654\nFrozen replay test 501 / 654\nFrozen replay test 601 / 654\nFrozen replay test 654 / 654\n                 abs_rel      rmse    delta1\nmethod                                      \nraw             0.114544  0.398866  0.892170\nglobal_scale    0.102042  0.389288  0.899400\nmonotone_curve  0.100831  0.387002  0.903200\nresidual_scale  0.099607  0.383124  0.905546\n",
+    "stderr": ""
+  }
+]

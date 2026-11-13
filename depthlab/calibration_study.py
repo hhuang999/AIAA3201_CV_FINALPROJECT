@@ -15,7 +15,8 @@ import numpy as np
 import torch
 
 from .cache import atomic_json, load_predictions, sha256
-from .calibration import prepare_training, scene_folds
+from .calibration import (prepare_training, scene_folds, validate_training_cache,
+                          validate_training_partition)
 from .data import open_nyu, nyu_depth, scene_names, splits
 from .frozen import depth_features
 from .metrics import evaluate_image
@@ -185,19 +186,15 @@ class TrainingData:
 
     def __enter__(self):
         partition = splits(self.data_root)
-        self.ids = partition["train"]
-        test = partition["test"]
-        if (len(self.ids) != 795 or len(np.unique(self.ids)) != 795 or
-                len(test) != 654 or len(np.unique(test)) != 654 or np.intersect1d(self.ids, test).size):
-            raise ValueError("Expected disjoint official 795/654 image identities")
+        self.ids = validate_training_partition(partition)
         self.predictions = load_predictions(self.prediction_root, required_ids=self.ids,
                                            expected_known_intrinsics=False, require_complete=True)
+        validate_training_cache(self.data_root, self.predictions)
         self.handle = open_nyu(self.data_root)
         try:
             all_scenes = scene_names(self.handle)
+            validate_training_partition(partition, all_scenes)
             self.scenes = all_scenes[self.ids]
-            if len(np.unique(self.scenes)) != 249 or np.intersect1d(self.scenes, all_scenes[test]).size:
-                raise ValueError("Expected 249 training scenes disjoint from test scenes")
             self.fold_positions = scene_folds(self.scenes)
             self.assignment = np.empty(len(self.ids), dtype=int)
             for fold, positions in enumerate(self.fold_positions):

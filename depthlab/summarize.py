@@ -1,3 +1,9 @@
+"""Historical artifact-format presentation helper; outside frozen numerical replay.
+
+Use results/restoration_20261113/part3b_replay or a new evaluation output for
+current numerical results. This helper requires the earlier combined result
+layout, including calibration, camera diagnosis, timing and rendered-video data.
+"""
 import argparse
 import json
 from pathlib import Path
@@ -8,7 +14,44 @@ import pandas as pd
 from .metrics import METRIC_NAMES
 
 
+def validate_inputs(args):
+    """Reject incomplete/hybrid presentation inputs before creating any files."""
+    guidance = ("Historical presentation inputs are required. This helper does not consume frozen replay outputs. "
+                "Use the current numerical results in results/restoration_20261113/part3b_replay "
+                "or your evaluation output; see docs/REPRODUCTION.md.")
+    if args.readme is not None:
+        if not args.readme.is_file():
+            raise ValueError("README marker validation requires an existing file")
+        content = args.readme.read_text(encoding="utf-8")
+        start, end = "<!-- results:start -->", "<!-- results:end -->"
+        if content.count(start) != 1 or content.count(end) != 1 or content.index(start) >= content.index(end):
+            raise ValueError("README must contain exactly one ordered results:start / results:end marker pair; no files were written")
+    parameter_path = args.results / "calibration_parameters.json"
+    if not parameter_path.is_file():
+        raise ValueError(guidance + " Missing calibration_parameters.json.")
+    try:
+        params = json.loads(parameter_path.read_text())
+    except (ValueError, OSError) as error:
+        raise ValueError(guidance + " Cannot read historical calibration parameters.") from error
+    fields = {"global_scale", "monotone_curve", "residual", "selected_method"}
+    if not isinstance(params, dict) or not fields.issubset(params) or params.get("schema") == "B_residual_v1":
+        raise ValueError(guidance + " Unsupported calibration parameter schema.")
+    required = [args.results / name for name in (
+        "calibration_oof_per_image.csv", "postprocessing_per_image.csv", "stereo_summary.csv",
+        "test_summary.csv", "calibration_oof_summary.csv", "camera_diagnostic_summary.csv",
+        "figures/video/video_adjacent_change.csv")]
+    for folder in ("nyu_rgb", "nyu_known", "video_image", "video_temporal"):
+        source = args.outputs / folder
+        required += [source / "runtime.json", source / (
+            "inference_per_frame.csv" if folder.startswith("video") else "inference_per_image.csv")]
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
+        raise ValueError(guidance + " Missing required artifacts: " + ", ".join(missing))
+    return params
+
+
 def summarize(args):
+    params = validate_inputs(args)
     runtime_folder = args.results / "runtime"
     runtime_folder.mkdir(parents=True, exist_ok=True)
     records = []
@@ -42,7 +85,6 @@ def summarize(args):
         sections.append(f"### {title}\n\n" + frame.to_markdown(index=False, floatfmt=".4f"))
     sections.append("### Efficiency\n\n" + efficiency.to_markdown(index=False, floatfmt=".4f"))
     sections.append("Times use each model's reported inference scope; offline video time is amortized over the 70 decoded frames. Peak memory is allocated GPU memory; reserved memory is also retained in the CSV and runtime JSON files.")
-    params = json.loads((args.results / "calibration_parameters.json").read_text())
     if params["residual"] is None:
         sections.append("The final method is the monotone curve. No residual candidate passed all metrics in every fold. The residual stage is inactive; its recorded incremental runtime is zero.")
     changes = pd.read_csv(args.results / "figures/video/video_adjacent_change.csv")
@@ -61,8 +103,8 @@ def summarize(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--outputs", type=Path, default=Path("outputs"))
-    parser.add_argument("--results", type=Path, default=Path("results"))
+    parser.add_argument("--results", type=Path, default=Path("results"), help="Historical combined artifact directory; not a frozen replay directory")
     parser.add_argument("--readme", type=Path)
     summarize(parser.parse_args())

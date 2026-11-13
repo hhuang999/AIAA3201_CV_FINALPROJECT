@@ -94,6 +94,10 @@ def evaluate(args):
     limit = getattr(args, "limit", None)
     if limit is not None and (limit <= 0 or split != "train"):
         raise ValueError("Limited smoke evaluation is supported on training images only")
+    parameters_digest = sha256(args.parameters)
+    expected_digest = getattr(args, "expected_model_sha256", None)
+    if expected_digest is not None and parameters_digest != expected_digest:
+        raise ValueError("Calibration parameter SHA-256 differs from the expected digest")
     parameters = json.loads(args.parameters.read_text())
     frozen = parameters.get("schema") == "B_residual_v1"
     if frozen:
@@ -104,6 +108,15 @@ def evaluate(args):
     ids = all_ids[split][:limit]
     if frozen and not np.array_equal(np.asarray(parameters["train_ids"]), all_ids["train"]):
         raise ValueError("Frozen training IDs differ from the official split")
+    if parameters.get("schema") == "depthlab_calibration_v2":
+        if parameters.get("complete") is not True or parameters.get("test_read") is not False:
+            raise ValueError("Completed calibration parameters must retain train-only provenance")
+        if parameters.get("training_ids") != all_ids["train"].tolist():
+            raise ValueError("Calibration training IDs differ from the official split")
+        if parameters.get("training_images") != len(all_ids["train"]):
+            raise ValueError("Calibration training image count differs from the official split")
+        if any(key not in parameters for key in ("dataset_sha256", "split_sha256")):
+            raise ValueError("Calibration parameters are missing data/split binding")
     data_hashes = {"nyu_mat_sha256": sha256(args.data_root / "nyu_depth_v2_labeled.mat"),
                    "splits_sha256": sha256(args.data_root / "splits.mat")}
     for key, actual in [("dataset_sha256", data_hashes["nyu_mat_sha256"]),
@@ -123,7 +136,7 @@ def evaluate(args):
     source_hashes = {str(p.relative_to(Path(__file__).parent.parent)): sha256(p)
                      for p in [Path(__file__).with_name(name) for name in ("evaluate.py", "metrics.py", "frozen.py", "calibration.py", "cache.py", "data.py")]}
     identity = {"complete": False, "split": split, "ids": ids.tolist(),
-        "parameters_sha256": sha256(args.parameters), "data": data_hashes,
+        "parameters_sha256": parameters_digest, "data": data_hashes,
         "prediction_files": {p.name: sha256(p) for p in [args.predictions / "depth.npy",
                               args.predictions / "indices.npy"]},
         "source_sha256": source_hashes, "frozen_replay": frozen,

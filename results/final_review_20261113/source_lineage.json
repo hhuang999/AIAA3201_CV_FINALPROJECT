@@ -1,0 +1,33 @@
+{
+  "teammate_base": "411687c4cce2a0c8be021f188c7ae9ef6b85de56",
+  "restoration_commit": "b3bbb148d0c1a8930e38a2159b6d55bfca90d1a1",
+  "all_teammate_modules_retained": true,
+  "teammate_module_count": 13,
+  "current_module_count": 21,
+  "original_modules": [
+    "__init__.py",
+    "calibration.py",
+    "data.py",
+    "diagnose.py",
+    "evaluate.py",
+    "figures.py",
+    "infer_nyu.py",
+    "infer_video.py",
+    "metrics.py",
+    "prepare.py",
+    "render_video.py",
+    "stereo.py",
+    "summarize.py"
+  ],
+  "additional_modules": [
+    "cache.py",
+    "cache_subset.py",
+    "calibration_analysis.py",
+    "calibration_study.py",
+    "frozen.py",
+    "inference_backend.py",
+    "learning_curve.py",
+    "verify.py"
+  ],
+  "scope": "Teammate depthlab architecture and entrypoints retained. Frozen numerical logic and selected historical parameters/evidence deliberately ported; not claimed to be wholly independent new algorithms. No imports of the old project application modules; external datasets, upstream checkouts, checkpoints and environment are reused."
+}

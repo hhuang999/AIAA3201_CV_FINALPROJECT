@@ -1,0 +1,29 @@
+{
+  "unchanged_numeric_modules": [
+    "frozen.py",
+    "metrics.py",
+    "stereo.py",
+    "infer_nyu.py",
+    "cache.py",
+    "cache_subset.py",
+    "data.py",
+    "render_video.py",
+    "inference_backend.py"
+  ],
+  "unchanged_calibration_functions": [
+    "fit_scale",
+    "log_features",
+    "curve_basis",
+    "apply_curve",
+    "fit_curve",
+    "fit_residual",
+    "fit_constant_residual",
+    "residual_log_scale",
+    "apply_residual",
+    "scene_folds",
+    "prepare_training",
+    "residual_targets"
+  ],
+  "frozen_model_sha256": "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5",
+  "protected_existing_artifacts_unchanged": true
+}

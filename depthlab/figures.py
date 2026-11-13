@@ -1,3 +1,9 @@
+"""Historical artifact-format figure helper; outside frozen numerical replay.
+
+Current frozen replay tables are in results/restoration_20261113/part3b_replay
+or your evaluation output. This helper requires the earlier combined calibration,
+OOF and camera-diagnosis artifact layout and does not render the frozen primary.
+"""
 import argparse
 import json
 from pathlib import Path
@@ -72,10 +78,36 @@ def comparison(handle, raw, index, parameters, previous, current, title, path):
     plt.close(fig)
 
 
+def validate_inputs(args):
+    """Require the historical presentation contract before generating assets."""
+    guidance = ("Historical figure inputs are required. This helper does not consume frozen replay outputs. "
+                "Use the current numerical results in results/restoration_20261113/part3b_replay "
+                "or your evaluation output; see docs/REPRODUCTION.md.")
+    parameter_path = args.results / "calibration_parameters.json"
+    if not parameter_path.is_file():
+        raise ValueError(guidance + " Missing calibration_parameters.json.")
+    try:
+        params = json.loads(parameter_path.read_text())
+    except (ValueError, OSError) as error:
+        raise ValueError(guidance + " Cannot read historical calibration parameters.") from error
+    fields = {"global_scale", "monotone_curve", "residual", "selected_method"}
+    if not isinstance(params, dict) or not fields.issubset(params) or params.get("schema") == "B_residual_v1":
+        raise ValueError(guidance + " Unsupported calibration parameter schema.")
+    required = [args.results / name for name in (
+        "test_summary.csv", "test_bins_summary.csv", "calibration_oof_summary.csv", "test_cases.csv",
+        "camera_diagnostic_per_image.csv", "camera_diagnostic.json")]
+    required += [args.data_root / name for name in ("nyu_depth_v2_labeled.mat", "splits.mat")]
+    required += [args.predictions / name for name in ("depth.npy", "indices.npy", "manifest.json")]
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
+        raise ValueError(guidance + " Missing required artifacts: " + ", ".join(missing))
+    return params
+
+
 def figures(args):
+    params = validate_inputs(args)
     output = args.results / "figures/nyu"
     output.mkdir(parents=True, exist_ok=True)
-    params = json.loads((args.results / "calibration_parameters.json").read_text())
     summary = pd.read_csv(args.results / "test_summary.csv", index_col="method")
     methods = list(summary.index)
     fig, axes = plt.subplots(1, 3, figsize=(12, 3.9), layout="constrained")
@@ -147,8 +179,8 @@ def figures(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, required=True)
     parser.add_argument("--predictions", type=Path, required=True)
-    parser.add_argument("--results", type=Path, default=Path("results"))
+    parser.add_argument("--results", type=Path, default=Path("results"), help="Historical combined artifact directory; not a frozen replay directory")
     figures(parser.parse_args())

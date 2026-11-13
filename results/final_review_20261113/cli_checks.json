@@ -1,0 +1,92 @@
+[
+  {
+    "module": "stereo",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "prepare",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "infer_nyu",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "infer_video",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "render_video",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "calibration",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "evaluate",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "diagnose",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "figures",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "summarize",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "cache_subset",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "calibration_study",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "learning_curve",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "calibration_analysis",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  },
+  {
+    "module": "verify",
+    "exit": 0,
+    "help_present": true,
+    "error": ""
+  }
+]

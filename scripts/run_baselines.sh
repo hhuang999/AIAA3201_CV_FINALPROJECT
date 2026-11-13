@@ -2,8 +2,8 @@
 set -euo pipefail
 data=${1:-data}
 sources=${2:-third_party}
-outputs=${3:-outputs}
-results=${4:-results}
+outputs=${3:-outputs/reproduction}
+results=${4:-results/reproduction}
 metric=${METRIC_PYTHON:-python}
 video=${VIDEO_PYTHON:-python}
 "$metric" -m depthlab.prepare --data-root "$data" --output "$results/data_summary.json"

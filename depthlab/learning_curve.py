@@ -143,6 +143,39 @@ def summarize_learning(rows, fits, ids, scenes, repeats=10000):
     return table, intervals, values
 
 
+def compare_learning_reference(path, values, ids, scenes, assignment):
+    """Check every paired saved OOF identity and finite score before parity."""
+    position = {int(index): pos for pos, index in enumerate(ids)}
+    expected = {(method, int(index)) for method in ("median", "spline_rmse") for index in ids}
+    seen, parity = set(), 0.
+    with Path(path).open() as stream:
+        for row in csv.DictReader(stream):
+            method = row.get("method")
+            if method not in ("median", "spline_rmse"):
+                continue
+            try:
+                index = int(row["dataset_index"])
+                scores = np.array([float(row[k]) for k in METRICS])
+                fold = int(row["fold"])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError("Reference has malformed OOF identity or metrics") from exc
+            key = method, index
+            if key not in expected or key in seen:
+                raise ValueError("Reference has unexpected or duplicate method/image identities")
+            pos = position[index]
+            if row.get("scene_id") != scenes[pos] or fold != assignment[pos]:
+                raise ValueError("Reference scene/fold identities differ from training assignments")
+            if not np.isfinite(scores).all():
+                raise ValueError("Reference contains nonfinite OOF metrics")
+            seen.add(key)
+            parity = max(parity, float(np.max(np.abs(values[1., method][pos] - scores))))
+    if seen != expected:
+        raise ValueError("Reference is missing paired full-training image identities")
+    if parity > 1e-10:
+        raise ValueError("Full-training reference changed")
+    return parity
+
+
 def run(args):
     torch.set_num_threads(2)
     output = fresh_output(args.output)
@@ -200,23 +233,15 @@ def run(args):
             atomic_json(output / "completion.json", {"complete": True, "smoke": True, "test_read": False, "model_selection": False})
             return
         table, intervals, values = summarize_learning(all_rows, all_fits, data.ids, data.scenes)
-        position = {int(index): pos for pos, index in enumerate(data.ids)}
-        parity = 0.
-        with (selection_root / "oof_per_image.csv").open() as stream:
-            reference = [row for row in csv.DictReader(stream) if row["method"] in ("median", "spline_rmse")]
-        if len(reference) != len(data.ids) * 2:
-            raise ValueError("Missing paired full-training reference")
-        for row in reference:
-            pos = position[int(row["dataset_index"])]
-            parity = max(parity, float(np.max(np.abs(values[1., row["method"]][pos] - [float(row[k]) for k in METRICS]))))
-        if parity > 1e-10:
-            raise ValueError("Full-training reference changed")
+        reference_path = selection_root / "oof_per_image.csv"
+        parity = compare_learning_reference(reference_path, values, data.ids, data.scenes, data.assignment)
         write_csv(output / "learning_curve.csv", table)
         write_csv(output / "oof_per_image.csv", all_rows)
         atomic_json(output / "comparisons.json", intervals)
         atomic_json(output / "completion.json", {"complete": True, "smoke": False, "test_read": False,
                     "model_selection": False, "deployment_changed": False, "fit_trials": 15,
                     "full_fit_reused": 5, "full_oof_max_difference": parity,
+                    "reference_oof_sha256": sha256(reference_path),
                     "protocol_sha256": sha256(output / "protocol.json"),
                     "interpretation": "Exploratory training-only nested scene learning curve. Conditional scene intervals do not include refitting uncertainty."})
 

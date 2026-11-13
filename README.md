@@ -14,9 +14,9 @@ Fresh executions in the pinned Linux reproduction environment were compared with
 | Part 2: NYU | All 1,449 newly inferred raw depth maps match the original element-for-element. |
 | Part 2: video depth | Both methods' 70-frame raw depth streams match the original element-for-element. |
 | Part 3B | All 654 final residual-corrected depth maps match; 2,616 per-image metric rows differ by at most 4.45e-16 after CSV round trips. |
-| Code and environment | 107 tests, 15 CLI entrypoints, shell syntax and 87 installed package dependencies passed. |
+| Code and environment | 174 tests, 15 CLI entrypoints, shell syntax and 87 installed package dependencies passed. |
 
-[Validation record](results/restoration_20261113/validation.json), [new replay evidence](results/restoration_20261113/), and [unchanged historical artifacts](results/frozen_20261111/IMPORT_MANIFEST.json) retain the details. These checks establish preservation of an existing frozen result, not a new independent holdout experiment.
+[Final code review](docs/FINAL_CODE_REVIEW_20261113.md), [current validation](results/final_review_20261113/validation.json), [complete restoration evidence](results/restoration_20261113/), and [unchanged historical artifacts](results/frozen_20261111/IMPORT_MANIFEST.json) retain the details. These checks establish preservation of an existing frozen result, not a new independent holdout experiment.
 
 ## Part 3B primary and controls
 
@@ -39,7 +39,8 @@ scripts/                       Baseline and frozen-replay shell entrypoints
 tests/                         Unit and numerical regression tests
 docs/REPRODUCTION.md            Current reproduction instructions
 results/frozen_20261111/        Original frozen parameters and historical evidence
-results/restoration_20261113/   Fresh restoration checks and delivery manifest
+results/restoration_20261113/   Original complete restoration evidence
+results/final_review_20261113/  Final review checks and current delivery manifest
 data/                          External datasets and weights (ignored)
 third_party/                   Pinned upstream Git checkouts (ignored)
 outputs/                       Raw arrays and runtime artifacts (ignored)

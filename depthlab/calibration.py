@@ -223,6 +223,34 @@ def _write_json(path, value):
     Path(path).write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
+def validate_training_partition(partition, all_scenes=None):
+    """Check the official image partition and optional scene boundary, without GT."""
+    train, test = (np.asarray(partition[name]) for name in ("train", "test"))
+    for ids, count in ((train, 795), (test, 654)):
+        if (ids.shape != (count,) or not np.issubdtype(ids.dtype, np.integer) or
+                len(np.unique(ids)) != count or np.any(ids < 0) or np.any(ids >= 1449)):
+            raise ValueError("Expected unique official 795/654 image identities within 1449 images")
+    if np.intersect1d(train, test).size:
+        raise ValueError("Official training/test image identities overlap")
+    if all_scenes is not None:
+        scenes = np.asarray(all_scenes)
+        if (scenes.shape != (1449,) or len(np.unique(scenes[train])) != 249 or
+                np.intersect1d(scenes[train], scenes[test]).size):
+            raise ValueError("Expected 249 training scenes disjoint from official test scenes")
+    return train
+
+
+def validate_training_cache(data_root, predictions):
+    """Bind a complete RGB-only cache to the current GT and split files."""
+    root = Path(data_root)
+    actual = {"nyu_mat_sha256": _sha(root / "nyu_depth_v2_labeled.mat"),
+              "splits_sha256": _sha(root / "splits.mat")}
+    signature = predictions.metadata.get("signature", {})
+    if not isinstance(signature, dict) or signature.get("data") != actual:
+        raise ValueError("Prediction cache data identity differs from the training dataset/split")
+    return actual
+
+
 def fit(data_root, prediction_folder, output):
     # Imported lazily so core calibration helpers remain usable independently.
     from .cache import load_predictions
@@ -230,14 +258,16 @@ def fit(data_root, prediction_folder, output):
     output, data_root, prediction_folder = Path(output), Path(data_root), Path(prediction_folder)
     if output.exists() and any(output.iterdir()):
         raise FileExistsError("Use a fresh calibration history directory; existing evidence cannot be overwritten")
-    indices = splits(data_root)["train"]
-    if len(indices) != 795 or len(np.unique(indices)) != 795:
-        raise ValueError("Expected official 795-image training split")
+    partition = splits(data_root)
+    indices = validate_training_partition(partition)
     predictions = load_predictions(prediction_folder, required_ids=indices,
                                    expected_known_intrinsics=False, require_complete=True)
+    data_hashes = validate_training_cache(data_root, predictions)
     output.mkdir(parents=True, exist_ok=True)
     with open_nyu(data_root) as handle:
-        scenes = scene_names(handle)[indices]
+        all_scenes = scene_names(handle)
+        validate_training_partition(partition, all_scenes)
+        scenes = all_scenes[indices]
         folds = scene_folds(scenes)
         features, ratios, samples, targets = prepare_training(handle, predictions, indices)
         protocol = {"scope": "official795_training_only", "historical_test_exposure": True,
@@ -250,8 +280,8 @@ def fit(data_root, prediction_folder, output):
                                   "history_size": 20, "tolerance_grad": 1e-9, "tolerance_change": 1e-11,
                                   "line_search_fn": "strong_wolfe"},
                     "selection_rule": "All three OOF mean gains >1e-6 and all three gains >0 in every scene fold; minimum eligible AbsRel",
-                    "dataset_sha256": _sha(data_root / "nyu_depth_v2_labeled.mat"),
-                    "split_sha256": _sha(data_root / "splits.mat"),
+                    "dataset_sha256": data_hashes["nyu_mat_sha256"],
+                    "split_sha256": data_hashes["splits_sha256"],
                     "prediction_files_sha256": {p.name: _sha(p) for p in prediction_folder.iterdir()
                                                    if p.is_file() and p.name in ("depth.npy", "indices.npy", "intrinsics.npy", "runtime.json", "manifest.json")},
                     "source_sha256": {name: _sha(Path(__file__).parent / name) for name in

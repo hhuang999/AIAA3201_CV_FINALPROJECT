@@ -37,7 +37,7 @@ def verify_manifest(manifest_path, root):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", type=Path, default=Path("results/restoration_20261113/manifest.json"))
+    parser.add_argument("--manifest", type=Path, default=Path("results/final_review_20261113/manifest.json"))
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     args = parser.parse_args()
     print(json.dumps(verify_manifest(args.manifest, args.root), indent=2))

@@ -43,7 +43,7 @@ export VIDEO_PYTHON="$METRIC_PYTHON"
 bash scripts/run_baselines.sh data third_party outputs/reproduction results/reproduction
 ```
 
-This generates raw predictions and numerical artifacts, without model selection. Use a new run directory for independent experiments. NYU inference can resume the same interrupted cache only when identity and runtime checks match; complete caches are checksum-verified without reloading a model.
+The baseline and evaluation scripts both default to `outputs/reproduction` and `results/reproduction`; explicit directory arguments are preserved. This generates raw predictions and numerical artifacts, without model selection. Use a new run directory for independent experiments. NYU inference can resume the same interrupted cache only when identity and runtime checks match; complete caches are checksum-verified without reloading a model. Decoded video frames can also be reused after a downstream interruption when source, decoding options and RGB checksum match, without rewriting their files.
 
 For stereo-only validation without creating figures:
 
@@ -104,8 +104,18 @@ Learning curves can reuse a completed new discovery, or the migrated original di
 
 Compact prediction caches always carry original dataset IDs; consumers never assume row positions equal IDs. Hash binding and finite-value checks prevent mismatched datasets, unfinished caches and invalid depth outputs from entering a completed result. These checks do not claim scientific novelty or new independent test evidence: the replay establishes preservation of the existing frozen result.
 
+## Historical presentation helpers
+
+`depthlab.figures` and `depthlab.summarize` still target the earlier combined artifact format. They require `calibration_parameters.json` with the historical scalar/curve/residual fields, the corresponding calibration OOF and camera-diagnosis artifacts, and their other presentation inputs. The summary additionally requires known-camera inference timings and the previously rendered video-change table. These helpers are outside the current numerical reproduction route and do not consume the `B_residual_v1` artifact or a standalone frozen replay directory.
+
+Use `results/restoration_20261113/part3b_replay/` or the new evaluation output for current numerical results. Do not combine its tables with the retained seed-42 parameters or diagnosis files. Both historical helpers reject missing required artifacts or incompatible parameters before creating output files. The summary's optional `--readme` requires exactly one ordered `<!-- results:start -->` / `<!-- results:end -->` marker pair; the current README has no such markers.
+
+Reports, figures and final videos remain a separate presentation task. No presentation generation is required to reproduce or verify the delivered numerical result. Running either helper with `--help` checks its command-line interface only.
+
 ## Delivered verification
 
-Run `python -m depthlab.verify` to check the source, tests, dependency specifications, historical evidence and new parity results against `results/restoration_20261113/manifest.json`. The verifier uses only Python's standard library. Large external prediction arrays remain in ignored runtime storage and carry their own complete cache manifests.
+Run `python -m depthlab.verify` to check the source, tests, dependency specifications, historical evidence and new parity results against `results/final_review_20261113/manifest.json`. The verifier uses only Python's standard library. Large external prediction arrays remain in ignored runtime storage and carry their own complete cache manifests.
 
 The restored source uses LF checkouts on Windows and Linux. `results/**` is preserved byte-for-byte so CSV newline conversion cannot invalidate frozen scientific hashes.
+
+The [final code review](FINAL_CODE_REVIEW_20261113.md) records implementation lineage and the 174-test acceptance result. The earlier restoration manifest remains an immutable record of its original commit; the current verifier uses the final-review manifest.

@@ -1,0 +1,44 @@
+{
+  "complete": true,
+  "review_base_commit": "b3bbb148d0c1a8930e38a2159b6d55bfca90d1a1",
+  "teammate_base_commit": "411687c4cce2a0c8be021f188c7ae9ef6b85de56",
+  "branch": "codex/part3b",
+  "github_account": "hjjs4",
+  "tests_passed": 174,
+  "new_regression_cases": 67,
+  "cli_help_checks_passed": 15,
+  "environment_packages_compatible": 87,
+  "real_cpu_inference": {
+    "model": "Depth Anything V2 Small",
+    "frames": 1,
+    "device": "CPU",
+    "finite_depth": true
+  },
+  "decoded_frame_reuse": {
+    "frames": 70,
+    "contents_and_modification_times_unchanged": true
+  },
+  "frozen_residual": {
+    "images": 654,
+    "changed_depth_pixels": 0,
+    "per_image_rows": 2616,
+    "max_absolute_metric_difference": 4.440892098500626e-16,
+    "model_sha256": "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5",
+    "abs_rel": 0.09960689343231784,
+    "rmse_m": 0.3831236302386158,
+    "delta1": 0.9055456208197196
+  },
+  "fixed_issues": [
+    "training cache dataset/split binding and train/test scene boundary",
+    "completed fit parameter provenance and expected digest enforced before evaluation",
+    "learning reference rejects NaN and duplicate/missing or wrong scene/fold identities",
+    "DAV2 honors explicit CPU selection on hosts with accelerators",
+    "verified decoded frames reusable after downstream interruption",
+    "baseline/evaluation default directories aligned",
+    "historical presentation helpers reject incompatible inputs before writes"
+  ],
+  "scope": "Final code review and reproducibility fixes; no new fit, model selection or claimed metric gain",
+  "course_report_figures_and_final_videos_modified": false,
+  "prior_restore_evidence": "results/restoration_20261113/validation.json",
+  "original_frozen_artifacts_unchanged": true
+}

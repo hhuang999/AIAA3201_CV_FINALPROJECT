@@ -1,0 +1,13 @@
+{
+  "complete": true,
+  "training_images": 795,
+  "training_scenes": 249,
+  "test_images": 654,
+  "train_test_scenes_overlap": 0,
+  "data_binding": {
+    "nyu_mat_sha256": "2d724b0c0ab358aa1ce5df855e5bd14a2279ab7202efe22f32a30d612dcb86aa",
+    "splits_sha256": "6e081404491a8bfba2f066beaa9713ef6046f9007aa5f799f2a350506a580cee"
+  },
+  "legacy_full_fraction_reference_max_difference": 8.881784197001252e-16,
+  "scope": "Identity and stored-reference acceptance; no new fitting or model selection"
+}

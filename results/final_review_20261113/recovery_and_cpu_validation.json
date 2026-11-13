@@ -1,0 +1,14 @@
+{
+  "complete": true,
+  "reused_original_frames": 70,
+  "frame_files_unchanged": true,
+  "cpu_real_model": "Depth Anything V2 Small",
+  "cpu_frames": 1,
+  "depth_shape": [
+    1,
+    360,
+    640
+  ],
+  "finite": true,
+  "cpu_manifest_sha256": "9aa7503a159794b8d86e6d09b72159771f6f9f8b43942a757a36d25fda56ef28"
+}
