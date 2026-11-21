@@ -224,8 +224,15 @@ def test_v2_parametrizations_torch_numpy_parity_and_pca_dof():
 
 
 def test_frozen_v2_model_schema_and_lf_endings():
+    import json
+    from depthlab.verify import verify_manifest
+
     repo = Path(__file__).resolve().parents[1]
-    for p in list((repo / "depthlab").glob("sota_v2_*.py")) + [repo / "tests" / "test_part3b_sota_v2.py"]:
+    v2_doc = repo / "docs" / "PART3B_SOTA_V2.md"
+    check_files = list((repo / "depthlab").glob("sota_v2_*.py")) + [repo / "tests" / "test_part3b_sota_v2.py"]
+    if v2_doc.is_file():
+        check_files.append(v2_doc)
+    for p in check_files:
         assert b"\r" not in p.read_bytes(), f"CRLF detected in {p}"
 
     frozen_path = repo / "results" / "part3b_sota_v2" / "frozen_sota_v2_model.json"
@@ -235,4 +242,17 @@ def test_frozen_v2_model_schema_and_lf_endings():
         assert payload["primary_single_pass_raw_params"] > 0
         assert 0.0 < payload["primary_single_pass_effective_dof"] < payload["primary_single_pass_raw_params"]
         assert b"\r" not in frozen_path.read_bytes()
+
+    receipt_path = repo / "results" / "part3b_sota_v2" / "test_evaluation_receipt.json"
+    if receipt_path.is_file():
+        rec = json.loads(receipt_path.read_text(encoding="utf-8"))
+        assert rec["one_shot_test_evaluation"] is True
+        assert rec["round1_exact_parity_max_abs_diff"] < 1e-12
+
+    manifest_path = repo / "results" / "part3b_sota_v2" / "manifest.json"
+    if manifest_path.is_file():
+        res = verify_manifest(manifest_path, root=repo)
+        assert res["complete"] is True
+        assert res["verified_files"] >= 20
+
 

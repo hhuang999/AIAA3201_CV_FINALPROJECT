@@ -1,0 +1,166 @@
+{
+  "schema": "part3b_sota_v2_manifest",
+  "file_count": 32,
+  "files": [
+    {
+      "path": "depthlab/sota_v2_cache.py",
+      "bytes": 27622,
+      "sha256": "571f60109e2dbfca2cba8a21c9ab1cd7ead2ef40ba7bee64a31139b463627ad1"
+    },
+    {
+      "path": "depthlab/sota_v2_diagnose.py",
+      "bytes": 32768,
+      "sha256": "38cef20acdb30a3c4e1d77779b99465cd4c20af8eef3aa953dd0e3d2ed837999"
+    },
+    {
+      "path": "depthlab/sota_v2_calibration.py",
+      "bytes": 92583,
+      "sha256": "f66bf438919cbadc6621db73e067981d456ea704525920041b7db4835ed18154"
+    },
+    {
+      "path": "depthlab/sota_v2_evaluate.py",
+      "bytes": 36240,
+      "sha256": "aee6453db12f2c645bc299d767533a399cba7dba4b95976534981f69ec841d78"
+    },
+    {
+      "path": "depthlab/sota_v2_figures.py",
+      "bytes": 39699,
+      "sha256": "7cf319341e0541f8cad70cfafbf0f81dd0646f8d1a46d2434be5f731ae845668"
+    },
+    {
+      "path": "tests/test_part3b_sota_v2.py",
+      "bytes": 9257,
+      "sha256": "20ebfcde6a8f5c979e193f41a01087fbedf502a5253b6290e00c6aa99d23a4da"
+    },
+    {
+      "path": "docs/PART3B_SOTA_V2.md",
+      "bytes": 20121,
+      "sha256": "b147b56704b3aeec210cb5b00b542eca128e906d9e740ec7b78e3c4d2b117fbf"
+    },
+    {
+      "path": "results/part3b_sota_v2/cv_v2_selection_report.json",
+      "bytes": 10282,
+      "sha256": "5d896e084ccfd5d6cbeadc7662b2a1fa2461138d0febcecfbaea0377b260fd94"
+    },
+    {
+      "path": "results/part3b_sota_v2/frozen_sota_v2_model.json",
+      "bytes": 603724,
+      "sha256": "a7633ffa74b21b70e196ba822c15fe454ac96b528443d4a70753f0aa4ff479e6"
+    },
+    {
+      "path": "results/part3b_sota_v2/generalization_gap.csv",
+      "bytes": 5390,
+      "sha256": "6cd9455dbee2e89a32c59c2d516be29caec1b593d87f09e5301096f4e80ba233"
+    },
+    {
+      "path": "results/part3b_sota_v2/oof_ablation_summary.csv",
+      "bytes": 11510,
+      "sha256": "1dfd60c3d49d9bc8beb8016490eefbd9480dd6c1016ecd179c5f42ce8227b159"
+    },
+    {
+      "path": "results/part3b_sota_v2/oof_fold_breakdown.csv",
+      "bytes": 24384,
+      "sha256": "88d150a60a3792b9a36e183149f5b5736b8fc04e2f9a7666e52274e5c103e349"
+    },
+    {
+      "path": "results/part3b_sota_v2/oof_learning_curve.csv",
+      "bytes": 4380,
+      "sha256": "4908efc108bf936fbca9055c05975c377dae4580cb06ba71668e3f1e6eb85267"
+    },
+    {
+      "path": "results/part3b_sota_v2/oof_multiseed_stability.csv",
+      "bytes": 8675,
+      "sha256": "65e7dfc2f34e148be00e560b54d7fc21312a314c68eaa5b83485796fea1375fd"
+    },
+    {
+      "path": "results/part3b_sota_v2/oof_paired_bootstrap.csv",
+      "bytes": 20150,
+      "sha256": "b7b6be40da15e11095b71de19fa4d71e7276208175356094d504fd0ea0863c4d"
+    },
+    {
+      "path": "results/part3b_sota_v2/oof_per_image.csv",
+      "bytes": 767182,
+      "sha256": "e58e304dd2c7fa31b4a02581447c9bce33cd31a66369b758ac2f98c042fcaa7b"
+    },
+    {
+      "path": "results/part3b_sota_v2/runtime_overhead.json",
+      "bytes": 1086,
+      "sha256": "2946ba76f3e3ea6834dcbf90197772778061e103c4fdf1068dc3a6b15963db17"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_change_counts.csv",
+      "bytes": 1159,
+      "sha256": "966a7922c5abad24fd7dae1c5116eda146571d1d995da0837dcb39503071711b"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_depth_bins.csv",
+      "bytes": 4884,
+      "sha256": "3c1e1cc06e5447f578b88f20673462ce99544797e4dcf3b6f1ef86d2c4dcba8a"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_evaluation_receipt.json",
+      "bytes": 2331,
+      "sha256": "62c0616aa7b2625bdd836f5385fd7c57dacb72468fa93cffae43cc72305b3439"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_mechanism_diagnostics.csv",
+      "bytes": 299296,
+      "sha256": "f77d4f1f34f038b9944549867da069a35e811e8df8ccb63cb5f3c404d155a186"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_paired_bootstrap.csv",
+      "bytes": 5869,
+      "sha256": "3f2a4b47f83353a33e1a0dab3caa84e1745521782ede850df732c4160f2ea928"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_per_image.csv",
+      "bytes": 615958,
+      "sha256": "eff8c9aa78215d5b98991f1451f281c85ae4034af1ebc1416912fbe302346aea"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_representative_cases.csv",
+      "bytes": 5552,
+      "sha256": "f251c25fefdf81413bf4386a8ecb56b51433fd5de78a3e35e035724fa2ad437e"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_round1_case_audit.csv",
+      "bytes": 8771,
+      "sha256": "60dcfe0ce1c1b556f48ba661f7cfcef5b337d83156d6cb5b74d00b136d9ded54"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_spatial_residuals.json",
+      "bytes": 141471,
+      "sha256": "f4082293db06be84ba797d0f99742cac1c42d681354711f9f2b952feef5d6496"
+    },
+    {
+      "path": "results/part3b_sota_v2/test_summary.csv",
+      "bytes": 2396,
+      "sha256": "0ef086a8cb1044741849f862542afca9686571b4fb8906614250103dbf2a744b"
+    },
+    {
+      "path": "results/figures/part3b_sota_v2/fig1_v2_architecture_and_oracles.png",
+      "bytes": 489011,
+      "sha256": "37aff16328fc9600030c66f58ad15d1a837f2a497847bfe1718040b51d042f99"
+    },
+    {
+      "path": "results/figures/part3b_sota_v2/fig2_v2_ablation_and_ci.png",
+      "bytes": 650012,
+      "sha256": "dcd896fcd1219c20097e54eeeafb657520c44f7e4fe93a28945eed6c33be2d39"
+    },
+    {
+      "path": "results/figures/part3b_sota_v2/fig3_v2_mechanism_and_left_tail.png",
+      "bytes": 629447,
+      "sha256": "965e946097268b9e04539656c94be6bccc33287673209eb88c74513571a66ec6"
+    },
+    {
+      "path": "results/figures/part3b_sota_v2/fig4_v2_depth_bins_learning_curve_pareto.png",
+      "bytes": 648842,
+      "sha256": "62d1aa14c7b0de3d12076d03c9f8ec4a32fec2439ad712e4ee894130f210ab8f"
+    },
+    {
+      "path": "results/figures/part3b_sota_v2/fig5_v2_round1_failures_and_qualitative.png",
+      "bytes": 6760282,
+      "sha256": "46d2f7f20e6dc89f54ca1bff9e9aad4435c6748d812dd5e0f7727bed39d9d32e"
+    }
+  ]
+}
