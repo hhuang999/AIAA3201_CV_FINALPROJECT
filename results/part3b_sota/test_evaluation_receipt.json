@@ -1,0 +1,64 @@
+{
+  "schema": "GeoCalib_3D_test_receipt_v1",
+  "complete": true,
+  "one_shot_test_evaluation": true,
+  "git_head_at_eval": "8560b5a40775ae971a503381aeeb071d0abb0311",
+  "frozen_sota_path": "results\\part3b_sota\\frozen_sota_model.json",
+  "frozen_sota_sha256": "5f8326a63470416e077cec12afb41ed793ffb2a58abf8d94a0eb88b84f08e86c",
+  "b3_frozen_sha256": "176a0b027af87d11fb14a44a843ed50b8e068e4284ee8096e4daf34009c55ea5",
+  "test_images": 654,
+  "test_scenes": 215,
+  "b3_reference_check": {
+    "reference_path": "results\\frozen_20261111\\part3b_residual_20261111\\final\\test\\per_image.csv",
+    "reference_sha256": "f1b690b35a19af35b85689cd4605c096a4a60d8c3779094bc7b1d46bd93cf32e",
+    "verified_rows": 2616,
+    "cache_note": "Local outputs/nyu_rgb/depth.npy (e84ee7d5...) vs historical replay cache (2d2e63d2...); all paired comparisons use identical local depth.npy",
+    "max_mean_abs_error": 0.0001258698982888884,
+    "per_image_max_abs_error": 0.0939260563380282,
+    "mean_tolerance": 0.0005,
+    "mean_deltas_by_method": {
+      "b1_global_scale": {
+        "abs_rel": -9.448910824966239e-06,
+        "rmse": -4.004593612422225e-05,
+        "delta1": 0.00011246120966390549
+      },
+      "b2_monotone_curve": {
+        "abs_rel": -4.7925713333174524e-06,
+        "rmse": -2.484218651960246e-05,
+        "delta1": 5.341042175577293e-05
+      },
+      "b3_residual_v1": {
+        "abs_rel": -5.998329192888341e-06,
+        "rmse": -2.484723941847955e-05,
+        "delta1": 0.0001258698982888884
+      },
+      "raw": {
+        "abs_rel": -4.075115428159304e-06,
+        "rmse": -2.64752892454867e-05,
+        "delta1": 0.00012251131662555093
+      }
+    }
+  },
+  "b3_reference_max_mean_error": 0.0001258698982888884,
+  "b3_reference_per_image_max_error": 0.0939260563380282,
+  "primary_method": "J3_geok_sp3d_slope_bal111_l01",
+  "primary_test_metrics": {
+    "abs_rel": 0.08653515479935733,
+    "rmse": 0.3492503515890357,
+    "delta1": 0.9350172838765518,
+    "gain_vs_b3_abs_rel": 0.013065740303767573,
+    "gain_vs_b3_rmse": 0.03384843141016153,
+    "gain_vs_b3_delta1": 0.029345793158543354
+  },
+  "runtime_summary": {
+    "benchmark_images": 200,
+    "extract_sota_features_ms_per_image": 2.220099499973003,
+    "geocalib3d_cpu_torch_f64_ms_per_image": 8.947041999781504,
+    "geocalib3d_pure_numpy_f64_ms_per_image": 30.95672249997733,
+    "b3_residual_v1_ms_per_image": 37.241634000092745,
+    "max_abs_diff_cpu_torch_vs_numpy": 8.881784197001252e-15,
+    "geocalib3d_gpu_torch_f64_ms_per_image": 4.201102500082925,
+    "max_abs_diff_gpu_torch_vs_numpy": 8.881784197001252e-15,
+    "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+  }
+}

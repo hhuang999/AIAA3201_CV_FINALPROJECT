@@ -1,0 +1,16 @@
+reference,candidate,all_better,all_worse,mixed_or_tied,unchanged,abs_rel_improved,rmse_improved,delta1_improved,total_images
+raw,b1_global_scale,300,181,173,0,411,347,386,654
+b1_global_scale,b2_monotone_curve,231,159,264,0,379,383,333,654
+b2_monotone_curve,b3_residual_v1,276,194,184,0,369,381,345,654
+b3_residual_v1,S2_b2_geok_sp3d_ridge,285,179,190,0,402,361,370,654
+S2_b2_geok_sp3d_ridge,J0_spline_bal111,157,284,213,0,274,256,262,654
+J0_spline_bal111,J1_geok_bal111_l01,281,175,198,0,378,374,380,654
+J1_geok_bal111_l01,J2_geok_sp3d_bal111_l01,269,181,204,0,371,390,363,654
+J2_geok_sp3d_bal111_l01,J3_geok_sp3d_slope_bal111_l01,205,161,288,0,356,365,339,654
+raw,J3_geok_sp3d_slope_bal111_l01,330,130,194,0,466,419,408,654
+b1_global_scale,J3_geok_sp3d_slope_bal111_l01,288,131,235,0,432,415,378,654
+b2_monotone_curve,J3_geok_sp3d_slope_bal111_l01,288,160,206,0,404,403,376,654
+b3_residual_v1,J3_geok_sp3d_slope_bal111_l01,285,158,211,0,404,398,378,654
+b3_residual_v1,J0_spline_bal111,204,246,204,0,320,281,301,654
+b3_residual_v1,J1_geok_bal111_l01,273,180,201,0,392,359,366,654
+b3_residual_v1,J2_geok_sp3d_bal111_l01,289,161,204,0,413,391,377,654

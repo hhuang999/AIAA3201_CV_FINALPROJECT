@@ -1,0 +1,11 @@
+{
+  "benchmark_images": 200,
+  "extract_sota_features_ms_per_image": 2.220099499973003,
+  "geocalib3d_cpu_torch_f64_ms_per_image": 8.947041999781504,
+  "geocalib3d_pure_numpy_f64_ms_per_image": 30.95672249997733,
+  "b3_residual_v1_ms_per_image": 37.241634000092745,
+  "max_abs_diff_cpu_torch_vs_numpy": 8.881784197001252e-15,
+  "geocalib3d_gpu_torch_f64_ms_per_image": 4.201102500082925,
+  "max_abs_diff_gpu_torch_vs_numpy": 8.881784197001252e-15,
+  "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+}

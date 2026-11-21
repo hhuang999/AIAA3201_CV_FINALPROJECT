@@ -31,6 +31,12 @@ from depthlab.sota_calibration import (
     load_frozen_sota,
     validate_frozen_sota,
 )
+from depthlab.sota_evaluate import (
+    compute_change_counts,
+    evaluate_heldout_test,
+    paired_scene_bootstrap,
+    select_representative_cases,
+)
 from depthlab.sota_diagnose import (
     CROP_R2,
     CROP_U_TILDE,
@@ -409,3 +415,74 @@ def test_frozen_sota_load_and_tamper_rejection(tmp_path):
     copy_p = tmp_path / "frozen.json"
     copy_p.write_bytes(frozen_path.read_bytes())
     assert load_frozen_sota(copy_p)["primary_params"] == 25
+
+
+def test_gate4_bootstrap_counts_and_case_selection_synthetic():
+    rng = np.random.default_rng(77)
+    rows = []
+    diag_rows = []
+    for i in range(40):
+        sc = f"scene_{i // 4}"
+        raw_ar, raw_rm, raw_d1 = 0.13 + rng.uniform(-0.01, 0.01), 0.45, 0.87
+        b3_ar, b3_rm, b3_d1 = 0.11 + rng.uniform(-0.005, 0.005), 0.42, 0.90
+        # Inject clear improvement on most images and 2 regressions at indices 5, 19
+        if i in (5, 19):
+            cand_ar, cand_rm, cand_d1 = b3_ar + 0.03, b3_rm + 0.05, b3_d1 - 0.04
+        elif i == 12:
+            cand_ar, cand_rm, cand_d1 = b3_ar - 0.05, b3_rm - 0.09, b3_d1 + 0.06
+        else:
+            cand_ar, cand_rm, cand_d1 = b3_ar - 0.012, b3_rm - 0.025, b3_d1 + 0.022
+        for m, (ar, rm, d1) in (
+            ("raw", (raw_ar, raw_rm, raw_d1)),
+            ("b3_residual_v1", (b3_ar, b3_rm, b3_d1)),
+            ("J3_geok_sp3d_slope_bal111_l01", (cand_ar, cand_rm, cand_d1)),
+        ):
+            rows.append({"index": i, "scene": sc, "method": m, "abs_rel": ar, "rmse": rm, "delta1": d1})
+        diag_rows.append({"index": i, "scene": sc, "f_tilde": 1.05 + 0.005 * i})
+
+    df = pd.DataFrame(rows)
+    diag_df = pd.DataFrame(diag_rows)
+    boot = paired_scene_bootstrap(df, [("b3_residual_v1", "J3_geok_sp3d_slope_bal111_l01")], replicates=400)
+    assert len(boot) == 3
+    assert (boot["gain"] > 0).all()
+    assert (boot["ci95_low"] > 0).all()
+    assert boot["scenes"].iloc[0] == 10
+
+    cnt = compute_change_counts(df, [("b3_residual_v1", "J3_geok_sp3d_slope_bal111_l01")]).iloc[0]
+    assert cnt["all_better"] == 38
+    assert cnt["all_worse"] == 2
+    assert cnt["total_images"] == 40
+
+    cases = select_representative_cases(df, diag_df, reference="b3_residual_v1", candidate="J3_geok_sp3d_slope_bal111_l01")
+    top = cases.loc[cases["case_label"] == "largest_gain_1", "index"].iloc[0]
+    worst = set(cases.loc[cases["case_label"].isin(["largest_regression_1", "largest_regression_2"]), "index"])
+    assert top == 12
+    assert worst == {5, 19}
+
+
+def test_gate4_provenance_rejection_and_receipt(tmp_path):
+    repo = Path(__file__).resolve().parents[1]
+    frozen_sota = repo / "results" / "part3b_sota" / "frozen_sota_model.json"
+    b3_frozen = repo / "results" / "frozen_20261111" / "part3b_residual_20261111" / "final" / "frozen_model.json"
+    receipt_path = repo / "results" / "part3b_sota" / "test_evaluation_receipt.json"
+    if not frozen_sota.is_file():
+        pytest.skip("Gate 3 frozen_sota_model.json missing")
+
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        evaluate_heldout_test(
+            data_root=repo / "data",
+            prediction_dir=repo / "outputs" / "nyu_rgb",
+            frozen_sota_path=frozen_sota,
+            b3_frozen_path=b3_frozen,
+            cv_dir=repo / "results" / "part3b_sota",
+            b3_test_reference_path=repo / "results" / "frozen_20261111" / "part3b_residual_20261111" / "final" / "test" / "per_image.csv",
+            output_dir=tmp_path / "eval_out",
+            expected_sota_sha256="0" * 64,
+        )
+
+    if not receipt_path.is_file():
+        pytest.skip("Gate 4 test_evaluation_receipt.json not yet generated")
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    assert receipt["test_images"] == 654
+    assert receipt["test_scenes"] == 215
+    assert receipt["b3_reference_max_mean_error"] <= 5e-4
