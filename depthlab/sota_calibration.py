@@ -8,7 +8,10 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
+import json
 from pathlib import Path
+import re
 from time import perf_counter
 from typing import Any
 
@@ -29,8 +32,9 @@ from .calibration import (
     residual_targets,
 )
 from .data import nyu_depth, nyu_image, open_nyu, scene_names
+from .frozen import load_frozen
 from .metrics import CROP, METRIC_NAMES, clip_depth, evaluate_image, valid_depth
-from .sota_io import load_nyu_rgb_cache, scene_folds_seeded, write_csv_lf, write_json_lf
+from .sota_io import file_sha256, load_nyu_rgb_cache, scene_folds_seeded, write_csv_lf, write_json_lf
 
 
 DEPTH_KNOTS = np.log(np.array([0.3, 0.7, 1.5, 3.0, 6.0, 12.0], dtype=np.float64))
@@ -39,6 +43,24 @@ FOCAL_ANCHOR_IDX = 3  # 1.14 in f_tilde = 0.5*(fx+fy)/480
 LOG_DEPTH_CENTER = 1.0
 SAMPLES_PER_IMAGE = 4096
 CV_SAMPLES_PER_IMAGE = 1024
+
+LOCKED_LADDER_NAMES = (
+    "S2_b2_geok_sp3d_ridge",
+    "J0_spline_bal111",
+    "J1_geok_bal111_l01",
+    "J2_geok_sp3d_bal111_l01",
+    "J3_geok_sp3d_slope_bal111_l01",
+)
+COMPARISON_ORDER = (
+    "raw",
+    "b1_global_scale",
+    "b2_monotone_curve",
+    "b3_residual_v1",
+    *LOCKED_LADDER_NAMES,
+)
+PRIMARY_SOTA_METHOD = "J3_geok_sp3d_slope_bal111_l01"
+LEARNING_CURVE_FRACTIONS = (0.10, 0.25, 0.50, 1.00)
+LEARNING_CURVE_SEED = 20261111
 
 # Precomputed pixel coordinate grids on 480x640 image
 _FULL_U_PIX, _FULL_V_PIX = np.meshgrid(
@@ -1467,16 +1489,421 @@ def run_cv_study(data_root: Path, prediction_dir: Path, output_dir: Path) -> dic
     return report
 
 
+def _check_sha256_hex(value: object, name: str) -> str:
+    if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        raise ValueError(f"Invalid SHA-256 digest for {name}: {value!r}")
+    return value
+
+
+def _finite_vec(values: object, name: str, expected_len: int | None = None) -> np.ndarray:
+    arr = np.asarray(values, dtype=np.float64)
+    if arr.ndim != 1 or not np.isfinite(arr).all():
+        raise ValueError(f"Expected finite 1D vector for {name}")
+    if expected_len is not None and len(arr) != expected_len:
+        raise ValueError(f"Expected length {expected_len} for {name}, got {len(arr)}")
+    return arr
+
+
+def _validate_submodel(model: dict[str, Any], label: str) -> None:
+    if not isinstance(model, dict):
+        raise ValueError(f"Expected dict submodel for {label}")
+    kind = model.get("kind")
+    if kind == "two_stage_ridge":
+        bc = model.get("base_curve", {})
+        xk = _finite_vec(bc.get("x_knots"), f"{label}.base_curve.x_knots", 6)
+        yk = _finite_vec(bc.get("y_knots"), f"{label}.base_curve.y_knots", 6)
+        if np.any(np.diff(xk) <= 0) or np.any(np.diff(yk) / np.diff(xk) <= 0):
+            raise ValueError(f"Non-monotone base_curve in {label}")
+        mean = _finite_vec(model.get("mean"), f"{label}.mean")
+        std = _finite_vec(model.get("std"), f"{label}.std", len(mean))
+        _finite_vec(model.get("coefficients"), f"{label}.coefficients", len(mean))
+        if np.any(std <= 0) or not np.isfinite(float(model.get("bias", np.nan))):
+            raise ValueError(f"Invalid ridge stats/bias in {label}")
+        if not np.isfinite(float(model.get("max_log_scale", np.nan))) or float(model["max_log_scale"]) <= 0:
+            raise ValueError(f"Invalid max_log_scale in {label}")
+        return
+
+    if kind != "geocalib_3d":
+        raise ValueError(f"Unsupported submodel kind {kind!r} in {label}")
+    ds = model.get("depth_spline", {})
+    dx = _finite_vec(ds.get("x_knots"), f"{label}.depth_spline.x_knots", 6)
+    dy = _finite_vec(ds.get("y_knots"), f"{label}.depth_spline.y_knots", 6)
+    if np.any(np.diff(dx) <= 0) or np.any(np.diff(dy) / np.diff(dx) <= 0):
+        raise ValueError(f"Depth spline must be strictly increasing in {label}")
+
+    fs = model.get("focal_spline", {})
+    if fs.get("enabled"):
+        fxk = _finite_vec(fs.get("x_knots"), f"{label}.focal_spline.x_knots", 6)
+        fyk = _finite_vec(fs.get("y_knots"), f"{label}.focal_spline.y_knots", 6)
+        if np.any(np.diff(fxk) <= 0) or np.any(np.diff(fyk) / np.diff(fxk) > 1e-12):
+            raise ValueError(f"Focal spline must be non-increasing in {label}")
+
+    for block_name in ("scale_residual", "depth_slope_mod"):
+        blk = model.get(block_name, {})
+        fnames = blk.get("feature_names", [])
+        n_f = len(fnames)
+        _finite_vec(blk.get("mean", []), f"{label}.{block_name}.mean", n_f)
+        sd = _finite_vec(blk.get("std", []), f"{label}.{block_name}.std", n_f)
+        _finite_vec(blk.get("weights", []), f"{label}.{block_name}.weights", n_f)
+        if np.any(sd <= 0):
+            raise ValueError(f"Non-positive std in {label}.{block_name}")
+
+    ru = model.get("ray_unwarp", {})
+    if not np.isfinite(float(ru.get("gamma_ray", 0.0))) or not np.isfinite(float(ru.get("f_ref_tilde", 1.14))):
+        raise ValueError(f"Nonfinite ray_unwarp in {label}")
+    c2 = model.get("cond_spatial2d", {})
+    if c2.get("w_v"):
+        n_c = len(c2.get("feature_names", []))
+        _finite_vec(c2.get("mean"), f"{label}.cond_spatial2d.mean", n_c)
+        c2_sd = _finite_vec(c2.get("std"), f"{label}.cond_spatial2d.std", n_c)
+        _finite_vec(c2.get("w_v"), f"{label}.cond_spatial2d.w_v", n_c)
+        _finite_vec(c2.get("w_r"), f"{label}.cond_spatial2d.w_r", n_c)
+        if np.any(c2_sd <= 0):
+            raise ValueError(f"Non-positive std in {label}.cond_spatial2d")
+
+
+def validate_frozen_sota(payload: dict[str, Any]) -> dict[str, Any]:
+    """Validate self-contained GeoCalib_3D_v1 frozen artifact strictly without side effects."""
+    if not isinstance(payload, dict) or payload.get("schema") != "GeoCalib_3D_v1":
+        raise ValueError("Expected schema == 'GeoCalib_3D_v1'")
+    if payload.get("complete") is not True:
+        raise ValueError("Frozen SOTA artifact must have complete=True")
+    if payload.get("test_read") is not False:
+        raise ValueError("Frozen SOTA artifact must retain train-only provenance (test_read=False)")
+    if payload.get("primary_method") != PRIMARY_SOTA_METHOD:
+        raise ValueError(f"Expected primary_method={PRIMARY_SOTA_METHOD!r}, got {payload.get('primary_method')!r}")
+    if payload.get("primary_params") != 25:
+        raise ValueError(f"Expected primary_params=25, got {payload.get('primary_params')!r}")
+    if payload.get("training_images") != 795 or payload.get("training_scenes") != 249:
+        raise ValueError("Expected training_images=795 and training_scenes=249")
+
+    train_ids = payload.get("train_ids")
+    if (
+        not isinstance(train_ids, list)
+        or len(train_ids) != 795
+        or len(set(train_ids)) != 795
+        or any(type(i) is not int or not (0 <= i < 1449) for i in train_ids)
+    ):
+        raise ValueError("Invalid train_ids in frozen SOTA artifact")
+
+    for digest_key in ("dataset_sha256", "split_sha256", "b3_frozen_model_sha256", "cv_selection_report_sha256"):
+        _check_sha256_hex(payload.get(digest_key), digest_key)
+
+    pc_hashes = payload.get("prediction_cache_sha256")
+    if not isinstance(pc_hashes, dict) or set(pc_hashes.keys()) != {"depth.npy", "intrinsics.npy", "indices.npy"}:
+        raise ValueError("Invalid prediction_cache_sha256 keys")
+    for k, v in pc_hashes.items():
+        _check_sha256_hex(v, f"prediction_cache_sha256[{k}]")
+
+    src_hashes = payload.get("source_sha256")
+    if not isinstance(src_hashes, dict) or not src_hashes:
+        raise ValueError("Expected nonempty source_sha256 map")
+    for k, v in src_hashes.items():
+        _check_sha256_hex(v, f"source_sha256[{k}]")
+
+    primary_model = payload.get("primary_model")
+    _validate_submodel(primary_model, "primary_model")
+    if count_parameters(primary_model) != payload["primary_params"]:
+        raise ValueError("primary_params mismatch with primary_model parameter count")
+
+    ladder = payload.get("ladder_models")
+    if not isinstance(ladder, dict) or any(name not in ladder for name in LOCKED_LADDER_NAMES):
+        raise ValueError("Missing required ladder_models entries")
+    for name in LOCKED_LADDER_NAMES:
+        _validate_submodel(ladder[name], f"ladder_models[{name}]")
+    if ladder[PRIMARY_SOTA_METHOD] != primary_model:
+        raise ValueError("ladder_models[primary_method] must exactly match primary_model")
+    return payload
+
+
+def load_frozen_sota(path: Path | str, expected_sha256: str | None = None) -> dict[str, Any]:
+    """Load and verify a locked GeoCalib_3D_v1 JSON artifact (optionally checking SHA-256)."""
+    target = Path(path)
+    actual_sha = file_sha256(target)
+    if expected_sha256 is not None and actual_sha != expected_sha256:
+        raise ValueError(f"Frozen SOTA SHA-256 mismatch: expected {expected_sha256}, got {actual_sha}")
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+        return validate_frozen_sota(payload)
+    except (TypeError, KeyError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Malformed frozen SOTA artifact at {target}") from exc
+
+
+def fit_and_lock_sota(
+    data_root: Path,
+    prediction_dir: Path,
+    cv_report_path: Path,
+    b3_frozen_path: Path,
+    output_path: Path,
+) -> dict[str, Any]:
+    """Gate 3: Fit primary + clean ladder on all 795 training images and freeze JSON before test."""
+    torch.set_num_threads(2)
+    cache = load_nyu_rgb_cache(
+        prediction_dir, data_root, allowed_split="train", compute_hashes=True, verify_scenes=True
+    )
+    train_ids = cache.train_ids
+
+    cv_report = json.loads(Path(cv_report_path).read_text(encoding="utf-8"))
+    if cv_report.get("test_read") is not False:
+        raise ValueError("CV selection report must certify test_read=False")
+    if cv_report.get("winner") != PRIMARY_SOTA_METHOD:
+        raise ValueError(f"Unexpected CV winner: {cv_report.get('winner')!r}")
+
+    b3_frozen = load_frozen(b3_frozen_path)
+    if b3_frozen["train_ids"] != train_ids.tolist():
+        raise ValueError("B3 frozen train_ids differ from official training split")
+    if b3_frozen["dataset_sha256"] != cache.hashes["nyu_mat_sha256"]:
+        raise ValueError("B3 frozen dataset_sha256 differs from current NYU dataset")
+    if b3_frozen["split_sha256"] != cache.hashes["splits_sha256"]:
+        raise ValueError("B3 frozen split_sha256 differs from current splits.mat")
+
+    spec_by_name = {s.name: s for s in build_candidate_specs()}
+    with open_nyu(data_root) as handle:
+        all_scenes = scene_names(handle)
+        train_scenes = np.unique(all_scenes[train_ids])
+        data = prepare_sota_training(handle, cache, train_ids, need_rgb=False)
+        full_scale = fit_scale(data["ratios"])
+        full_b2_curve = fit_curve(data["samples_b3"], data["targets_b3"], full_scale)
+        full_res_y = residual_targets(handle, cache, train_ids, full_b2_curve)[:, 0]
+
+    ladder_models: dict[str, Any] = {}
+    for name in LOCKED_LADDER_NAMES:
+        spec = spec_by_name[name]
+        if spec.kind == "two_stage_ridge":
+            model = fit_two_stage_ridge_model(spec, full_b2_curve, data["sota_feats"], full_res_y)
+        else:
+            model = fit_joint_sota_model(
+                spec=spec,
+                samples_p=data["samples_p"],
+                samples_gt=data["samples_gt"],
+                samples_row=data["samples_row"],
+                samples_col=data["samples_col"],
+                features=data["sota_feats"],
+                intrinsics=data["intrinsics"],
+                ratios=data["ratios"],
+            )
+        ladder_models[name] = model
+
+    primary_model = ladder_models[PRIMARY_SOTA_METHOD]
+    pkg_dir = Path(__file__).resolve().parent
+    source_sha256 = {
+        f"depthlab/{fname}": file_sha256(pkg_dir / fname)
+        for fname in ("sota_io.py", "sota_calibration.py", "metrics.py", "data.py", "frozen.py", "calibration.py")
+    }
+    eval_by_name = {e["method"]: e for e in cv_report.get("candidate_evaluations", [])}
+    selection_receipt = {
+        "cv_winner": PRIMARY_SOTA_METHOD,
+        "canonical_seed": cv_report["canonical_seed"],
+        "multi_seeds": cv_report["multi_seeds"],
+        "promotion_criterion": cv_report["promotion_criterion"],
+        "winner_cv_metrics": eval_by_name.get(PRIMARY_SOTA_METHOD),
+        "ladder_cv_metrics": {k: eval_by_name.get(k) for k in LOCKED_LADDER_NAMES if k in eval_by_name},
+    }
+
+    payload = {
+        "schema": "GeoCalib_3D_v1",
+        "complete": True,
+        "frozen_utc": datetime.now(timezone.utc).isoformat(),
+        "test_read": False,
+        "primary_method": PRIMARY_SOTA_METHOD,
+        "primary_display_name": "GeoCalib-3D",
+        "primary_params": count_parameters(primary_model),
+        "comparison_order": list(COMPARISON_ORDER),
+        "train_ids": train_ids.tolist(),
+        "training_images": int(len(train_ids)),
+        "training_scenes": int(len(train_scenes)),
+        "dataset_sha256": cache.hashes["nyu_mat_sha256"],
+        "split_sha256": cache.hashes["splits_sha256"],
+        "prediction_cache_sha256": {
+            "depth.npy": cache.hashes["depth_npy_sha256"],
+            "intrinsics.npy": cache.hashes["intrinsics_npy_sha256"],
+            "indices.npy": cache.hashes["indices_npy_sha256"],
+        },
+        "b3_frozen_model_path": "results/frozen_20261111/part3b_residual_20261111/final/frozen_model.json",
+        "b3_frozen_model_sha256": file_sha256(b3_frozen_path),
+        "cv_selection_report_sha256": file_sha256(cv_report_path),
+        "source_sha256": source_sha256,
+        "selection_receipt": selection_receipt,
+        "primary_model": primary_model,
+        "ladder_models": ladder_models,
+    }
+    write_json_lf(output_path, payload)
+    verified = load_frozen_sota(output_path)
+    out_sha = file_sha256(output_path)
+    print(f"Gate 3 Frozen Lock Complete: {output_path} (sha256={out_sha}, params={verified['primary_params']})", flush=True)
+    return verified
+
+
+def _scene_metric_bootstrap_ci(
+    scores: np.ndarray,
+    scenes: np.ndarray,
+    repeats: int = 10000,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Compute per-method 95% scene-cluster bootstrap CI [2.5, 97.5] over 249 training scenes."""
+    unique, inverse = np.unique(scenes, return_inverse=True)
+    counts = np.bincount(inverse)
+    sums = np.stack([scores[inverse == i].sum(axis=0) for i in range(len(unique))])
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+    boot = np.empty((repeats, scores.shape[1], 3), dtype=np.float64)
+    for start in range(0, repeats, 200):
+        step = min(200, repeats - start)
+        draw = rng.integers(0, len(unique), (step, len(unique)))
+        boot[start : start + step] = sums[draw].sum(axis=1) / counts[draw].sum(axis=1)[:, None, None]
+    return np.percentile(boot, 2.5, axis=0), np.percentile(boot, 97.5, axis=0)
+
+
+def run_learning_curve(
+    data_root: Path,
+    prediction_dir: Path,
+    output_path: Path,
+) -> pd.DataFrame:
+    """Train-only 5-fold scene-CV learning curve at 10%, 25%, 50%, 100% training scenes."""
+    torch.set_num_threads(2)
+    cache = load_nyu_rgb_cache(prediction_dir, data_root, allowed_split="train", compute_hashes=False)
+    train_ids = cache.train_ids
+    winner_spec = {s.name: s for s in build_candidate_specs()}[PRIMARY_SOTA_METHOD]
+    methods = ("b1_global_scale", "b2_monotone_curve", "b3_residual_v1", PRIMARY_SOTA_METHOD)
+
+    rows: list[dict[str, Any]] = []
+    with open_nyu(data_root) as handle:
+        scenes = scene_names(handle)[train_ids]
+        data = prepare_sota_training(handle, cache, train_ids, need_rgb=False)
+        folds = scene_folds_seeded(scenes, count=5, seed=SEED)
+        n = len(train_ids)
+
+        for frac in LEARNING_CURVE_FRACTIONS:
+            t0 = perf_counter()
+            fold_tasks: list[dict[str, Any]] = []
+            for f_idx, val in enumerate(folds):
+                fitting = np.setdiff1d(np.arange(n), val)
+                fit_scenes = np.unique(scenes[fitting])
+                shuffled = np.random.default_rng(LEARNING_CURVE_SEED + f_idx).permutation(fit_scenes)
+                keep_scenes = shuffled[: max(1, int(np.ceil(frac * len(shuffled))))]
+                tr_sub = fitting[np.isin(scenes[fitting], keep_scenes)]
+
+                scale = fit_scale(data["ratios"][tr_sub])
+                curve = fit_curve(data["samples_b3"][tr_sub], data["targets_b3"][tr_sub], scale)
+                res_y = residual_targets(handle, cache, train_ids[tr_sub], curve)[:, 0]
+                res_model = fit_residual(data["features_b3"][tr_sub], res_y, regularization=1.0, shrinkage=0.5)
+                fold_tasks.append(
+                    {
+                        "fold": f_idx,
+                        "val": val,
+                        "n_scenes": len(keep_scenes),
+                        "n_images": len(tr_sub),
+                        "scale": scale,
+                        "curve": curve,
+                        "res_model": res_model,
+                        "tr_sub": tr_sub,
+                    }
+                )
+
+            def _fit_fold_sota(task: dict[str, Any]) -> dict[str, Any]:
+                tr_sub = task["tr_sub"]
+                return fit_joint_sota_model(
+                    spec=winner_spec,
+                    samples_p=data["samples_p"][tr_sub, :CV_SAMPLES_PER_IMAGE],
+                    samples_gt=data["samples_gt"][tr_sub, :CV_SAMPLES_PER_IMAGE],
+                    samples_row=data["samples_row"][tr_sub, :CV_SAMPLES_PER_IMAGE],
+                    samples_col=data["samples_col"][tr_sub, :CV_SAMPLES_PER_IMAGE],
+                    features=[data["sota_feats"][i] for i in tr_sub],
+                    intrinsics=data["intrinsics"][tr_sub],
+                    ratios=data["ratios"][tr_sub],
+                    max_iter=65,
+                )
+
+            with ThreadPoolExecutor(max_workers=5) as pool:
+                sota_models = list(pool.map(_fit_fold_sota, fold_tasks))
+
+            scores = np.full((n, len(methods), 3), np.nan, dtype=np.float64)
+            for task, sota_m in zip(fold_tasks, sota_models):
+                for row in task["val"]:
+                    idx = int(train_ids[row])
+                    pred = cache[idx].astype(np.float64)
+                    gt = nyu_depth(handle, idx)
+                    K = data["intrinsics"][row]
+                    feat = data["sota_feats"][row]
+                    b1 = clip_depth(task["scale"] * pred)
+                    b2 = apply_curve(pred, task["curve"])
+                    b3 = apply_residual(b2, data["features_b3"][row], task["res_model"])
+                    sota_out = apply_sota_model(pred, K, sota_m, cached_features=feat)
+                    for col, out_d in enumerate((b1, b2, b3, sota_out)):
+                        scores[row, col] = evaluate_image(out_d, gt)
+
+            if not np.isfinite(scores).all():
+                raise ArithmeticError(f"Nonfinite learning curve OOF scores at fraction={frac}")
+            mean_scores = scores.mean(axis=0)
+            ci_lo, ci_hi = _scene_metric_bootstrap_ci(scores, scenes)
+            g_mean, g_lo, g_hi = _scene_bootstrap_vs_ref(scores, methods.index("b3_residual_v1"), scenes)
+            mean_scenes = float(np.mean([t["n_scenes"] for t in fold_tasks]))
+            mean_imgs = float(np.mean([t["n_images"] for t in fold_tasks]))
+
+            for col, m_name in enumerate(methods):
+                rows.append(
+                    {
+                        "fraction": float(frac),
+                        "train_scenes_mean": mean_scenes,
+                        "train_images_mean": mean_imgs,
+                        "method": m_name,
+                        "abs_rel": float(mean_scores[col, 0]),
+                        "rmse": float(mean_scores[col, 1]),
+                        "delta1": float(mean_scores[col, 2]),
+                        "ci95_lo_abs_rel": float(ci_lo[col, 0]),
+                        "ci95_hi_abs_rel": float(ci_hi[col, 0]),
+                        "ci95_lo_rmse": float(ci_lo[col, 1]),
+                        "ci95_hi_rmse": float(ci_hi[col, 1]),
+                        "ci95_lo_delta1": float(ci_lo[col, 2]),
+                        "ci95_hi_delta1": float(ci_hi[col, 2]),
+                        "gain_vs_b3_abs_rel": float(g_mean[col, 0]),
+                        "gain_vs_b3_rmse": float(g_mean[col, 1]),
+                        "gain_vs_b3_delta1": float(g_mean[col, 2]),
+                        "gain_ci95_lo_abs_rel": float(g_lo[col, 0]),
+                        "gain_ci95_hi_abs_rel": float(g_hi[col, 0]),
+                        "gain_ci95_lo_rmse": float(g_lo[col, 1]),
+                        "gain_ci95_hi_rmse": float(g_hi[col, 1]),
+                        "gain_ci95_lo_delta1": float(g_lo[col, 2]),
+                        "gain_ci95_hi_delta1": float(g_hi[col, 2]),
+                    }
+                )
+            print(
+                f"Learning curve frac={frac:.2f} (scenes={mean_scenes:.1f}, imgs={mean_imgs:.1f}) finished in {perf_counter() - t0:.1f}s: "
+                f"GeoCalib AbsRel={mean_scores[-1, 0]:.4f}, B3={mean_scores[2, 0]:.4f}",
+                flush=True,
+            )
+
+    df = pd.DataFrame(rows)
+    write_csv_lf(output_path, df)
+    return df
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+
     cv_p = sub.add_parser("cv", help="Run 5-fold + multi-seed scene-CV ablations on 795 training images only")
     cv_p.add_argument("--data-root", type=Path, required=True)
     cv_p.add_argument("--predictions", type=Path, required=True)
     cv_p.add_argument("--output", type=Path, required=True)
+
+    lock_p = sub.add_parser("fit-lock", help="Fit primary + ladder on all 795 training images and freeze JSON")
+    lock_p.add_argument("--data-root", type=Path, required=True)
+    lock_p.add_argument("--predictions", type=Path, required=True)
+    lock_p.add_argument("--cv-report", type=Path, required=True)
+    lock_p.add_argument("--b3-frozen", type=Path, required=True)
+    lock_p.add_argument("--output", type=Path, required=True)
+
+    lc_p = sub.add_parser("learning-curve", help="Run train-only 5-fold scene-CV learning curve (10/25/50/100%)")
+    lc_p.add_argument("--data-root", type=Path, required=True)
+    lc_p.add_argument("--predictions", type=Path, required=True)
+    lc_p.add_argument("--output", type=Path, required=True)
+
     args = parser.parse_args()
     if args.command == "cv":
         run_cv_study(args.data_root, args.predictions, args.output)
+    elif args.command == "fit-lock":
+        fit_and_lock_sota(args.data_root, args.predictions, args.cv_report, args.b3_frozen, args.output)
+    elif args.command == "learning-curve":
+        run_learning_curve(args.data_root, args.predictions, args.output)
 
 
 if __name__ == "__main__":

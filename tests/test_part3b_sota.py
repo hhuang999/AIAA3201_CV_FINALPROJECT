@@ -28,6 +28,8 @@ from depthlab.sota_calibration import (
     count_parameters,
     extract_sota_features,
     fit_joint_sota_model,
+    load_frozen_sota,
+    validate_frozen_sota,
 )
 from depthlab.sota_diagnose import (
     CROP_R2,
@@ -362,3 +364,48 @@ def test_sota_outputs_have_lf_line_endings():
         pytest.skip("Gate 2 outputs not yet generated")
     for p in list(out_dir.glob("*.csv")) + list(out_dir.glob("*.json")):
         assert b"\r\n" not in p.read_bytes(), f"CRLF detected in {p}"
+
+
+def test_frozen_sota_load_and_tamper_rejection(tmp_path):
+    repo = Path(__file__).resolve().parents[1]
+    frozen_path = repo / "results" / "part3b_sota" / "frozen_sota_model.json"
+    cv_path = repo / "results" / "part3b_sota" / "cv_selection_report.json"
+    if not frozen_path.is_file() or not cv_path.is_file():
+        pytest.skip("Gate 3 frozen_sota_model.json not yet generated")
+
+    frozen = load_frozen_sota(frozen_path)
+    assert frozen["test_read"] is False
+    assert frozen["primary_params"] == 25
+    cv = json.loads(cv_path.read_text(encoding="utf-8"))
+    inspected_yk = np.asarray(cv["winner_full_train_inspection"]["depth_spline"]["y_knots"], dtype=np.float64)
+    locked_yk = np.asarray(frozen["primary_model"]["depth_spline"]["y_knots"], dtype=np.float64)
+    assert np.max(np.abs(locked_yk - inspected_yk)) < 1e-12
+
+    # Wrong expected SHA-256 must fail
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        load_frozen_sota(frozen_path, expected_sha256="0" * 64)
+
+    # Tampered test_read=True must fail
+    tampered_tr = json.loads(json.dumps(frozen))
+    tampered_tr["test_read"] = True
+    with pytest.raises(ValueError, match="test_read=False"):
+        validate_frozen_sota(tampered_tr)
+
+    # Tampered NaN weight must fail (write as raw string since allow_nan=False rejects NaN JSON normally)
+    tampered_nan = json.loads(json.dumps(frozen))
+    tampered_nan["primary_model"]["scale_residual"]["weights"][0] = float("nan")
+    with pytest.raises(ValueError):
+        validate_frozen_sota(tampered_nan)
+
+    # Tampered negative depth slope must fail
+    tampered_slope = json.loads(json.dumps(frozen))
+    yk = list(tampered_slope["primary_model"]["depth_spline"]["y_knots"])
+    yk[2] = yk[1] - 0.1
+    tampered_slope["primary_model"]["depth_spline"]["y_knots"] = yk
+    with pytest.raises(ValueError, match="strictly increasing"):
+        validate_frozen_sota(tampered_slope)
+
+    # Round-trip valid file via tmp_path rejects wrong hash
+    copy_p = tmp_path / "frozen.json"
+    copy_p.write_bytes(frozen_path.read_bytes())
+    assert load_frozen_sota(copy_p)["primary_params"] == 25
