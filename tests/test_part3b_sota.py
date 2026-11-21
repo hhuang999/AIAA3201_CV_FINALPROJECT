@@ -9,6 +9,26 @@ import pandas as pd
 import pytest
 
 from depthlab.calibration import scene_folds
+from depthlab.metrics import CROP
+from depthlab.sota_calibration import (
+    GeoCalibSpec,
+    _CROP_D2_CENTER,
+    _CROP_R2,
+    _CROP_V_TILDE,
+    _JointGeoCalibModule,
+    _MEAN_R2_CROP,
+    _centered_log_cos_hat_crop,
+    _cond2d_feature_names,
+    _feature_matrix,
+    _scale_feature_names,
+    _slope_feature_names,
+    _standardize_apply,
+    _standardize_fit,
+    apply_sota_model,
+    count_parameters,
+    extract_sota_features,
+    fit_joint_sota_model,
+)
 from depthlab.sota_diagnose import (
     CROP_R2,
     CROP_U_TILDE,
@@ -136,3 +156,209 @@ def test_verified_cache_train_guard_if_data_present():
         _ = cache[int(cache.test_ids[0])]
     with pytest.raises(PermissionError):
         _ = cache.intrinsics(int(cache.test_ids[0]))
+
+
+def _make_synthetic_batch(n_imgs=12, samples_per_img=128):
+    rng = np.random.default_rng(123)
+    depths = []
+    intrinsics = []
+    samples_p = np.empty((n_imgs, samples_per_img), dtype=np.float64)
+    samples_gt = np.empty((n_imgs, samples_per_img), dtype=np.float64)
+    samples_row = np.empty((n_imgs, samples_per_img), dtype=np.int32)
+    samples_col = np.empty((n_imgs, samples_per_img), dtype=np.int32)
+    feats = []
+    ratios = np.empty(n_imgs, dtype=np.float64)
+
+    for i in range(n_imgs):
+        f = rng.uniform(350.0, 620.0)
+        K = np.array([[f, 0.0, 321.0], [0.0, f * 1.01, 244.0], [0.0, 0.0, 1.0]], dtype=np.float64)
+        d = rng.uniform(0.6, 5.5, size=(480, 640))
+        true_scale = 1.05 * (550.0 / f) ** 0.3
+        gt = np.clip(d * true_scale, 0.001, 10.0)
+        rr = rng.integers(0, 426, size=samples_per_img)
+        cc = rng.integers(0, 560, size=samples_per_img)
+        samples_row[i] = rr
+        samples_col[i] = cc
+        samples_p[i] = d[CROP][rr, cc]
+        samples_gt[i] = gt[CROP][rr, cc]
+        depths.append(d)
+        intrinsics.append(K)
+        feats.append(extract_sota_features(d, K, None, need_rgb=False))
+        ratios[i] = true_scale
+
+    return depths, np.stack(intrinsics), samples_p, samples_gt, samples_row, samples_col, feats, ratios
+
+
+def test_sota_model_torch_numpy_parity():
+    import torch
+
+    depths, intr, sp, sgt, srow, scol, feats, ratios = _make_synthetic_batch()
+    spec = GeoCalibSpec(
+        name="parity_test",
+        use_focal_curve=True,
+        use_geo_cxcy=True,
+        use_spatial3d=True,
+        use_depth_slope=True,
+        use_ray_unwarp=True,
+        use_cond_spatial2d=True,
+        loss_mode="ar_rmse_d1_1512",
+        reg_l2=0.01,
+    )
+    model = fit_joint_sota_model(spec, sp, sgt, srow, scol, feats, intr, ratios, max_iter=30)
+    assert count_parameters(model) == 37
+    # Focal spline must be active (not frozen near zero) on focal-correlated synthetic data
+    assert min(model["focal_spline"]["slopes"]) < -0.15
+
+    # Verify torch fast path vs pure NumPy path across all pixels
+    out_np = apply_sota_model(depths[0], intr[0], model, use_torch_fast=False)
+    out_torch = apply_sota_model(depths[0], intr[0], model, use_torch_fast=True)
+    assert out_np.shape == (480, 640)
+    assert np.max(np.abs(out_np - out_torch)) < 1e-11
+
+    # Verify against _JointGeoCalibModule forward pass on sampled crop pixels
+    mod = _JointGeoCalibModule(
+        spec,
+        model["init_scale"],
+        model["ray_unwarp"]["f_ref_tilde"],
+        len(_scale_feature_names(spec)),
+        len(_slope_feature_names(spec)),
+        len(_cond2d_feature_names(spec)),
+    )
+    # Reconstruct exact module state by running forward check with exported dict
+    # Check directly that focal_spline anchor at index 3 == 0.0 and slopes are strictly valid
+    assert abs(model["focal_spline"]["y_knots"][3]) < 1e-12
+    assert all(s <= 0.0 for s in model["focal_spline"]["slopes"])
+    assert all(0.25 - 1e-9 <= s <= 2.0 + 1e-9 for s in model["depth_spline"]["slopes"])
+
+    # Verify module parity via explicit parameter loading (module-level with torch.no_grad)
+    with torch.no_grad():
+        ds = model["depth_spline"]
+        offset = ds["y_knots"][0] - ds["x_knots"][0]
+        mod.raw_offset.copy_(torch.tensor(np.arctanh(offset / np.log(2.0)), dtype=torch.float64))
+        sl_frac = (np.asarray(ds["slopes"]) - 0.25) / 1.75
+        mod.raw_depth_slopes.copy_(torch.tensor(np.log(sl_frac / (1.0 - sl_frac)), dtype=torch.float64))
+        fs = model["focal_spline"]
+        f_frac = np.clip(-np.asarray(fs["slopes"]) / 2.5, 1e-12, 1.0 - 1e-12)
+        mod.raw_focal_slopes.copy_(torch.tensor(np.log(f_frac / (1.0 - f_frac)), dtype=torch.float64))
+        mod.w_scale.copy_(torch.tensor(model["scale_residual"]["weights"], dtype=torch.float64))
+        mod.w_slope.copy_(torch.tensor(model["depth_slope_mod"]["weights"], dtype=torch.float64))
+        ru = model["ray_unwarp"]
+        mod.raw_gamma_ray.copy_(torch.tensor(np.arctanh(ru["gamma_ray"] / 1.5), dtype=torch.float64))
+        fr_frac = (ru["f_ref_tilde"] - 0.8) / 0.6
+        mod.raw_f_ref.copy_(torch.tensor(np.log(fr_frac / (1.0 - fr_frac)), dtype=torch.float64))
+        c2 = model["cond_spatial2d"]
+        mod.a_v0.copy_(torch.tensor(c2["a_v0"], dtype=torch.float64))
+        mod.a_r0.copy_(torch.tensor(c2["a_r0"], dtype=torch.float64))
+        mod.w_v.copy_(torch.tensor(c2["w_v"], dtype=torch.float64))
+        mod.w_r.copy_(torch.tensor(c2["w_r"], dtype=torch.float64))
+
+        z_sc = _standardize_apply(
+            _feature_matrix([feats[0]], _scale_feature_names(spec)),
+            np.asarray(model["scale_residual"]["mean"]),
+            np.asarray(model["scale_residual"]["std"]),
+        )
+        z_sl = _standardize_apply(
+            _feature_matrix([feats[0]], _slope_feature_names(spec)),
+            np.asarray(model["depth_slope_mod"]["mean"]),
+            np.asarray(model["depth_slope_mod"]["std"]),
+        )
+        z_c2 = _standardize_apply(
+            _feature_matrix([feats[0]], _cond2d_feature_names(spec)),
+            np.asarray(c2["mean"]),
+            np.asarray(c2["std"]),
+        )
+        lch = _centered_log_cos_hat_crop(intr[0])[srow[0], scol[0]][None, :]
+        f_ref_v = ru["f_ref_tilde"]
+        log_cos_ref_full = -0.5 * np.log(1.0 + _CROP_D2_CENTER / ((480.0 * f_ref_v) ** 2))
+        pred_t = mod(
+            torch.tensor(np.log(sp[0:1]), dtype=torch.float64),
+            torch.tensor([feats[0]["f_tilde"]], dtype=torch.float64),
+            torch.tensor(z_sc, dtype=torch.float64),
+            torch.tensor(z_sl, dtype=torch.float64),
+            torch.tensor(z_c2, dtype=torch.float64),
+            torch.tensor(_CROP_V_TILDE[srow[0], scol[0]][None, :], dtype=torch.float64),
+            torch.tensor((_CROP_R2[srow[0], scol[0]] - _MEAN_R2_CROP)[None, :], dtype=torch.float64),
+            torch.tensor(_CROP_D2_CENTER[srow[0], scol[0]][None, :], dtype=torch.float64),
+            torch.tensor(lch, dtype=torch.float64),
+        ).numpy()[0]
+        sample_only_lcr = log_cos_ref_full[srow[0], scol[0]]
+        mean_diff = float(sample_only_lcr.mean() - log_cos_ref_full.mean())
+        pred_t_exact = np.clip(pred_t * np.exp(ru["gamma_ray"] * mean_diff), 0.001, 10.0)
+    assert np.max(np.abs(pred_t_exact - out_np[CROP][srow[0], scol[0]])) < 1e-11
+
+
+def test_sota_model_strict_depth_monotonicity():
+    depths, intr, sp, sgt, srow, scol, feats, ratios = _make_synthetic_batch()
+    spec = GeoCalibSpec(
+        name="mono_test",
+        use_focal_curve=True,
+        use_geo_cxcy=True,
+        use_spatial3d=True,
+        use_depth_slope=True,
+        use_ray_unwarp=True,
+        use_cond_spatial2d=True,
+    )
+    model = fit_joint_sota_model(spec, sp, sgt, srow, scol, feats, intr, ratios, max_iter=20)
+    # Push depth_slope weights to extreme magnitude to force tanh -> -1 (delta_b -> -0.20)
+    model["depth_slope_mod"]["weights"] = [100.0] * len(model["depth_slope_mod"]["weights"])
+
+    z_grid = np.linspace(0.05, 15.0, 200)
+    d_low = np.full((480, 640), 1.0)
+    d_high = np.full((480, 640), 1.0)
+    fixed_feat = extract_sota_features(depths[0], intr[0], need_rgb=False)
+    prev = np.zeros((480, 640))
+    for zv in z_grid:
+        d_cur = np.full((480, 640), zv)
+        cur = apply_sota_model(d_cur, intr[0], model, cached_features=fixed_feat)
+        assert np.all(cur >= prev - 1e-12)
+        prev = cur
+    # Also check strict ordering between two distinct levels
+    d_low[200, 300] = 1.2
+    d_high[200, 300] = 2.5
+    out_low = apply_sota_model(d_low, intr[0], model, cached_features=fixed_feat)
+    out_high = apply_sota_model(d_high, intr[0], model, cached_features=fixed_feat)
+    assert out_high[200, 300] > out_low[200, 300]
+
+
+def test_sota_model_bounded_extrapolation():
+    depths, intr, sp, sgt, srow, scol, feats, ratios = _make_synthetic_batch()
+    spec = GeoCalibSpec(
+        name="bounds_test",
+        use_focal_curve=True,
+        use_geo_cxcy=True,
+        use_spatial3d=True,
+        use_depth_slope=True,
+        use_ray_unwarp=True,
+        use_cond_spatial2d=True,
+    )
+    model = fit_joint_sota_model(spec, sp, sgt, srow, scol, feats, intr, ratios, max_iter=20)
+    d_ext = np.full((480, 640), 1e-4)
+    d_ext[0:240, :] = 100.0
+    for f_val in (50.0, 5000.0):
+        K_ext = np.array([[f_val, 0.0, 320.0], [0.0, f_val, 240.0], [0.0, 0.0, 1.0]])
+        out = apply_sota_model(d_ext, K_ext, model)
+        assert np.isfinite(out).all()
+        assert np.all((out >= 0.001) & (out <= 10.0))
+
+
+def test_sota_inference_latency_sanity():
+    from time import perf_counter
+
+    depths, intr, sp, sgt, srow, scol, feats, ratios = _make_synthetic_batch(n_imgs=6)
+    spec = GeoCalibSpec(name="lat_test", use_focal_curve=True, use_geo_cxcy=True, use_depth_slope=True)
+    model = fit_joint_sota_model(spec, sp, sgt, srow, scol, feats, intr, ratios, max_iter=15)
+    _ = apply_sota_model(depths[0], intr[0], model)
+    t0 = perf_counter()
+    for _ in range(10):
+        _ = apply_sota_model(depths[0], intr[0], model)
+    ms = (perf_counter() - t0) * 1000.0 / 10.0
+    assert np.isfinite(ms) and ms < 200.0
+
+
+def test_sota_outputs_have_lf_line_endings():
+    repo = Path(__file__).resolve().parents[1]
+    out_dir = repo / "results" / "part3b_sota"
+    if not out_dir.exists():
+        pytest.skip("Gate 2 outputs not yet generated")
+    for p in list(out_dir.glob("*.csv")) + list(out_dir.glob("*.json")):
+        assert b"\r\n" not in p.read_bytes(), f"CRLF detected in {p}"
