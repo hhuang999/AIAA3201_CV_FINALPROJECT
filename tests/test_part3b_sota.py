@@ -486,3 +486,37 @@ def test_gate4_provenance_rejection_and_receipt(tmp_path):
     assert receipt["test_images"] == 654
     assert receipt["test_scenes"] == 215
     assert receipt["b3_reference_max_mean_error"] <= 5e-4
+
+
+def test_gate5_learning_curve_figures_and_manifest():
+    from depthlab.verify import verify_manifest
+
+    repo = Path(__file__).resolve().parents[1]
+    lc_path = repo / "results" / "part3b_sota" / "oof_learning_curve.csv"
+    manifest_path = repo / "results" / "part3b_sota" / "manifest.json"
+    fig_dir = repo / "results" / "figures" / "part3b_sota"
+    expected_figs = (
+        "fig1_pipeline_overview.png",
+        "fig2_ablation_and_ci.png",
+        "fig3_mechanism_diagnostics.png",
+        "fig4_depth_bins_and_learning_curve.png",
+        "fig5_qualitative_and_failures.png",
+    )
+    if not manifest_path.is_file():
+        pytest.skip("Gate 5 manifest not yet generated")
+
+    lc_df = pd.read_csv(lc_path)
+    assert set(lc_df["fraction"].round(2).tolist()) == {0.10, 0.25, 0.50, 1.00}
+    assert np.isfinite(lc_df[["abs_rel", "rmse", "delta1"]].to_numpy(dtype=np.float64)).all()
+    assert len(lc_df) == 16
+
+    for fname in expected_figs:
+        fpath = fig_dir / fname
+        assert fpath.is_file(), f"Missing CVPR figure {fpath}"
+        raw = fpath.read_bytes()
+        assert len(raw) > 10000 and raw.startswith(b"\x89PNG\r\n\x1a\n")
+
+    assert (repo / "docs" / "PART3B_SOTA.md").is_file()
+    verified = verify_manifest(manifest_path, repo)
+    assert verified["complete"] is True
+    assert verified["verified_files"] >= 28
