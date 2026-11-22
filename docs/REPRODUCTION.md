@@ -2,6 +2,8 @@
 
 The rebuilt `depthlab` package is self-contained. Historical code is used only in independent migration checks, never imported by production modules. The frozen artifact remains byte-identical to commit `91091a1b1d27fc2e19e56c2910dd0b3020921f59`.
 
+For the current Part 3B maintenance and interpretation boundaries, see [PART3B_MAINTENANCE.md](PART3B_MAINTENANCE.md). H6 and the historical experiment results remain frozen. Existing course-report snapshots and figures were not edited by maintenance; their timing, diagnostic-independence and test-exposure claims should be read with those corrections.
+
 ## Environment and inputs
 
 Use Linux, Python 3.10 and `requirements-reproduction.txt` for the numerical parity route. That file includes the previously validated PyTorch 2.8 / CUDA 12.8 lock. The original `requirements-metric.txt` and `requirements-video.txt` describe the earlier rewrite environment; they are retained for historical results and are not the numerical parity environment.
@@ -114,7 +116,7 @@ Reports, figures and final videos remain a separate presentation task. No presen
 
 ## Part 3B Round 1 (`GeoCalib-3D v1`) and Round 2 (`GeoCalib-3D v2`)
 
-Additive calibration upgrades built on the pinned `lpiccinelli/unidepth-v2-vits14` RGB-only predictions (`outputs/nyu_rgb/depth.npy`) with zero ground-truth intrinsics and strict training-split isolation (`795` train images / `249` scenes for CV and fitting; one-shot `654` test evaluation after parameter freeze):
+Additive calibration upgrades built on the pinned `lpiccinelli/unidepth-v2-vits14` RGB-only predictions (`outputs/nyu_rgb/depth.npy`) with zero ground-truth intrinsics. Fitting and quantitative selection use `795` training images / `249` scenes; each delivered `654`-image official-test evaluation follows its parameter freeze. The inherited project already had test results, and Round 2 design was informed by Round 1 test cases. These are paired results on a reused official benchmark, not an independent blind holdout:
 
 | Iteration | Frozen Artifact & Expected SHA-256 | Pre-Test Freeze Commit | Technical Report & Manifest |
 | :--- | :--- | :---: | :--- |
@@ -127,22 +129,41 @@ Key CLI entrypoints (inspect all flags with `--help`):
 # Build pinned UniDepthV2 ViT-S internal feature (outputs/nyu_rgb_aux/) and horizontal-flip (outputs/nyu_rgb_flip/) caches
 python -m depthlab.sota_v2_cache build --help
 
-# One-shot held-out 654-image test evaluation & 10k scene bootstrap (Round 1 / Round 2)
+# Inspect fixed-parameter official-test replay entrypoints (does not run evaluation)
 python -m depthlab.sota_evaluate --help
 python -m depthlab.sota_v2_evaluate --help
 ```
 
+An explicit Round 2 replay requires the original checksum-bound raw, aux and flip caches. Preserve the archived results and choose a fresh output directory:
+
+```bash
+python -m depthlab.sota_v2_evaluate \
+  --data-root data --orig-preds outputs/nyu_rgb \
+  --aux-dir outputs/nyu_rgb_aux --flip-dir outputs/nyu_rgb_flip \
+  --frozen-v2 results/part3b_sota_v2/frozen_sota_v2_model.json \
+  --expected-v2-sha256 a7633ffa74b21b70e196ba822c15fe454ac96b528443d4a70753f0aa4ff479e6 \
+  --b3-frozen results/frozen_20261111/part3b_residual_20261111/final/frozen_model.json \
+  --v1-frozen results/part3b_sota/frozen_sota_model.json \
+  --v1-test-summary results/part3b_sota/test_summary.csv \
+  --cv-dir results/part3b_sota_v2 --output outputs/replay_sota_v2
+```
+
+This command reproduces fixed parameters; it does not authorize new model selection. A regenerated cache with different bytes is rejected against the frozen experiment. The maintenance validation uses synthetic tests and preserved-result hashes; it does not execute this official-test replay.
+
+Runtime is recorded separately from accuracy. Both `outputs/nyu_rgb_aux/runtime_aux.json` and `outputs/nyu_rgb_flip/runtime_flip.json` use `mean_seconds_per_image` in seconds. New runtime output records the actual receipt checksums and converts to milliseconds. Without a required receipt, its composite estimate is null. No `43.04`/`44.13 ms` fallback is substituted. Measured cached-input post-processing is distinguished from a sum of component timings; neither is a direct full-pipeline benchmark. Historical runtime JSON and report figures remain preserved, with the limitations recorded in the maintenance notes.
+
 ```powershell
-# Verify Round 1 & Round 2 delivered manifests and run Windows test suite
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota/manifest.json
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
-D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
+# Use the activated verification environment; Linux is the full-suite reference
+python -m depthlab.verify
+python -m depthlab.verify --manifest results/part3b_sota/manifest.json
+python -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
+python -m pytest tests -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
 ```
 
 ## Delivered verification
 
-On `feat/part3b-sota-v2`, `results/part3b_sota/manifest.json` (`31` files) and `results/part3b_sota_v2/manifest.json` (`32` files) verify cleanly with `python -m depthlab.verify --manifest ...`. Historical `results/final_review_20261113/manifest.json` (`336` files) is the immutable `2026-11-13` snapshot anchored on `codex/part3b` (`923ec49`); on `feat/part3b-sota-v2`, `334/336` files in that manifest remain byte-identical (only `README.md` and `docs/REPRODUCTION.md` were updated to document Round 1 & Round 2).
+On `feat/part3b-sota-v2`, the default verifier checks the current `results/maintenance_20261122/manifest.json`. The Round 1 (`31` files) and Round 2 (`32` files) delivery manifests have updated source entries while preserving their frozen experimental-file hashes. The earlier `final_review_20261113` and `acceptance_20261113` manifests are immutable snapshots verifiable at their original baseline commit `923ec49`. The maintenance validation records which source changed and confirms preservation of frozen parameters, experiment results, report snapshots and figures.
 
 The verifier uses only Python's standard library. Large external prediction arrays remain in ignored runtime storage and carry their own complete cache manifests. The restored source uses LF checkouts on Windows and Linux. `results/**` is preserved byte-for-byte so CSV newline conversion cannot invalidate frozen scientific hashes.
 
-The [final code review](FINAL_CODE_REVIEW_20261113.md) records the original `codex/part3b` implementation lineage and the 174-test acceptance result; [PART3B_OVERVIEW.md](PART3B_OVERVIEW.md) indexes the baseline alongside Round 1 and Round 2.
+The [final code review](FINAL_CODE_REVIEW_20261113.md) records the original `codex/part3b` implementation lineage and the 174-test acceptance result; [PART3B_OVERVIEW.md](PART3B_OVERVIEW.md) is the preserved experiment overview. Consult [PART3B_MAINTENANCE.md](PART3B_MAINTENANCE.md) for current interpretation. Run `python -m pytest tests -q` for the full Linux suite. `pytest.ini` also restricts default collection to project tests instead of third-party GPU examples.

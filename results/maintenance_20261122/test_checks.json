@@ -1,0 +1,71 @@
+[
+  {
+    "name": "new_regressions",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "tests/test_sota_cache_integrity.py",
+      "tests/test_sota_runtime_receipts.py",
+      "tests/test_sota_diagnostic_scope.py",
+      "tests/test_sota_cli_reproduction.py",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--tb=short"
+    ],
+    "exit_code": 0,
+    "seconds": 16.18952463194728,
+    "stdout": "....................................                                     [100%]\n36 passed in 14.68s\n",
+    "stderr": ""
+  },
+  {
+    "name": "v1_manifest",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.verify",
+      "--manifest",
+      "results/part3b_sota/manifest.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.09282328188419342,
+    "stdout": "{\n  \"complete\": true,\n  \"verified_files\": 31,\n  \"manifest_sha256\": \"f355db2d0cad3ccf51a88bd132dbde066658adbc0d2b0775b76e3589acd1d865\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "v2_manifest",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "depthlab.verify",
+      "--manifest",
+      "results/part3b_sota_v2/manifest.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.06559523567557335,
+    "stdout": "{\n  \"complete\": true,\n  \"verified_files\": 32,\n  \"manifest_sha256\": \"e35e53a9b2d1b3ceb03db1dbba5269009d58ce7368671ad1b3cd65124e5c9358\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "name": "full_default_suite",
+    "command": [
+      "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--tb=short",
+      "-rs"
+    ],
+    "exit_code": 0,
+    "seconds": 23.112851448357105,
+    "stdout": "........................................................................ [ 31%]\n................................s............s.......................... [ 62%]\n........................................................................ [ 93%]\n...............                                                          [100%]\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_part3b_sota.py:158: Local NYU cache/data not present\nSKIPPED [1] tests/test_part3b_sota_v2.py:104: Round 2 aux/flip caches not yet generated locally\n229 passed, 2 skipped in 21.78s\n",
+    "stderr": ""
+  }
+]

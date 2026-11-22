@@ -1,0 +1,52 @@
+{
+  "complete": true,
+  "scope": "One official training RGB and its horizontal flip; local fixed weights; no GT depth access or metric scoring",
+  "dataset_index": 2,
+  "device": "cpu",
+  "source": {
+    "revision": "8d8cfe4c7ee15297099983607febf0d4f32eb3d6",
+    "tracked_source_clean": true
+  },
+  "attention_backend": {
+    "implementation": "upstream PyTorch attention branches",
+    "xformers_attention_enabled": false,
+    "configured_modules": [
+      "unidepth.models.backbones.metadinov2.attention",
+      "unidepth.models.backbones.metadinov2.block"
+    ]
+  },
+  "weights_sha256": {
+    "config.json": "ecc1f898690debe387d10329cca5d9d66a0a447ce83c3a2a7ae3673c7ce43cfe",
+    "model.safetensors": "93705cb3295dd7476b44911b8a55f5215bf74e8d5eccd27cecdb1b338270a648"
+  },
+  "forwards": [
+    {
+      "flipped": false,
+      "depth_shape": [
+        480,
+        640
+      ],
+      "cls_dims": 384,
+      "depth_feature_stats_dims": 512,
+      "finite_positive_depth": true
+    },
+    {
+      "flipped": true,
+      "depth_shape": [
+        480,
+        640
+      ],
+      "cls_dims": 384,
+      "depth_feature_stats_dims": 512,
+      "finite_positive_depth": true
+    }
+  ],
+  "frozen_h6_m6_numpy_torch_max_depth_difference_m": {
+    "H6_geosem_inv_spline": 8.881784197001252e-16,
+    "M6_flip_inv_geosem": 8.881784197001252e-16
+  },
+  "frozen_model_sha256": "a7633ffa74b21b70e196ba822c15fe454ac96b528443d4a70753f0aa4ff479e6",
+  "seconds": 8.04602137580514,
+  "new_fit": false,
+  "official_test_images_scored": 0
+}

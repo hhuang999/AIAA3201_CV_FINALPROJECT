@@ -2,28 +2,33 @@
 
 AIAA 3201 course project covering stereo geometry (Part 1), RGB-only metric depth and video depth consistency (Part 2), and zero-GT-intrinsics post-hoc metric depth calibration (Part 3B: restored baseline `b3_residual_v1`, Round 1 `GeoCalib-3D v1`, and Round 2 `GeoCalib-3D v2`).
 
-Quick links: [Part 3B Overview](docs/PART3B_OVERVIEW.md) | [Round 1 Report (`GeoCalib-3D v1`)](docs/PART3B_SOTA.md) | [Round 2 Report (`GeoCalib-3D v2`)](docs/PART3B_SOTA_V2.md) | [Reproduction Guide](docs/REPRODUCTION.md)
+Quick links: [Current interpretation and maintenance notes](docs/PART3B_MAINTENANCE.md) | [Part 3B Overview](docs/PART3B_OVERVIEW.md) | [Round 1 Report (`GeoCalib-3D v1`)](docs/PART3B_SOTA.md) | [Round 2 Report (`GeoCalib-3D v2`)](docs/PART3B_SOTA_V2.md) | [Reproduction Guide](docs/REPRODUCTION.md)
+
+The frozen **H6** single-pass primary, **M6** extension, experiment tables, report snapshots and figures are preserved. The maintenance notes correct their interpretation where needed: the official test set had prior exposure, second-stage residual diagnostics are exploratory, and the historical end-to-end timing totals used fallback constants. No new training, candidate selection or official-test scoring is part of this maintenance.
 
 ## Part 3B headline results (`GeoCalib-3D v1` & `v2`)
 
-Evaluated on **NYU Depth V2** (`654` held-out test images across `215` scenes; RGB-only frozen **UniDepthV2 ViT-S**, zero ground-truth intrinsics $K_{\text{true}}$). All rows below run on the identical local UniDepthV2 ViT-S prediction cache (`outputs/nyu_rgb/depth.npy`; the earlier NAS-backed cache replay for `b3_residual_v1` gave `0.099607 / 0.383124 / 0.905546`, max aggregate mean diff `1.26e-4`).
+Evaluated on the **NYU Depth V2 official test split** (`654` images across `215` scenes; RGB-only frozen **UniDepthV2 ViT-S**, zero ground-truth intrinsics $K_{\text{true}}$). This split was not used to fit calibration parameters, but it had already been examined in earlier project work and Round 1 case analysis; Round 2 is not an independent blind holdout. All rows below use the identical local UniDepthV2 ViT-S prediction cache (`outputs/nyu_rgb/depth.npy`; the earlier NAS-backed cache replay for `b3_residual_v1` gave `0.099607 / 0.383124 / 0.905546`, max aggregate mean diff `1.26e-4`).
 
-| Method | Track (`Passes`) | Params (`Raw / Eff.DoF`) | OOF `AbsRel` $\downarrow$ | OOF `RMSE` $\downarrow$ | OOF `delta1` $\uparrow$ | Test `AbsRel` $\downarrow$ | Test `RMSE` (m) $\downarrow$ | Test `delta1` $\uparrow$ | Test Gain vs `B3_prev` / `v1` | End-to-End GPU (`ms/img`) |
+| Method | Track (`Passes`) | Params (`Raw / estimated Eff.DoF`) | OOF `AbsRel` $\downarrow$ | OOF `RMSE` $\downarrow$ | OOF `delta1` $\uparrow$ | Test `AbsRel` $\downarrow$ | Test `RMSE` (m) $\downarrow$ | Test `delta1` $\uparrow$ | Test Gain vs `B3_prev` / `v1` | Measured post-processing (`ms/img`, CPU / GPU) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :---: |
-| `raw` (UniDepthV2 ViT-S) | 1-Pass (`1x`) | `0 / 0.0` | 0.117945 | 0.430373 | 0.884173 | 0.114540 | 0.398839 | 0.892293 | `—` | `43.04` |
+| `raw` (UniDepthV2 ViT-S) | 1-Pass (`1x`) | `0 / 0.0` | 0.117945 | 0.430373 | 0.884173 | 0.114540 | 0.398839 | 0.892293 | `—` | `—` |
 | `b1_global_scale` | 1-Pass (`1x`) | `1 / 1.0` | 0.105587 | 0.416395 | 0.897421 | 0.102033 | 0.389248 | 0.899513 | `—` | `—` |
 | `b2_monotone_curve` | 1-Pass (`1x`) | `6 / 6.0` | 0.103380 | 0.404847 | 0.901091 | 0.100827 | 0.386977 | 0.903253 | `—` | `—` |
-| `b3_residual_v1` (Restored `codex/part3b` baseline) | 1-Pass (`1x`) | `15 / 15.0` | 0.102441 | 0.401714 | 0.904042 | 0.099601 | 0.383099 | 0.905671 | Baseline (`—`) | `85.22` (NumPy post) |
-| **`GeoCalib-3D v1`** (Round 1, Track A) | 1-Pass (`1x`) | `25 / 25.0` | 0.092502 | 0.379230 | 0.926687 | **0.086535** | **0.349250** | **0.935017** | `+0.01307 / +0.03385 m / +2.93 pp` vs `B3_prev` | `51.34` (CPU post) |
-| **`GeoCalib-3D v2`** (`H6_geosem_inv_spline`, Round 2 Track A Primary) | **1-Pass (`1x`)** | `5018 / 146.9` | **0.086894** | **0.366619** | **0.932284** | **0.083024** | **0.340792** | **0.938413** | **`+0.01658 / +0.04231 m / +3.27 pp` vs `B3_prev`**<br>**`+0.00351 / +0.00846 m / +0.34 pp` vs `v1`** | **`47.67`** |
-| `GeoCalib-3D v2 + Flip` (`M6_flip_inv_geosem`, Round 2 Track B Extension) | 2-Pass (`2x`) | `5024 / 150.9` | 0.086697 | 0.366778 | 0.932848 | 0.083189 | 0.339846 | 0.938350 | Statistically tied with 1-Pass `v2` on `AbsRel`/`delta1` (`p > 0.5`) at ~2x latency | `93.86` |
+| `b3_residual_v1` (Restored `codex/part3b` baseline) | 1-Pass (`1x`) | `15 / 15.0` | 0.102441 | 0.401714 | 0.904042 | 0.099601 | 0.383099 | 0.905671 | Baseline (`—`) | `42.18 / —` (NumPy) |
+| **`GeoCalib-3D v1`** (Round 1, Track A) | 1-Pass (`1x`) | `25 / 25.0` | 0.092502 | 0.379230 | 0.926687 | **0.086535** | **0.349250** | **0.935017** | `+0.01307 / +0.03385 m / +2.93 pp` vs `B3_prev` | `8.30 / —` (Torch) |
+| **`GeoCalib-3D v2`** (`H6_geosem_inv_spline`, Round 2 Track A Primary) | **1-Pass (`1x`)** | `5018 / 146.9` | **0.086894** | **0.366619** | **0.932284** | **0.083024** | **0.340792** | **0.938413** | **`+0.01658 / +0.04231 m / +3.27 pp` vs `B3_prev`**<br>**`+0.00351 / +0.00846 m / +0.34 pp` vs `v1`** | `10.26 / 4.63` (Torch) |
+| `GeoCalib-3D v2 + Flip` (`M6_flip_inv_geosem`, Round 2 Track B Extension) | 2-Pass (`2x`) | `5024 / 150.9` | 0.086697 | 0.366778 | 0.932848 | 0.083189 | 0.339846 | 0.938350 | No clear paired-metric advantage over H6; uses an additional backbone pass | `24.04 / 6.69` (Torch) |
 
-- **Zero $K_{\text{true}}$ & Strict Train/Test Protocol**: Calibration uses only UniDepthV2 RGB-only outputs and internal single-pass representations. All candidate development and 5-fold / 4-seed (`20261031, 42, 100, 20261121`) scene-grouped CV ran solely on the `795` official training images (`249` scenes), followed by parameter freeze (`8560b5a` for `v1`, `ebad14a` for `v2`) and a strictly one-shot evaluation on the `654` held-out test images (`215` scenes).
-- **Honest Provenance Distinction**: Round 1 (`GeoCalib-3D v1`) had zero prior exposure to `splits["test"]`. Round 2 (`GeoCalib-3D v2`) was motivated by Round 1's documented post-test failure taxonomy (`#839 / #832 / #326` false focal alarms vs `#1150 / #1151` wide-FoV collapse), with 100% of Round 2 diagnosis, CV selection, and full-795 fitting isolated to the training split (`splits["test"]` access hard-blocked via `VerifiedV2Cache(allowed_split="train")`).
+- **Training and frozen evaluation**: Parameter fitting and quantitative candidate selection use the `795` official training images (`249` scenes), with no ground-truth camera intrinsics. In Round 2, 26 candidates run on canonical scene-grouped 5-fold CV; nine finalists and three reference methods have four-seed records (`20261031, 42, 100, 20261121`). Models were committed before each round's recorded test evaluation (`8560b5a` for v1, `ebad14a` for v2). These records establish the delivered sequence, not that the test data had never been examined.
+- **Historical exposure**: The inherited B3 work already records official-test exposure. Round 2 was also motivated by Round 1 test cases (`#839 / #832 / #326` versus `#1150 / #1151`). Its fitting and quantitative selection read training targets only, while fixed-model cache generation may read RGB inputs from both splits. The secondary residual-predictability diagnostics reuse global OOF targets and are exploratory, not nested cross-fitting; the primary calibration CV directly fits within each fold.
 - **Paired Scene-Cluster Bootstrap (`10,000` replicates, `215` test scenes)**:
   - `v2` vs `B3_prev`: `AbsRel` `+0.016577` (`95% CI [+0.012706, +0.020809]`), `RMSE` `+0.042307 m`, `delta1` `+3.27 pp`.
   - `v2` vs `v1`: `AbsRel` `+0.003512` (`95% CI [+0.001280, +0.005868]`), `RMSE` `+0.008458 m` (`95% CI [+0.003117, +0.014054 m]`), `delta1` `+0.34 pp` (`95% CI [-0.000183, +0.007364]`).
+- **Interpretation**: The v2-v1 delta1 interval crosses zero. M6-vs-H6 intervals cross zero for all three metrics; that is lack of clear improvement, not proof of equivalence or strict dominance. Bootstrap tail values of zero mean zero nonpositive draws among 10,000 draws, not a zero probability. These are paired results on the reused benchmark, not a claim of external state of the art or zero overfitting.
 - **Round 1 Failure Recovery (`v2` vs `v1`)**: `#839` (`kitchen_0039`: `AbsRel 0.2683 -> 0.1699`, `delta1 51.3% -> 90.3%`), `#832` (`kitchen_0038`: `0.2460 -> 0.1906`), `#326` (`classroom_0023`: `0.2168 -> 0.1481`), while further improving wide-FoV `#1151` (`0.0929 -> 0.0576`, `delta1 99.6%`).
+
+Timing above reports historical **cached-input post-processing only** (four CPU threads; RTX 4060 Laptop for GPU measurements). NumPy and Torch paths are separate implementations. Historical totals such as `47.67 / 93.86 ms` combined fixed backbone defaults with measured post-processing and do not establish measured end-to-end latency. The fixed reader now uses both actual runtime receipts, reports unavailable totals as null, and labels component sums as estimates. Existing report/figure snapshots are unchanged; consult the maintenance notes before reusing their timing or statistical claims.
 
 ![GeoCalib-3D v2 Dual-Track Ablations and Bootstrap 95% CIs](results/figures/part3b_sota_v2/fig2_v2_ablation_and_ci.png)
 
@@ -75,19 +80,21 @@ Root-level legacy CSV/JSON files, `results/summary.md`, and `results/figures/{ny
 
 ```bash
 # Linux
+python -m depthlab.verify
 python -m depthlab.verify --manifest results/part3b_sota/manifest.json
 python -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
-python -m pytest -q
+python -m pytest tests -q
 ```
 
 ```powershell
-# Windows
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota/manifest.json
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
-D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
+# Windows: use the Python interpreter from your activated verification environment
+python -m depthlab.verify
+python -m depthlab.verify --manifest results/part3b_sota/manifest.json
+python -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
+python -m pytest tests -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
 ```
 
-> **Manifest Lineage Note**: `results/part3b_sota/manifest.json` (`31` files) and `results/part3b_sota_v2/manifest.json` (`32` files) verify cleanly on this branch. Historical `results/final_review_20261113/manifest.json` (`336` files) is the immutable `2026-11-13` snapshot anchored on branch `codex/part3b` (`923ec49`); on `feat/part3b-sota-v2`, all `334` code, test, frozen-model, and historical-result files in that snapshot remain byte-identical, with only `README.md` and `docs/REPRODUCTION.md` updated to document `GeoCalib-3D v1` and `v2`.
+> **Manifest lineage**: The default verifier uses `results/maintenance_20261122/manifest.json` for this delivery. The Round 1/2 manifests retain all historical experimental-file checksums and refresh the entries for repaired source files. Older `final_review_20261113` and `acceptance_20261113` manifests describe the baseline commit `923ec49`; verify those snapshots at their original commit, not against a subsequently maintained source tree. Frozen model and scientific-result preservation is recorded separately in the maintenance validation.
 
 ### Run Part 1, Part 2 & baseline pipelines
 
@@ -98,8 +105,8 @@ git clone --branch feat/part3b-sota-v2 https://github.com/hhuang999/AIAA3201_CV_
 cd AIAA3201_CV_FINALPROJECT
 export METRIC_PYTHON=/path/to/reproduction/python
 export VIDEO_PYTHON="$METRIC_PYTHON"
-"$METRIC_PYTHON" -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
-"$METRIC_PYTHON" -m pytest -q
+"$METRIC_PYTHON" -m depthlab.verify
+"$METRIC_PYTHON" -m pytest tests -q
 bash scripts/run_baselines.sh data third_party outputs/reproduction results/reproduction
 bash scripts/run_evaluation.sh data outputs/reproduction results/reproduction
 ```

@@ -1,0 +1,79 @@
+{
+  "schema": "maintenance_validation_v1",
+  "date": "2026-11-22",
+  "base_commit": "609f36e834d00e6059348166e3172d4bb51aed1f",
+  "branch": "feat/part3b-sota-v2",
+  "scope": "Maintenance only: preserve H6 primary, M6 extension, fixed parameters, experimental results, and report/video snapshots.",
+  "four_groups": {
+    "runtime_receipts": "Read both actual seconds-per-image receipts; remove fallback constants; label component sums as estimates; record scoped postprocessing memory.",
+    "cache_integrity": "Validate complete manifests, data/weight/source identity, every required file hash, index ordering, shapes and allowed-row values; fail incomplete reuse.",
+    "public_entrypoints": "Fix literal percent in argparse help and restrict default pytest collection to project tests.",
+    "scientific_scope": "Explicit reused official-test benchmark, exploratory non-nested secondary diagnostics, paired uncertainty, candidate coverage and timing limitations."
+  },
+  "tested_source_snapshot": {
+    "file_count": 417,
+    "archive_sha256": "6bb940ba9a44d490053a481a5d2626ead61c74c6de69fa8c07f05eac832e36a6",
+    "files_unchanged_since_linux_tests": true
+  },
+  "test_environment": {
+    "platform": "Linux",
+    "python": "3.10.20",
+    "interpreter": "/home/ai4s_group/XZG/coursework/CV/Project3/.venv-reproduction/bin/python",
+    "device": "cpu",
+    "cuda_visible_devices": "",
+    "thread_limit": 2
+  },
+  "tests": {
+    "new_regressions_passed": 36,
+    "complete_default_suite_passed": 229,
+    "complete_default_suite_skipped": 2,
+    "skips": [
+      {
+        "path": "tests/test_part3b_sota.py:158",
+        "reason": "Local NYU cache/data not present"
+      },
+      {
+        "path": "tests/test_part3b_sota_v2.py:104",
+        "reason": "Round 2 aux/flip caches not yet generated locally"
+      }
+    ],
+    "receipts": "test_checks.json",
+    "v1_manifest_files_verified": 31,
+    "v2_manifest_files_verified": 32
+  },
+  "real_model_smoke": {
+    "training_rgb_dataset_index": 2,
+    "forward_passes": 2,
+    "device": "cpu",
+    "frozen_models_applied": [
+      "H6_geosem_inv_spline",
+      "M6_flip_inv_geosem"
+    ],
+    "maximum_numpy_torch_depth_difference_m": 8.881784197001252e-16,
+    "receipt": "real_training_rgb_smoke.json",
+    "gt_depth_read": false,
+    "official_test_images_scored": 0
+  },
+  "preservation": {
+    "unchanged_existing_files": 401,
+    "unchanged_math_units": 53,
+    "sota_v2_calibration_entire_file_unchanged": true,
+    "protected_artifact_receipt": "protected_artifacts.json",
+    "numerical_receipt": "numerical_preservation.json",
+    "frozen_v1_model_sha256": "5f8326a63470416e077cec12afb41ed793ffb2a58abf8d94a0eb88b84f08e86c",
+    "frozen_v2_model_sha256": "a7633ffa74b21b70e196ba822c15fe454ac96b528443d4a70753f0aa4ff479e6",
+    "historical_h6_official_test_metrics_unchanged": {
+      "AbsRel": 0.08302361977908763,
+      "RMSE_m": 0.3407922145778033,
+      "delta1": 0.9384131047754417
+    }
+  },
+  "not_performed": [
+    "New calibration fit or candidate selection",
+    "Official-test scoring or historical full-cache inference replay",
+    "Nested refitting of secondary exploratory diagnostics",
+    "New hardware GPU/full-pipeline latency measurement",
+    "Course report, experimental figure or video revision"
+  ],
+  "acceptance": "All four maintenance groups pass the stated checks; full historical-cache replay remains outside this maintenance acceptance."
+}

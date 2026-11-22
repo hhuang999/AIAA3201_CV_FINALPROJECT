@@ -9,13 +9,13 @@
     },
     {
       "path": "depthlab/sota_diagnose.py",
-      "bytes": 35461,
-      "sha256": "dc9fe287f58dedfe519227dfe4de0d5ffaa032d22601173942110afdcfec274f"
+      "bytes": 37048,
+      "sha256": "d5bd4df73a67e6ef901e8c553d624508b8b58e53beec7d2af70e335bf794a8ca"
     },
     {
       "path": "depthlab/sota_calibration.py",
-      "bytes": 82058,
-      "sha256": "f0e56b89d79827bf6b5911ac959d8f2a533ecb303393cbd55efc6a85f9403090"
+      "bytes": 82059,
+      "sha256": "e69ead7df96634fc312bc3ba0a9f02d1f65e28f1d86c7b19f385581e348c696e"
     },
     {
       "path": "depthlab/sota_evaluate.py",
@@ -157,5 +157,10 @@
       "bytes": 5969979,
       "sha256": "9da9029175b416ecd1b4b48a0fb99112e16efdc150525273efac974bd0a586cd"
     }
-  ]
+  ],
+  "maintenance": {
+    "base_commit": "609f36e834d00e6059348166e3172d4bb51aed1f",
+    "previous_manifest_sha256": "6cdb9f49ab091f9db2929b7a606f3bb9a94cb59bb16a91db5d3a99cd1aa0bb20",
+    "scope": "Source entries refreshed; frozen experiment files and report snapshots unchanged."
+  }
 }

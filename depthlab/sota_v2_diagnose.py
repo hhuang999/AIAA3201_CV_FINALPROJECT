@@ -1,4 +1,8 @@
-"""Round 2 Gate 1: Deep mechanism & residual bimodality diagnosis on 795 training images ONLY."""
+"""Round 2 exploratory residual diagnosis with official training targets.
+
+Round 1 official-test failure cases motivated the Round 2 design. This run uses
+training targets and reuses the baseline OOF residuals for second-stage fits.
+"""
 from __future__ import annotations
 
 import argparse
@@ -35,20 +39,32 @@ from .sota_diagnose import (
     CROP_R2,
     CROP_U_TILDE,
     CROP_V_TILDE,
+    SECOND_STAGE_RESIDUAL_SCOPE,
     extract_spatial_3d_features,
     fit_inv_affine_oracle,
     fit_log_affine_oracle,
     fit_spatial_oracle,
     optimal_absrel_scalar,
     optimal_rmse_scalar,
+    write_diagnostic_summary,
 )
-from .sota_io import scene_folds_seeded, write_csv_lf, write_json_lf, write_text_lf
+from .sota_io import scene_folds_seeded, write_csv_lf, write_text_lf
 from .sota_v2_cache import CONF_SUMMARY_NAMES, load_v2_cache
 
 
 CANON_V1_ABSREL = 0.09250162171078427
 CANON_V1_RMSE = 0.37923017857116015
 CANON_V1_DELTA1 = 0.9266869297546273
+
+
+DIAGNOSTIC_PROTOCOL = {
+    "official_test_targets_read": False,
+    "prior_official_test_context": "round1_test_cases_informed_round2_design",
+    "second_stage_residual_diagnostics": {
+        **SECOND_STAGE_RESIDUAL_SCOPE,
+        "affected_diagnostics": ["residual_r2", "residual_ridge_score_discriminators"],
+    },
+}
 
 
 def roc_auc_mann_whitney(scores: np.ndarray, labels: np.ndarray) -> float:
@@ -87,7 +103,11 @@ def scene_cv_ridge_r2_pca(
     lam: float = 10.0,
     pca_k: int | None = None,
 ) -> tuple[float, np.ndarray]:
-    """Fold-strict out-of-fold R^2 with optional fold-internal SVD PCA + standardized ridge."""
+    """Fit standardized ridge and optional PCA within each fold for supplied targets.
+
+    This function does not reconstruct residual targets within each outer fold.
+    Shared baseline OOF residuals therefore yield an exploratory R^2.
+    """
     x_arr = np.asarray(x, dtype=np.float64)
     if x_arr.ndim == 1:
         x_arr = x_arr[:, None]
@@ -234,7 +254,7 @@ def run_v2_diagnosis(
     flip_dir: Path,
     output_dir: Path,
 ) -> dict[str, Any]:
-    """Execute Round 2 deep post-v1 mechanism diagnosis strictly on 795 training images."""
+    """Execute exploratory post-v1 residual diagnosis on the official training images."""
     torch.set_num_threads(2)
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -515,6 +535,8 @@ def run_v2_diagnosis(
             ("all_single_plus_flip", "multi_pass", X_plus_flip, [(16, 10.0), (32, 10.0), (None, 100.0), (None, 1000.0)]),
         ]
 
+        # These shared v1 OOF residuals can depend on the validation fold's
+        # labels through baseline fits for the second-stage training rows.
         r2_rows: list[dict[str, Any]] = []
         oof_cls_med = None
         oof_df_med = None
@@ -667,7 +689,6 @@ def run_v2_diagnosis(
 
     summary_payload = {
         "split": "official795_training_only",
-        "test_read": False,
         "images": int(n),
         "scenes": int(len(np.unique(scenes))),
         "reconstructed_v1_oof": {"abs_rel": float(v1_m[0]), "rmse": float(v1_m[1]), "delta1": float(v1_m[2])},
@@ -679,20 +700,25 @@ def run_v2_diagnosis(
         "left_tail_false_alarm_count": int((lt_sub["regime"] == "false_alarm").sum()),
         "top_discriminators_lt075": disc_df.head(15).to_dict(orient="records"),
     }
-    write_json_lf(output_dir / "diag_v2_results.json", summary_payload)
+    summary_payload = write_diagnostic_summary(
+        output_dir / "diag_v2_results.json", summary_payload, DIAGNOSTIC_PROTOCOL
+    )
 
     # Write clean human-readable Markdown summary
     md_lines = [
         "# Round 2 Part 1: Post-v1 Residual, Bimodality & Signal Predictability Diagnosis",
         "",
-        "> Strictly training-only (`splits['train']`, 795 images / 249 scenes). `test_read: false`.",
+        "> This run uses official training targets only. Round 1 official-test failure cases informed Round 2 design.",
+        "",
+        "> Residual R² and discriminators using fitted residual scores are exploratory. "
+        + SECOND_STAGE_RESIDUAL_SCOPE["limitation"],
         "",
         f"- Reconstructed `GeoCalib-3D v1` Canonical OOF: `AbsRel={v1_m[0]:.6f}`, `RMSE={v1_m[1]:.6f}`, `delta1={v1_m[2]:.6f}`",
         "",
         "## 1. Post-v1 Remaining Oracles & Train Flip-TTA Baselines",
         oracle_df.to_markdown(index=False, floatfmt=".6f"),
         "",
-        "## 2. Best 5-Fold Scene-CV R^2 Predicting Residual v1 Error (`e_v1_med`, `e_v1_absrel`)",
+        "## 2. Exploratory 5-Fold Scene-CV R^2 on Shared v1 Residual Targets",
         best_r2_per_block[["feature_block", "track", "raw_dims", "pca_k", "ridge_lam", "cv_r2_e_v1_med", "cv_r2_e_v1_absrel", "cv_r2_e_v1_slope_v", "cv_r2_e_v1_radial"]].to_markdown(index=False, floatfmt=".4f"),
         "",
         f"## 3. Left-Tail (`f_tilde < 0.75`, n={len(lt_sub)}) Bimodality Top Discriminators",

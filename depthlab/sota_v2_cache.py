@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import random
 import shutil
+import subprocess
 import sys
 from time import perf_counter
 import types
@@ -13,6 +15,7 @@ from typing import Any
 import numpy as np
 import torch
 
+from .cache import source_identity
 from .data import nyu_image, open_nyu, splits
 from .inference_backend import use_pytorch_attention
 from .metrics import CROP
@@ -25,6 +28,18 @@ PINNED_WEIGHTS: dict[str, str] = {
 }
 UPSTREAM_REPO = "lpiccinelli/unidepth-v2-vits14"
 UPSTREAM_REVISION = "8d8cfe4c7ee15297099983607febf0d4f32eb3d6"
+_NYU_IMAGES = 1449
+_NYU_HW = (480, 640)
+_CLS_DIM = 384
+_DEPTH_FEAT_STATS_DIM = 512
+_MANIFEST_NAME = "manifest_v2_cache.json"
+_BASE_BINDINGS = {
+    "nyu_mat_sha256": "nyu_mat_sha256",
+    "splits_sha256": "splits_sha256",
+    "orig_depth_sha256": "depth_npy_sha256",
+    "orig_intrinsics_sha256": "intrinsics_npy_sha256",
+    "orig_indices_sha256": "indices_npy_sha256",
+}
 
 CONF_SUMMARY_NAMES: tuple[str, ...] = (
     "conf_mean",
@@ -130,6 +145,12 @@ def _install_unidepth_shims() -> None:
 
 def _load_local_unidepth(source_dir: Path, weights_dir: Path, device_str: str = "cuda"):
     """Load pinned UniDepthV2 ViT-S cleanly using local PyTorch attention branches."""
+    source_dir = Path(source_dir).resolve()
+    try:
+        source = source_identity(source_dir, UPSTREAM_REVISION)
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise ValueError(f"Expected a Git checkout of pinned UniDepth source at {source_dir}") from exc
+
     random.seed(0)
     np.random.seed(0)
     torch.manual_seed(0)
@@ -139,16 +160,20 @@ def _load_local_unidepth(source_dir: Path, weights_dir: Path, device_str: str = 
     torch.backends.cudnn.benchmark = False
 
     _install_unidepth_shims()
-    src_resolved = str(Path(source_dir).resolve())
-    if src_resolved not in sys.path:
+    src_resolved = str(source_dir)
+    if sys.path[0:1] != [src_resolved]:
         sys.path.insert(0, src_resolved)
     from unidepth.models import UniDepthV2
+
+    implementation = getattr(sys.modules.get(UniDepthV2.__module__), "__file__", None)
+    if implementation is None or not Path(implementation).resolve().is_relative_to(source_dir / "unidepth"):
+        raise ValueError(f"UniDepthV2 import did not come from pinned checkout {source_dir}")
 
     backend = use_pytorch_attention("unidepth")
     device = torch.device(device_str if (device_str != "cuda" or torch.cuda.is_available()) else "cpu")
     model = UniDepthV2.from_pretrained(str(Path(weights_dir).resolve())).to(device).eval()
     model.interpolation_mode = "bilinear"
-    return model, device, backend
+    return model, device, backend, source
 
 
 def compute_confidence_summary(conf_480x640: np.ndarray) -> np.ndarray:
@@ -186,6 +211,79 @@ def compute_confidence_summary(conf_480x640: np.ndarray) -> np.ndarray:
     )
 
 
+def _cache_layouts() -> tuple[dict, dict]:
+    aux = {
+        "cls_tokens.npy": ((_CLS_DIM,), np.float32),
+        "patch_mean.npy": ((_CLS_DIM,), np.float32),
+        "patch_std.npy": ((_CLS_DIM,), np.float32),
+        "depth_feat_stats.npy": ((_DEPTH_FEAT_STATS_DIM,), np.float32),
+        "confidence_f16.npy": (_NYU_HW, np.float16),
+        "confidence_summary.npy": ((len(CONF_SUMMARY_NAMES),), np.float32),
+    }
+    flip = {
+        "depth_flip.npy": (_NYU_HW, np.float32),
+        "intrinsics_flip.npy": ((3, 3), np.float32),
+        "confidence_flip_f16.npy": (_NYU_HW, np.float16),
+        "cls_tokens_flip.npy": ((_CLS_DIM,), np.float32),
+    }
+    return aux, flip
+
+
+def _read_v2_indices(folder: Path, expected_indices: np.ndarray) -> np.ndarray:
+    path = folder / "indices.npy"
+    indices = np.load(path, allow_pickle=False)
+    if not np.issubdtype(indices.dtype, np.integer) or not np.array_equal(indices, expected_indices):
+        raise ValueError(f"Round 2 cache row order differs from original NYU IDs: {path}")
+    return indices
+
+
+def _read_cache_partition(
+    folder: Path, layout: dict, bindings: dict[str, str], expected_indices: np.ndarray,
+) -> tuple[dict[str, Any], dict[str, np.ndarray]]:
+    manifest_path = folder / _MANIFEST_NAME
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict) or manifest.get("complete") is not True:
+        raise ValueError(f"Round 2 cache has no complete manifest: {manifest_path}")
+    for key, expected in bindings.items():
+        if manifest.get(key) != expected:
+            raise ValueError(f"Round 2 cache input mismatch for {key}: {manifest_path}")
+    if manifest.get("weights_sha256") != PINNED_WEIGHTS:
+        raise ValueError(f"Round 2 cache weights differ from pinned weights: {manifest_path}")
+    if "source" in manifest and manifest["source"] != {"revision": UPSTREAM_REVISION, "tracked_source_clean": True}:
+        raise ValueError(f"Round 2 cache source differs from pinned clean revision: {manifest_path}")
+    file_hashes = manifest.get("files_sha256")
+    if not isinstance(file_hashes, dict) or file_hashes.keys() != {"indices.npy", *layout}:
+        raise ValueError(f"Round 2 cache manifest has an invalid file list: {manifest_path}")
+
+    _read_v2_indices(folder, expected_indices)
+    arrays = {}
+    for filename, (row_shape, dtype) in layout.items():
+        path = folder / filename
+        array = np.load(path, mmap_mode="r", allow_pickle=False)
+        expected_shape = (len(expected_indices), *row_shape)
+        if array.shape != expected_shape or array.dtype != dtype:
+            raise ValueError(f"Expected {expected_shape} {np.dtype(dtype)} cache array: {path}")
+        arrays[filename] = array
+    for filename, expected in file_hashes.items():
+        path = folder / filename
+        if file_sha256(path) != expected:
+            raise ValueError(f"Round 2 cache SHA-256 mismatch: {path}")
+    return manifest, arrays
+
+
+def _validate_allowed_rows(arrays: dict[str, np.ndarray], allowed_ids: np.ndarray) -> None:
+    for idx in allowed_ids:
+        i = int(idx)
+        for filename, array in arrays.items():
+            if not np.isfinite(array[i]).all():
+                raise ValueError(f"Nonfinite Round 2 cache values in {filename} at allowed index {i}")
+        if not (arrays["depth_flip.npy"][i] > 0).all():
+            raise ValueError(f"Nonpositive depth_flip.npy at allowed index {i}")
+        k = arrays["intrinsics_flip.npy"][i]
+        if k[0, 0] <= 0 or k[1, 1] <= 0:
+            raise ValueError(f"Nonpositive focal length in intrinsics_flip.npy at allowed index {i}")
+
+
 def build_aux_and_flip_caches(
     data_root: Path,
     source_dir: Path,
@@ -205,41 +303,45 @@ def build_aux_and_flip_caches(
     aux_dir = Path(aux_dir)
     flip_dir = Path(flip_dir)
 
-    mat_sha = file_sha256(data_root / "nyu_depth_v2_labeled.mat")
-    splits_sha = file_sha256(data_root / "splits.mat")
-    orig_depth_sha = file_sha256(orig_pred_dir / "depth.npy")
-    orig_intr_sha = file_sha256(orig_pred_dir / "intrinsics.npy")
-    orig_idx_sha = file_sha256(orig_pred_dir / "indices.npy")
+    if aux_dir.resolve() == flip_dir.resolve():
+        raise ValueError("Round 2 aux and flip caches require distinct output directories")
+    bindings = {
+        "nyu_mat_sha256": file_sha256(data_root / "nyu_depth_v2_labeled.mat"),
+        "splits_sha256": file_sha256(data_root / "splits.mat"),
+        "orig_depth_sha256": file_sha256(orig_pred_dir / "depth.npy"),
+        "orig_intrinsics_sha256": file_sha256(orig_pred_dir / "intrinsics.npy"),
+        "orig_indices_sha256": file_sha256(orig_pred_dir / "indices.npy"),
+    }
+    n_total = _NYU_IMAGES
+    indices = np.arange(n_total, dtype=np.int64)
+    _read_v2_indices(orig_pred_dir, indices)
+    train_indices = splits(data_root)["train"]
+    aux_layout, flip_layout = _cache_layouts()
+    aux_manifest_path = aux_dir / _MANIFEST_NAME
+    flip_manifest_path = flip_dir / _MANIFEST_NAME
+    if aux_manifest_path.exists() and flip_manifest_path.exists():
+        aux_m, aux_arrays = _read_cache_partition(aux_dir, aux_layout, bindings, indices)
+        flip_m, flip_arrays = _read_cache_partition(flip_dir, flip_layout, bindings, indices)
+        _validate_allowed_rows({**aux_arrays, **flip_arrays}, train_indices)
+        print("Round 2 aux & flip cache checksums verified; skipping GPU rebuild.", flush=True)
+        return {"aux_manifest": aux_m, "flip_manifest": flip_m}
 
-    aux_manifest_path = aux_dir / "manifest_v2_cache.json"
-    flip_manifest_path = flip_dir / "manifest_v2_cache.json"
-    if aux_manifest_path.is_file() and flip_manifest_path.is_file():
-        import json
+    for folder, layout in ((aux_dir, aux_layout), (flip_dir, flip_layout)):
+        if any((folder / filename).exists() for filename in (_MANIFEST_NAME, "indices.npy", *layout)):
+            raise ValueError(f"Unbound or incomplete Round 2 cache at {folder}; use new output directories")
 
-        aux_m = json.loads(aux_manifest_path.read_text(encoding="utf-8"))
-        flip_m = json.loads(flip_manifest_path.read_text(encoding="utf-8"))
-        if (
-            aux_m.get("complete") is True
-            and flip_m.get("complete") is True
-            and aux_m.get("nyu_mat_sha256") == mat_sha
-            and flip_m.get("nyu_mat_sha256") == mat_sha
-            and aux_m.get("orig_depth_sha256") == orig_depth_sha
-        ):
-            print("Round 2 aux & flip caches already complete and verified; skipping GPU rebuild.", flush=True)
-            return {"aux_manifest": aux_m, "flip_manifest": flip_m}
+    train_ids = set(int(i) for i in train_indices)
+    orig_depths = np.load(orig_pred_dir / "depth.npy", mmap_mode="r", allow_pickle=False)
+    orig_intr = np.load(orig_pred_dir / "intrinsics.npy", mmap_mode="r", allow_pickle=False)
+    if orig_depths.shape != (n_total, *_NYU_HW) or orig_intr.shape != (n_total, 3, 3):
+        raise ValueError(f"Unexpected original NYU depth or intrinsics shape: {orig_pred_dir}")
 
     weight_hashes = ensure_unidepth_weights(weights_dir)
-    model, device, backend = _load_local_unidepth(source_dir, weights_dir, device_str=device_str)
+    model, device, backend, source = _load_local_unidepth(source_dir, weights_dir, device_str=device_str)
 
     aux_dir.mkdir(parents=True, exist_ok=True)
     flip_dir.mkdir(parents=True, exist_ok=True)
 
-    train_ids = set(int(i) for i in splits(data_root)["train"].tolist())
-    orig_depths = np.load(orig_pred_dir / "depth.npy", mmap_mode="r", allow_pickle=False)
-    orig_intr = np.load(orig_pred_dir / "intrinsics.npy", mmap_mode="r", allow_pickle=False)
-
-    n_total = 1449
-    indices = np.arange(n_total, dtype=np.int64)
     np.save(aux_dir / "indices.npy", indices)
     np.save(flip_dir / "indices.npy", indices)
 
@@ -266,6 +368,8 @@ def build_aux_and_flip_caches(
 
             d_emb = int(captured_enc["cls_last"].shape[-1])
             c_df = int(probe_out["depth_features"].shape[1])
+            if d_emb != _CLS_DIM or 2 * c_df != _DEPTH_FEAT_STATS_DIM:
+                raise ValueError(f"Unexpected UniDepthV2 feature dimensions: CLS={d_emb}, depth stats={2 * c_df}")
 
             cls_tokens = np.empty((n_total, d_emb), dtype=np.float32)
             patch_mean = np.empty((n_total, d_emb), dtype=np.float32)
@@ -274,16 +378,16 @@ def build_aux_and_flip_caches(
             conf_summary = np.empty((n_total, len(CONF_SUMMARY_NAMES)), dtype=np.float32)
 
             conf_f16 = np.lib.format.open_memmap(
-                aux_dir / "confidence_f16.npy", mode="w+", dtype=np.float16, shape=(n_total, 480, 640)
+                aux_dir / "confidence_f16.npy", mode="w+", dtype=np.float16, shape=(n_total, *_NYU_HW)
             )
             depth_flip = np.lib.format.open_memmap(
-                flip_dir / "depth_flip.npy", mode="w+", dtype=np.float32, shape=(n_total, 480, 640)
+                flip_dir / "depth_flip.npy", mode="w+", dtype=np.float32, shape=(n_total, *_NYU_HW)
             )
             intr_flip = np.lib.format.open_memmap(
                 flip_dir / "intrinsics_flip.npy", mode="w+", dtype=np.float32, shape=(n_total, 3, 3)
             )
             conf_flip_f16 = np.lib.format.open_memmap(
-                flip_dir / "confidence_flip_f16.npy", mode="w+", dtype=np.float16, shape=(n_total, 480, 640)
+                flip_dir / "confidence_flip_f16.npy", mode="w+", dtype=np.float16, shape=(n_total, *_NYU_HW)
             )
             cls_tokens_flip = np.empty((n_total, d_emb), dtype=np.float32)
 
@@ -374,7 +478,7 @@ def build_aux_and_flip_caches(
 
     # Assert tight train-only parity vs existing outputs/nyu_rgb
     med_parity = float(np.median(train_depth_med_diffs))
-    if med_parity > 0.02:
+    if not np.isfinite(med_parity) or med_parity > 0.02:
         raise RuntimeError(f"Train-only GPU parity check failed: median diff={med_parity:.4f} m > 0.02 m")
 
     parity_payload = {
@@ -413,44 +517,22 @@ def build_aux_and_flip_caches(
     write_json_lf(aux_dir / "runtime_aux.json", rt_aux)
     write_json_lf(flip_dir / "runtime_flip.json", rt_flip)
 
-    aux_files = (
-        "indices.npy",
-        "cls_tokens.npy",
-        "patch_mean.npy",
-        "patch_std.npy",
-        "depth_feat_stats.npy",
-        "confidence_f16.npy",
-        "confidence_summary.npy",
-    )
-    flip_files = (
-        "indices.npy",
-        "depth_flip.npy",
-        "intrinsics_flip.npy",
-        "confidence_flip_f16.npy",
-        "cls_tokens_flip.npy",
-    )
-    aux_manifest = {
+    common_manifest = {
         "complete": True,
-        "nyu_mat_sha256": mat_sha,
-        "splits_sha256": splits_sha,
-        "orig_depth_sha256": orig_depth_sha,
-        "orig_intrinsics_sha256": orig_intr_sha,
-        "orig_indices_sha256": orig_idx_sha,
+        **bindings,
         "weights_sha256": weight_hashes,
-        "files_sha256": {f: file_sha256(aux_dir / f) for f in aux_files},
+        "source": source,
+    }
+    aux_manifest = {
+        **common_manifest,
+        "files_sha256": {f: file_sha256(aux_dir / f) for f in ("indices.npy", *aux_layout)},
     }
     flip_manifest = {
-        "complete": True,
-        "nyu_mat_sha256": mat_sha,
-        "splits_sha256": splits_sha,
-        "orig_depth_sha256": orig_depth_sha,
-        "orig_intrinsics_sha256": orig_intr_sha,
-        "orig_indices_sha256": orig_idx_sha,
-        "weights_sha256": weight_hashes,
-        "files_sha256": {f: file_sha256(flip_dir / f) for f in flip_files},
+        **common_manifest,
+        "files_sha256": {f: file_sha256(flip_dir / f) for f in ("indices.npy", *flip_layout)},
     }
-    write_json_lf(aux_dir / "manifest_v2_cache.json", aux_manifest)
-    write_json_lf(flip_dir / "manifest_v2_cache.json", flip_manifest)
+    write_json_lf(aux_manifest_path, aux_manifest)
+    write_json_lf(flip_manifest_path, flip_manifest)
     print(
         f"Aux+Flip caches built cleanly! Train depth parity median diff={med_parity:.6f}m, "
         f"aux={rt_aux['mean_seconds_per_image']*1000:.2f}ms/img, "
@@ -477,7 +559,7 @@ class VerifiedV2Cache:
             orig_pred_dir,
             data_root,
             allowed_split=allowed_split,
-            compute_hashes=compute_hashes,
+            compute_hashes=True,
             verify_scenes=verify_scenes,
         )
         self.aux_dir = Path(aux_dir)
@@ -487,57 +569,40 @@ class VerifiedV2Cache:
         self.test_ids = self.base.test_ids
         self.allowed_ids = self.base.allowed_ids
 
-        for req in (
-            self.aux_dir / "cls_tokens.npy",
-            self.aux_dir / "patch_mean.npy",
-            self.aux_dir / "patch_std.npy",
-            self.aux_dir / "depth_feat_stats.npy",
-            self.aux_dir / "confidence_f16.npy",
-            self.aux_dir / "confidence_summary.npy",
-            self.flip_dir / "depth_flip.npy",
-            self.flip_dir / "intrinsics_flip.npy",
-            self.flip_dir / "confidence_flip_f16.npy",
-            self.flip_dir / "cls_tokens_flip.npy",
-        ):
-            if not req.is_file():
-                raise FileNotFoundError(f"Missing Round 2 cache artifact: {req}")
+        bindings = {name: self.base.hashes[key] for name, key in _BASE_BINDINGS.items()}
+        aux_layout, flip_layout = _cache_layouts()
+        aux_m, aux_arrays = _read_cache_partition(self.aux_dir, aux_layout, bindings, self.base.indices)
+        flip_m, flip_arrays = _read_cache_partition(self.flip_dir, flip_layout, bindings, self.base.indices)
+        _validate_allowed_rows({**aux_arrays, **flip_arrays}, self.allowed_ids)
 
-        self._cls = np.load(self.aux_dir / "cls_tokens.npy", mmap_mode="r", allow_pickle=False)
-        self._pat_m = np.load(self.aux_dir / "patch_mean.npy", mmap_mode="r", allow_pickle=False)
-        self._pat_s = np.load(self.aux_dir / "patch_std.npy", mmap_mode="r", allow_pickle=False)
-        self._df_stats = np.load(self.aux_dir / "depth_feat_stats.npy", mmap_mode="r", allow_pickle=False)
-        self._conf = np.load(self.aux_dir / "confidence_f16.npy", mmap_mode="r", allow_pickle=False)
-        self._conf_sum = np.load(self.aux_dir / "confidence_summary.npy", mmap_mode="r", allow_pickle=False)
+        self._cls = aux_arrays["cls_tokens.npy"]
+        self._pat_m = aux_arrays["patch_mean.npy"]
+        self._pat_s = aux_arrays["patch_std.npy"]
+        self._df_stats = aux_arrays["depth_feat_stats.npy"]
+        self._conf = aux_arrays["confidence_f16.npy"]
+        self._conf_sum = aux_arrays["confidence_summary.npy"]
 
-        self._d_flip = np.load(self.flip_dir / "depth_flip.npy", mmap_mode="r", allow_pickle=False)
-        self._k_flip = np.load(self.flip_dir / "intrinsics_flip.npy", mmap_mode="r", allow_pickle=False)
-        self._c_flip = np.load(self.flip_dir / "confidence_flip_f16.npy", mmap_mode="r", allow_pickle=False)
-        self._cls_flip = np.load(self.flip_dir / "cls_tokens_flip.npy", mmap_mode="r", allow_pickle=False)
+        self._d_flip = flip_arrays["depth_flip.npy"]
+        self._k_flip = flip_arrays["intrinsics_flip.npy"]
+        self._c_flip = flip_arrays["confidence_flip_f16.npy"]
+        self._cls_flip = flip_arrays["cls_tokens_flip.npy"]
 
-        # Validate finiteness strictly ONLY on allowed_ids
-        for idx in self.allowed_ids:
-            i = int(idx)
-            if not np.isfinite(self._cls[i]).all() or not np.isfinite(self._conf[i]).all():
-                raise ValueError(f"Nonfinite aux values at allowed index {i}")
-            df_i = self._d_flip[i]
-            if not np.isfinite(df_i).all() or not (df_i > 0).all():
-                raise ValueError(f"Nonfinite/nonpositive flip depth at allowed index {i}")
-
-        self.hashes: dict[str, str] = dict(self.base.hashes)
+        self.hashes: dict[str, str] = {}
         if compute_hashes:
-            for tag, p in (
-                ("aux_cls_tokens_sha256", self.aux_dir / "cls_tokens.npy"),
-                ("aux_patch_mean_sha256", self.aux_dir / "patch_mean.npy"),
-                ("aux_patch_std_sha256", self.aux_dir / "patch_std.npy"),
-                ("aux_depth_feat_stats_sha256", self.aux_dir / "depth_feat_stats.npy"),
-                ("aux_confidence_f16_sha256", self.aux_dir / "confidence_f16.npy"),
-                ("aux_confidence_summary_sha256", self.aux_dir / "confidence_summary.npy"),
-                ("flip_depth_sha256", self.flip_dir / "depth_flip.npy"),
-                ("flip_intrinsics_sha256", self.flip_dir / "intrinsics_flip.npy"),
-                ("flip_confidence_f16_sha256", self.flip_dir / "confidence_flip_f16.npy"),
-                ("flip_cls_tokens_sha256", self.flip_dir / "cls_tokens_flip.npy"),
-            ):
-                self.hashes[tag] = file_sha256(p)
+            aux_hashes = aux_m["files_sha256"]
+            flip_hashes = flip_m["files_sha256"]
+            self.hashes = {**self.base.hashes,
+                "aux_cls_tokens_sha256": aux_hashes["cls_tokens.npy"],
+                "aux_patch_mean_sha256": aux_hashes["patch_mean.npy"],
+                "aux_patch_std_sha256": aux_hashes["patch_std.npy"],
+                "aux_depth_feat_stats_sha256": aux_hashes["depth_feat_stats.npy"],
+                "aux_confidence_f16_sha256": aux_hashes["confidence_f16.npy"],
+                "aux_confidence_summary_sha256": aux_hashes["confidence_summary.npy"],
+                "flip_depth_sha256": flip_hashes["depth_flip.npy"],
+                "flip_intrinsics_sha256": flip_hashes["intrinsics_flip.npy"],
+                "flip_confidence_f16_sha256": flip_hashes["confidence_flip_f16.npy"],
+                "flip_cls_tokens_sha256": flip_hashes["cls_tokens_flip.npy"],
+            }
 
     def _guard(self, index: int) -> int:
         return self.base._check_index(index)

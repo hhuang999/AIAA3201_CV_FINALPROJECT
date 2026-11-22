@@ -1,4 +1,8 @@
-"""Training-only residual and oracle error diagnosis for Part 3B SOTA calibration."""
+"""Round 1 residual and oracle diagnosis with official training targets.
+
+The historical B3 baseline has official-test results. This diagnostic run uses
+training targets and treats its second-stage residual fits as exploratory.
+"""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +26,43 @@ from .data import nyu_depth, nyu_image, open_nyu, scene_names
 from .frozen import load_frozen
 from .metrics import CROP, DEPTH_BINS, METRIC_NAMES, clip_depth, evaluate_image, metrics, valid_depth
 from .sota_io import load_nyu_rgb_cache, scene_folds_seeded, write_csv_lf, write_json_lf
+
+
+SECOND_STAGE_RESIDUAL_SCOPE = {
+    "target_source": "reused_baseline_oof_residuals",
+    "exploratory": True,
+    "nested_crossfit": False,
+    "validation_labels_independent_of_fit": False,
+    "limitation": (
+        "Second-stage training residuals may come from baseline fits that used the current "
+        "validation fold's labels."
+    ),
+}
+DIAGNOSTIC_PROTOCOL = {
+    "official_test_targets_read": False,
+    "prior_official_test_context": "historical_b3_project_baseline",
+    "second_stage_residual_diagnostics": {
+        **SECOND_STAGE_RESIDUAL_SCOPE,
+        "affected_diagnostics": [
+            "univariate_residual_r2",
+            "multivariate_residual_r2",
+            "global_spatial_residual_models",
+        ],
+    },
+}
+
+
+def write_diagnostic_summary(
+    path: Path, summary: dict[str, Any], protocol: dict[str, Any]
+) -> dict[str, Any]:
+    """Write diagnostic evidence with its run and historical test scopes."""
+    payload = {
+        **summary,
+        "test_read": protocol["official_test_targets_read"],
+        "diagnostic_protocol": protocol,
+    }
+    write_json_lf(path, payload)
+    return payload
 
 
 # CROP = (slice(45, 471), slice(41, 601)) -> shape (426, 560) inside 480x640 image
@@ -277,7 +318,11 @@ def scene_cv_ridge_r2(
     folds: list[np.ndarray],
     lam: float = 1.0,
 ) -> float:
-    """Compute 5-fold scene-grouped out-of-fold R^2 with standardized linear ridge."""
+    """Fit scene-grouped ridge folds to the supplied targets and compute R^2.
+
+    When the supplied residuals come from shared baseline OOF fits, the result
+    is an exploratory score because target construction can depend on validation labels.
+    """
     x_arr = np.asarray(x, dtype=np.float64)
     if x_arr.ndim == 1:
         x_arr = x_arr[:, None]
@@ -540,7 +585,9 @@ def run_diagnosis(
             feats.update(extract_rgb_features(rgb_full, raw_full))
             feat_records.append(feats)
 
-        # 3. Evaluate 5-fold OOF global spatial field on top of OOF B3
+        # 3. Explore spatial fields over shared OOF B3 residuals.
+        # The baseline fits producing second-stage training residuals can include
+        # labels from the current spatial model's validation fold.
         s_log_res = np.concatenate(sampled_log_res)
         s_u = np.concatenate(sampled_u)
         s_v = np.concatenate(sampled_v)
@@ -791,7 +838,6 @@ def run_diagnosis(
         "split": "official795_training_only",
         "images": int(n),
         "scenes": int(len(np.unique(scenes))),
-        "test_read": False,
         "oof_baseline": oof_rows,
         "oracles": oracle_rows,
         "cross_metric_bias_on_oof_b3": {
@@ -816,8 +862,7 @@ def run_diagnosis(
         "depth_bin_summary": bin_summary.to_dict(orient="records"),
         "spatial_summary": spatial_rows,
     }
-    write_json_lf(output_dir / "diag_results.json", summary)
-    return summary
+    return write_diagnostic_summary(output_dir / "diag_results.json", summary, DIAGNOSTIC_PROTOCOL)
 
 
 def main() -> None:

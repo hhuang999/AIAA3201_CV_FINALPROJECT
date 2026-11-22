@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
 from pathlib import Path
 from time import perf_counter
 from typing import Any
@@ -154,6 +156,55 @@ def _apply_v2_gpu_exact(
     return torch.exp(out_g.clamp_(float(np.log(0.001)), float(np.log(10.0)))).clamp_(0.001, 10.0)
 
 
+def _read_backbone_timing_receipt(path: Path | None) -> dict[str, Any] | None:
+    if path is None:
+        return None
+    try:
+        raw = path.read_bytes()
+    except FileNotFoundError:
+        return None
+    try:
+        record = json.loads(raw)
+    except (UnicodeError, ValueError) as exc:
+        raise ValueError(f"{path}: invalid runtime JSON") from exc
+    if not isinstance(record, dict):
+        raise ValueError(f"{path}: expected a runtime JSON object")
+
+    seconds = record.get("mean_seconds_per_image")
+    error = f"{path}: mean_seconds_per_image must be a positive finite duration"
+    if type(seconds) not in (int, float):
+        raise ValueError(error)
+    try:
+        mean_ms = float(seconds) * 1000.0
+    except OverflowError as exc:
+        raise ValueError(error) from exc
+    if not math.isfinite(mean_ms) or mean_ms <= 0.0:
+        raise ValueError(error)
+
+    device = record.get("device")
+    gpu_name = record.get("gpu_name")
+    try:
+        device_type = torch.device(device).type if isinstance(device, str) else None
+    except RuntimeError as exc:
+        raise ValueError(f"{path}: invalid backbone device {device!r}") from exc
+    if device_type not in {"cpu", "cuda"}:
+        raise ValueError(f"{path}: expected a CPU or CUDA backbone device")
+    if device_type == "cuda" and (not isinstance(gpu_name, str) or not gpu_name.strip()):
+        raise ValueError(f"{path}: CUDA backbone device requires a gpu_name")
+    return {
+        "path": str(path),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "device": device,
+        "device_type": device_type,
+        "gpu_name": gpu_name if device_type == "cuda" else None,
+        "mean_ms_per_image": mean_ms,
+    }
+
+
+def _estimated_latency(backbone_ms: float | None, post_ms: float) -> float | None:
+    return backbone_ms + post_ms if backbone_ms is not None else None
+
+
 def benchmark_v2_uncontended_runtime(
     cache,
     test_ids: np.ndarray,
@@ -163,9 +214,25 @@ def benchmark_v2_uncontended_runtime(
     b3_frozen: dict[str, Any],
     aux_runtime_path: Path,
     n_images: int = 200,
+    *,
+    flip_runtime_path: Path | None = None,
 ) -> dict[str, Any]:
-    """Measure uncontended post-processing runtime and Torch/NumPy/GPU parity across 200 test images."""
+    """Measure cached-input post-processing and optionally estimate component sums."""
+    if n_images <= 0 or not len(test_ids):
+        raise ValueError("Timing requires a positive n_images and at least one image")
+    aux_timing = _read_backbone_timing_receipt(aux_runtime_path)
+    flip_timing = _read_backbone_timing_receipt(flip_runtime_path)
+    bb_1pass_ms = aux_timing["mean_ms_per_image"] if aux_timing is not None else None
+    bb_2pass_ms = None
+    if aux_timing is not None and flip_timing is not None:
+        if (aux_timing["device"], aux_timing["gpu_name"]) != (flip_timing["device"], flip_timing["gpu_name"]):
+            raise ValueError(f"{aux_runtime_path} and {flip_runtime_path} must record the same backbone device")
+        bb_2pass_ms = aux_timing["mean_ms_per_image"] + flip_timing["mean_ms_per_image"]
+        if not math.isfinite(bb_2pass_ms):
+            raise ValueError(f"{aux_runtime_path} and {flip_runtime_path} must have a finite combined duration")
+
     bench_ids = test_ids[: min(n_images, len(test_ids))]
+    warmup_count = min(10, len(bench_ids))
     p1_l = [cache[int(i)].astype(np.float64) for i in bench_ids]
     p2_l = [cache.depth_flip(int(i)).astype(np.float64) for i in bench_ids]
     c1_l = [np.maximum(cache.confidence(int(i)).astype(np.float64), 1e-4) for i in bench_ids]
@@ -204,8 +271,7 @@ def benchmark_v2_uncontended_runtime(
         )
         max_diff_mp_cpu = max(max_diff_mp_cpu, float(np.max(np.abs(m_t - m_n))))
 
-    # Warmup 10 images
-    for j in range(10):
+    for j in range(warmup_count):
         _ = apply_frozen(p1_l[j], b3_frozen)
         _ = apply_sota_model(p1_l[j], k1_l[j], v1_model, use_torch_fast=True)
         xs = assemble_semantic_vector(sm_sp, cls1_l[j], pm_l[j], ps_l[j], df_l[j])
@@ -249,14 +315,13 @@ def benchmark_v2_uncontended_runtime(
         )
     v2_mp_cpu_ms = (perf_counter() - t0) * 1000.0 / len(bench_ids)
 
-    backbone_info = json.loads(aux_runtime_path.read_text(encoding="utf-8")) if aux_runtime_path.is_file() else {}
-    bb_1pass_ms = float(backbone_info.get("pass1_aux_ms_mean", 43.04))
-    bb_2pass_ms = bb_1pass_ms + float(backbone_info.get("pass2_flip_ms_mean", 44.13))
-
     res: dict[str, Any] = {
         "benchmark_images": len(bench_ids),
         "uncontended_threads": torch.get_num_threads(),
-        "backbone_device": backbone_info.get("device_name", "GPU"),
+        "postprocessing_timing_kind": "measured_cached_inputs",
+        "end_to_end_timing_kind": "estimated_sum_of_separately_measured_components",
+        "backbone_timing_sources": {"aux": aux_timing, "flip": flip_timing},
+        "backbone_device": aux_timing["device"] if aux_timing is not None else None,
         "backbone_single_pass_ms_per_image": bb_1pass_ms,
         "backbone_two_pass_flip_ms_per_image": bb_2pass_ms,
         "b3_residual_v1_post_ms": float(b3_ms),
@@ -264,9 +329,9 @@ def benchmark_v2_uncontended_runtime(
         "v2_single_pass_cpu_post_ms": float(v2_sp_cpu_ms),
         "v2_single_pass_numpy_post_ms": float(v2_sp_np_ms),
         "v2_flip_tta_cpu_post_ms": float(v2_mp_cpu_ms),
-        "end_to_end_v1_ms": float(bb_1pass_ms + v1_cpu_ms),
-        "end_to_end_v2_single_pass_cpu_post_ms": float(bb_1pass_ms + v2_sp_cpu_ms),
-        "end_to_end_v2_flip_tta_cpu_post_ms": float(bb_2pass_ms + v2_mp_cpu_ms),
+        "end_to_end_v1_ms": _estimated_latency(bb_1pass_ms, v1_cpu_ms),
+        "end_to_end_v2_single_pass_cpu_post_ms": _estimated_latency(bb_1pass_ms, v2_sp_cpu_ms),
+        "end_to_end_v2_flip_tta_cpu_post_ms": _estimated_latency(bb_2pass_ms, v2_mp_cpu_ms),
         "max_abs_diff_sp_cpu_vs_numpy": float(max_diff_sp_cpu),
         "max_abs_diff_mp_cpu_vs_numpy": float(max_diff_mp_cpu),
     }
@@ -275,7 +340,7 @@ def benchmark_v2_uncontended_runtime(
         dev = torch.device("cuda")
         max_diff_sp_gpu = 0.0
         max_diff_mp_gpu = 0.0
-        for j in range(10):
+        for j in range(warmup_count):
             xs = assemble_semantic_vector(sm_sp, cls1_l[j], pm_l[j], ps_l[j], df_l[j])
             g_sp = _apply_v2_gpu_exact(
                 p1_l[j], k1_l[j], sp_model, dev, conf_sum_np=cs_l[j],
@@ -298,32 +363,48 @@ def benchmark_v2_uncontended_runtime(
             max_diff_mp_gpu = max(max_diff_mp_gpu, float(np.max(np.abs(g_mp - n_mp))))
 
         torch.cuda.synchronize()
+        torch.cuda.reset_peak_memory_stats(dev)
         t_g0 = perf_counter()
         for j in range(len(bench_ids)):
-            _ = _apply_v2_gpu_exact(
+            _apply_v2_gpu_exact(
                 p1_l[j], k1_l[j], sp_model, dev, conf_sum_np=cs_l[j],
                 cls_orig_np=cls1_l[j], pat_m_np=pm_l[j], pat_s_np=ps_l[j], df_np=df_l[j],
             )
         torch.cuda.synchronize()
         sp_gpu_ms = (perf_counter() - t_g0) * 1000.0 / len(bench_ids)
+        sp_peak_allocated = torch.cuda.max_memory_allocated(dev)
+        sp_peak_reserved = torch.cuda.max_memory_reserved(dev)
 
+        torch.cuda.reset_peak_memory_stats(dev)
         t_g1 = perf_counter()
         for j in range(len(bench_ids)):
-            _ = _apply_v2_gpu_exact(
+            _apply_v2_gpu_exact(
                 p1_l[j], k1_l[j], mp_model, dev, flip_depth_np=p2_l[j], flip_intrinsics_np=k2_l[j],
                 conf_orig_np=c1_l[j], conf_flip_np=c2_l[j], conf_sum_np=cs_l[j],
                 cls_orig_np=cls1_l[j], cls_flip_np=cls2_l[j], pat_m_np=pm_l[j], pat_s_np=ps_l[j], df_np=df_l[j],
             )
         torch.cuda.synchronize()
         mp_gpu_ms = (perf_counter() - t_g1) * 1000.0 / len(bench_ids)
-
+        mp_peak_allocated = torch.cuda.max_memory_allocated(dev)
+        mp_peak_reserved = torch.cuda.max_memory_reserved(dev)
+        gpu_name = str(torch.cuda.get_device_name(dev))
+        same_gpu_model = (
+            aux_timing is not None
+            and aux_timing["device_type"] == "cuda"
+            and aux_timing["gpu_name"] == gpu_name
+        )
+        res["postprocessing_cuda_peak_scope"] = "process allocator peaks during cached-input post-processing"
+        res["v2_single_pass_gpu_post_peak_allocated_bytes"] = sp_peak_allocated
+        res["v2_single_pass_gpu_post_peak_reserved_bytes"] = sp_peak_reserved
+        res["v2_flip_tta_gpu_post_peak_allocated_bytes"] = mp_peak_allocated
+        res["v2_flip_tta_gpu_post_peak_reserved_bytes"] = mp_peak_reserved
         res["v2_single_pass_gpu_post_ms"] = float(sp_gpu_ms)
         res["v2_flip_tta_gpu_post_ms"] = float(mp_gpu_ms)
-        res["end_to_end_v2_single_pass_gpu_ms"] = float(bb_1pass_ms + sp_gpu_ms)
-        res["end_to_end_v2_flip_tta_gpu_ms"] = float(bb_2pass_ms + mp_gpu_ms)
+        res["end_to_end_v2_single_pass_gpu_ms"] = _estimated_latency(bb_1pass_ms if same_gpu_model else None, sp_gpu_ms)
+        res["end_to_end_v2_flip_tta_gpu_ms"] = _estimated_latency(bb_2pass_ms if same_gpu_model else None, mp_gpu_ms)
         res["max_abs_diff_sp_gpu_vs_numpy"] = float(max_diff_sp_gpu)
         res["max_abs_diff_mp_gpu_vs_numpy"] = float(max_diff_mp_gpu)
-        res["gpu_name"] = str(torch.cuda.get_device_name(0))
+        res["gpu_name"] = gpu_name
     return res
 
 
@@ -658,7 +739,7 @@ def evaluate_heldout_v2_test(
 
     runtime = benchmark_v2_uncontended_runtime(
         cache, test_ids, models_v2[win_sp], models_v2[win_mp], v1["primary_model"], b3,
-        aux_dir / "runtime_aux.json", n_images=200,
+        aux_dir / "runtime_aux.json", n_images=200, flip_runtime_path=flip_dir / "runtime_flip.json",
     )
 
     write_csv_lf(output_dir / "test_summary.csv", sum_df)

@@ -1892,7 +1892,7 @@ def main() -> None:
     lock_p.add_argument("--b3-frozen", type=Path, required=True)
     lock_p.add_argument("--output", type=Path, required=True)
 
-    lc_p = sub.add_parser("learning-curve", help="Run train-only 5-fold scene-CV learning curve (10/25/50/100%)")
+    lc_p = sub.add_parser("learning-curve", help="Run train-only 5-fold scene-CV learning curve (10/25/50/100%%)")
     lc_p.add_argument("--data-root", type=Path, required=True)
     lc_p.add_argument("--predictions", type=Path, required=True)
     lc_p.add_argument("--output", type=Path, required=True)
