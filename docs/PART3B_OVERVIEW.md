@@ -2,7 +2,7 @@
 
 This index summarizes the additive Part 3B research progression built on top of the restored course-project codebase for RGB-only **UniDepthV2 ViT-S** post-hoc calibration on **NYU Depth V2**.
 
-> **Why `README.md` Remains Unchanged**: Root [README.md](../README.md) and the restored pipeline sources are SHA-256 locked inside `results/final_review_20261113/manifest.json` (`336` files), `results/acceptance_20261113/manifest.json` (`344` files), and `results/restoration_20261113/manifest.json` (`318` files). Keeping `README.md` byte-identical to `codex/part3b` guarantees `python -m depthlab.verify` passes unconditionally alongside the Round 1 and Round 2 manifests.
+> **Documentation & Manifest Lineage**: Root [README.md](../README.md) and [REPRODUCTION.md](REPRODUCTION.md) now surface the complete Part 3B progression (`0.1145 -> 0.0996 -> 0.0865 -> 0.0830`). On `feat/part3b-sota-v2`, `results/part3b_sota/manifest.json` (`31` files) and `results/part3b_sota_v2/manifest.json` (`32` files) pass `python -m depthlab.verify --manifest ...` 100%, while all `334` non-doc files inside the immutable historical snapshot `results/final_review_20261113/manifest.json` remain byte-identical (the full `336/336` baseline snapshot is verifiable on branch `codex/part3b` commit `923ec49`).
 
 ---
 
@@ -71,12 +71,12 @@ tests/
 Run inside `AIAA3102_CV_FINALPROJECT`:
 
 ```powershell
-# Verify all 4 SHA-256 manifests (baseline review, acceptance, Round 1 SOTA, Round 2 SOTA)
-D:\anaconda\envs\vb\python.exe -m depthlab.verify
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/acceptance_20261113/manifest.json
+# Verify Round 1 (31 files) and Round 2 (32 files) SHA-256 manifests on feat/part3b-sota-v2
 D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota/manifest.json
 D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
 
 # Run Windows pytest suite (excludes Linux shell-default / POSIX crash-resume checks)
 D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
 ```
+
+*(Note: The full `336`-file baseline manifest `results/final_review_20261113/manifest.json` is anchored to `codex/part3b` `923ec49`; on `feat/part3b-sota-v2`, `334/336` entries match byte-for-byte with only `README.md` and `docs/REPRODUCTION.md` updated for `GeoCalib-3D v1`/`v2`.)*

@@ -112,10 +112,37 @@ Use `results/restoration_20261113/part3b_replay/` or the new evaluation output f
 
 Reports, figures and final videos remain a separate presentation task. No presentation generation is required to reproduce or verify the delivered numerical result. Running either helper with `--help` checks its command-line interface only.
 
+## Part 3B Round 1 (`GeoCalib-3D v1`) and Round 2 (`GeoCalib-3D v2`)
+
+Additive calibration upgrades built on the pinned `lpiccinelli/unidepth-v2-vits14` RGB-only predictions (`outputs/nyu_rgb/depth.npy`) with zero ground-truth intrinsics and strict training-split isolation (`795` train images / `249` scenes for CV and fitting; one-shot `654` test evaluation after parameter freeze):
+
+| Iteration | Frozen Artifact & Expected SHA-256 | Pre-Test Freeze Commit | Technical Report & Manifest |
+| :--- | :--- | :---: | :--- |
+| Round 1 (`GeoCalib-3D v1`) | `results/part3b_sota/frozen_sota_model.json`<br>`5f8326a63470416e077cec12afb41ed793ffb2a58abf8d94a0eb88b84f08e86c` | `8560b5a` | [PART3B_SOTA.md](PART3B_SOTA.md)<br>`results/part3b_sota/manifest.json` (`31` files) |
+| Round 2 (`GeoCalib-3D v2`: Track A `H6_geosem_inv_spline` & Track B `M6_flip_inv_geosem`) | `results/part3b_sota_v2/frozen_sota_v2_model.json`<br>`a7633ffa74b21b70e196ba822c15fe454ac96b528443d4a70753f0aa4ff479e6` | `ebad14a` | [PART3B_SOTA_V2.md](PART3B_SOTA_V2.md)<br>`results/part3b_sota_v2/manifest.json` (`32` files) |
+
+Key CLI entrypoints (inspect all flags with `--help`):
+
+```bash
+# Build pinned UniDepthV2 ViT-S internal feature (outputs/nyu_rgb_aux/) and horizontal-flip (outputs/nyu_rgb_flip/) caches
+python -m depthlab.sota_v2_cache build --help
+
+# One-shot held-out 654-image test evaluation & 10k scene bootstrap (Round 1 / Round 2)
+python -m depthlab.sota_evaluate --help
+python -m depthlab.sota_v2_evaluate --help
+```
+
+```powershell
+# Verify Round 1 & Round 2 delivered manifests and run Windows test suite
+D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota/manifest.json
+D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/part3b_sota_v2/manifest.json
+D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
+```
+
 ## Delivered verification
 
-Run `python -m depthlab.verify` to check the source, tests, dependency specifications, historical evidence and new parity results against `results/final_review_20261113/manifest.json`. The verifier uses only Python's standard library. Large external prediction arrays remain in ignored runtime storage and carry their own complete cache manifests.
+On `feat/part3b-sota-v2`, `results/part3b_sota/manifest.json` (`31` files) and `results/part3b_sota_v2/manifest.json` (`32` files) verify cleanly with `python -m depthlab.verify --manifest ...`. Historical `results/final_review_20261113/manifest.json` (`336` files) is the immutable `2026-11-13` snapshot anchored on `codex/part3b` (`923ec49`); on `feat/part3b-sota-v2`, `334/336` files in that manifest remain byte-identical (only `README.md` and `docs/REPRODUCTION.md` were updated to document Round 1 & Round 2).
 
-The restored source uses LF checkouts on Windows and Linux. `results/**` is preserved byte-for-byte so CSV newline conversion cannot invalidate frozen scientific hashes.
+The verifier uses only Python's standard library. Large external prediction arrays remain in ignored runtime storage and carry their own complete cache manifests. The restored source uses LF checkouts on Windows and Linux. `results/**` is preserved byte-for-byte so CSV newline conversion cannot invalidate frozen scientific hashes.
 
-The [final code review](FINAL_CODE_REVIEW_20261113.md) records implementation lineage and the 174-test acceptance result. The earlier restoration manifest remains an immutable record of its original commit; the current verifier uses the final-review manifest.
+The [final code review](FINAL_CODE_REVIEW_20261113.md) records the original `codex/part3b` implementation lineage and the 174-test acceptance result; [PART3B_OVERVIEW.md](PART3B_OVERVIEW.md) indexes the baseline alongside Round 1 and Round 2.
