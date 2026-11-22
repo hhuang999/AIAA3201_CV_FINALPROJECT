@@ -1,0 +1,606 @@
+{
+  "schema": "aiaa3201_project_manifest",
+  "file_count": 120,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 11944,
+      "sha256": "ff326ef8c81ec0db1e0cd6cf9c0d101f22e0edfcbdbd36477df98ec9b9d38548"
+    },
+    {
+      "path": "depthlab/__init__.py",
+      "bytes": 55,
+      "sha256": "78b388286dd0a2f409cf71e9ee182b27e8543a11786c89a7452596e6a790318f"
+    },
+    {
+      "path": "depthlab/cache.py",
+      "bytes": 10253,
+      "sha256": "b7b8b0ab26ec34d6076f1a2743a2dbe41a406246fd36c40c5464ace69cb08c7e"
+    },
+    {
+      "path": "depthlab/cache_subset.py",
+      "bytes": 2410,
+      "sha256": "23d3475b87c0662b8373b6d15207015fd0791addc40fc7bd4762a41a28a4f541"
+    },
+    {
+      "path": "depthlab/data.py",
+      "bytes": 1617,
+      "sha256": "2b569493404e30c7029cfc9b89f5cf5f098bc17f50af8c17a8a75b3e2afffa30"
+    },
+    {
+      "path": "depthlab/diagnose.py",
+      "bytes": 4263,
+      "sha256": "7ac488e174a58f882747f797d523bde9a552495dd1c9dc35f47184ea22291f88"
+    },
+    {
+      "path": "depthlab/geocalib_cache.py",
+      "bytes": 27094,
+      "sha256": "6931c735f160060e707df939a8527cee7271615e75452f31e91a7c458d2de816"
+    },
+    {
+      "path": "depthlab/geocalib_diagnose.py",
+      "bytes": 41001,
+      "sha256": "9ac5850759b6d05762ba7f3cb6f809a770845bc82d39366fcc53932ecbfc6ada"
+    },
+    {
+      "path": "depthlab/geocalib_evaluate.py",
+      "bytes": 44441,
+      "sha256": "bccb2a00ac1e4ddade00d98eea407f39e5d1fffc3cfe42ccef789b5627a7d2ac"
+    },
+    {
+      "path": "depthlab/geocalib_figures.py",
+      "bytes": 46916,
+      "sha256": "bb2c13cb2035afd186f5cbb9d8c8a0bb48538f2f1ac864d26b30ef817dc1267a"
+    },
+    {
+      "path": "depthlab/geocalib_io.py",
+      "bytes": 7355,
+      "sha256": "498e052295b150876202308b4f77633b1033677f2a39b5e33ac78f1ec78b940d"
+    },
+    {
+      "path": "depthlab/geocalib_model.py",
+      "bytes": 105797,
+      "sha256": "86783db365dd0521569d38afafd65dc360f18e0362fa49ee0fbecb474774cd94"
+    },
+    {
+      "path": "depthlab/infer_nyu.py",
+      "bytes": 11416,
+      "sha256": "074c264c0414cfe22e970033d690ac1308bb169f838b2bc3a03309c33ff985e9"
+    },
+    {
+      "path": "depthlab/infer_video.py",
+      "bytes": 15855,
+      "sha256": "eaa56e533796e35d1e4fd5c5b72ac87904b58dd38d31fafb25a4f9c2028fcf3e"
+    },
+    {
+      "path": "depthlab/inference_backend.py",
+      "bytes": 1447,
+      "sha256": "5f03cb7404bb6fe884b9848070b2a3d098f6058408675ab0474f610f77dfcd1f"
+    },
+    {
+      "path": "depthlab/metrics.py",
+      "bytes": 1477,
+      "sha256": "381e58dd887687e9534a2b0ff4054d92236686db08ab9478968c9b70949c3f39"
+    },
+    {
+      "path": "depthlab/prepare.py",
+      "bytes": 3038,
+      "sha256": "bb6323f7b44b47cb458d361c3b5a88e94da5688b61c72bcaad90ec0c32d1a890"
+    },
+    {
+      "path": "depthlab/render_video.py",
+      "bytes": 7719,
+      "sha256": "539038e97ff4d3fd26d883f0bdd0036be02050d52ac06b01ad141eb1ba34a50e"
+    },
+    {
+      "path": "depthlab/stereo.py",
+      "bytes": 28003,
+      "sha256": "7a4f493ffd50090748572ee4522a64a6af96e3565d69b2919b06ec267abcab46"
+    },
+    {
+      "path": "depthlab/verify.py",
+      "bytes": 1756,
+      "sha256": "4119026700188bb0a96aa48f8ee22581cde11543f912b8f24e7b48a6fa21c60f"
+    },
+    {
+      "path": "docs/PART3_GEOCALIB.md",
+      "bytes": 19983,
+      "sha256": "f2fbd7e15fdb06f2053206d06d9615a3775b97c448ec75e69590d51577f208d8"
+    },
+    {
+      "path": "docs/REPRODUCTION.md",
+      "bytes": 7995,
+      "sha256": "cf5d6ec1e474b2b2107f32862b46120c67563aa06e233bbf93b25014fa1a7e76"
+    },
+    {
+      "path": "requirements-linux-cu128.lock.txt",
+      "bytes": 4890,
+      "sha256": "ffbd55fc9ff369510ceb96014e6eba2fbe82249250a75c588ee919a67be44163"
+    },
+    {
+      "path": "requirements-reproduction.txt",
+      "bytes": 134,
+      "sha256": "543b0dfde311ca649eb2bafc75c748ed4c22618adeb421d644813f1e32ef9819"
+    },
+    {
+      "path": "results/figures/part1_stereo/Adirondack.png",
+      "bytes": 628754,
+      "sha256": "382cb2e3b2f2d5abc9cf3297e8a70d328f28ed3a6bf3d3e60d2c32f82d27e5e5"
+    },
+    {
+      "path": "results/figures/part1_stereo/ArtL.png",
+      "bytes": 599080,
+      "sha256": "6566d3cc9b3bb2e2fb4e64ff60ef150764a8e06af548661f0227ce9e7a2a789e"
+    },
+    {
+      "path": "results/figures/part1_stereo/Jadeplant.png",
+      "bytes": 673112,
+      "sha256": "c62ee92cac50b3c7d6dbfac4e39969b28db6a1104765c8c706992fd4b345af9e"
+    },
+    {
+      "path": "results/figures/part1_stereo/Motorcycle.png",
+      "bytes": 670297,
+      "sha256": "fc32694e20e3204fedf55da079fa2247c4e035cc573e5710c581b5db40d8bbc2"
+    },
+    {
+      "path": "results/figures/part1_stereo/MotorcycleE.png",
+      "bytes": 690864,
+      "sha256": "fa3fc35476a461719743df6abebad3be97454c0f95a37ef88c42b532f7946e42"
+    },
+    {
+      "path": "results/figures/part1_stereo/Piano.png",
+      "bytes": 645500,
+      "sha256": "653007c111d32323aa03df7bdd04c5a0ffd085f3294ed3cfdaffe8cf42d6975f"
+    },
+    {
+      "path": "results/figures/part1_stereo/PianoL.png",
+      "bytes": 601109,
+      "sha256": "9b5831fd44c4385926becaa4cd169509a661d5c3b6a01e5536b90bb84f29b8f7"
+    },
+    {
+      "path": "results/figures/part1_stereo/Pipes.png",
+      "bytes": 662003,
+      "sha256": "c73b12b8c0687aa6257ddcf4c4cb4c4f5b69023a6bc331c3ba1114acf151cd0f"
+    },
+    {
+      "path": "results/figures/part1_stereo/Playroom.png",
+      "bytes": 660474,
+      "sha256": "d81e3e2cdbfb3f602c7a8fffd31ddd0d90c06d92ce510ae97e9402e1c13e7049"
+    },
+    {
+      "path": "results/figures/part1_stereo/Playtable.png",
+      "bytes": 701157,
+      "sha256": "f4e77c815c8065491eda9ac395e35c27e36513a3a22088adc627ec4114f36bf9"
+    },
+    {
+      "path": "results/figures/part1_stereo/PlaytableP.png",
+      "bytes": 675345,
+      "sha256": "473aada612371ced1978e12272f290892ef77363468dc4a48e76c375f4b253a3"
+    },
+    {
+      "path": "results/figures/part1_stereo/Recycle.png",
+      "bytes": 554269,
+      "sha256": "6d199916c331657f941200b61d75222b582a9937029cdb2edb45b95fd7f6723b"
+    },
+    {
+      "path": "results/figures/part1_stereo/Shelves.png",
+      "bytes": 645912,
+      "sha256": "d1899a749087ea36a545a0a9e88121c2e33ef0b31204fe6a634aedff8db058c7"
+    },
+    {
+      "path": "results/figures/part1_stereo/Teddy.png",
+      "bytes": 697021,
+      "sha256": "ce48c302590f9b5407297f0d3b7e02abb172b5ea70bb10698f166673ddb7af21"
+    },
+    {
+      "path": "results/figures/part1_stereo/Vintage.png",
+      "bytes": 561388,
+      "sha256": "d498d621e6b3b1fc6b302b6227e3b78c43df9f7e8856aad0c95247ed8a2ff684"
+    },
+    {
+      "path": "results/figures/part2_nyu/camera_diagnostic.png",
+      "bytes": 134223,
+      "sha256": "334149418c43d2b848a71b040ca10aeff30e51a899719e3ecdd165bffe932c42"
+    },
+    {
+      "path": "results/figures/part2_nyu/nyu_raw_examples.png",
+      "bytes": 3808749,
+      "sha256": "311ecbf2497a1010522bb1663905e9202370d819f8de3dcd943e8640ba53bb94"
+    },
+    {
+      "path": "results/figures/part2_video/application_frame_00.png",
+      "bytes": 474315,
+      "sha256": "22f05d95d2c9a259d2690f30c017f407ac429d7291c6e085c25876b5cb5ec025"
+    },
+    {
+      "path": "results/figures/part2_video/application_frame_35.png",
+      "bytes": 532982,
+      "sha256": "a48c12e07588976a862f2ad6040fe405c7db950e54a9ffe7df38a3155021fee8"
+    },
+    {
+      "path": "results/figures/part2_video/application_frame_69.png",
+      "bytes": 576817,
+      "sha256": "e983e1c2e65160aebd9407b90c08aeaa86ab96f651bd8cf4fd6ad322c6c9aa2f"
+    },
+    {
+      "path": "results/figures/part2_video/video_adjacent_frames.png",
+      "bytes": 818512,
+      "sha256": "9e41d4e83533565184d8f48340947f7abab304261e1253d37acb1d7b3a0bb32c"
+    },
+    {
+      "path": "results/figures/part2_video/video_boundary_zoom.png",
+      "bytes": 1767024,
+      "sha256": "e90dc49ac45728295d954748b2b63923f05173f1481b0ea0d4c3f117dacac7b8"
+    },
+    {
+      "path": "results/figures/part2_video/video_frame_00.png",
+      "bytes": 432948,
+      "sha256": "9149c8626f15496a55ea713ed5788433c643781f58f68128059945a87882f906"
+    },
+    {
+      "path": "results/figures/part2_video/video_frame_35.png",
+      "bytes": 447582,
+      "sha256": "330cd9092bbea25ccaa1caabf7978ac5dcb7acd74a8ba65978633fecc08b0b81"
+    },
+    {
+      "path": "results/figures/part2_video/video_frame_69.png",
+      "bytes": 494400,
+      "sha256": "9156ac5727b51cf448ab48c7b3368d1287fb5481a2ab30cc88fbe5d40815b74c"
+    },
+    {
+      "path": "results/figures/part2_video/video_temporal_slices.png",
+      "bytes": 146935,
+      "sha256": "ab6e4f30d6ee4f91ed66680f08a8ea6b7015a2d4d32ba1c3d3b51d0bf98bbe2e"
+    },
+    {
+      "path": "results/figures/part3_geocalib/fig1_architecture_and_oracles.png",
+      "bytes": 481389,
+      "sha256": "427cca2833e29451931e12d84e99139681f4e185109c811016ddcb0312375446"
+    },
+    {
+      "path": "results/figures/part3_geocalib/fig2_ablation_and_ci.png",
+      "bytes": 700940,
+      "sha256": "4c46b58296aa56c599c21e044758bf29cce46554d8613fb7c34fb75c94feee07"
+    },
+    {
+      "path": "results/figures/part3_geocalib/fig3_mechanism_and_spatial_bias.png",
+      "bytes": 635196,
+      "sha256": "99edd7b7e24206209336b4896479a09bb9169c7e7bc9af8406cf51063633b2ca"
+    },
+    {
+      "path": "results/figures/part3_geocalib/fig4_depth_bins_learning_curve_pareto.png",
+      "bytes": 703098,
+      "sha256": "bcb381edfbe425a89bec23ab764c445a067cec91196dc3f4bb1b1d76bba5d063"
+    },
+    {
+      "path": "results/figures/part3_geocalib/fig5_qualitative_and_failure_cases.png",
+      "bytes": 6805079,
+      "sha256": "f0e6617a37197024d7dd1ef128dbd94e82e46068c1fa0520897f23611089a581"
+    },
+    {
+      "path": "results/figures/pipeline.png",
+      "bytes": 410243,
+      "sha256": "907c84716859a646f2af02ec1e20b2911f1d097af58cc8cf37070a0b70c0d74a"
+    },
+    {
+      "path": "results/part1_stereo/disparity_sensitivity.csv",
+      "bytes": 2020,
+      "sha256": "58b10948162fafb758b1e3836e7424bf3661028b3bf33813b8d7968c0fadfa3f"
+    },
+    {
+      "path": "results/part1_stereo/stereo_paired_populations.csv",
+      "bytes": 37797,
+      "sha256": "44432362d9a242f0a3d6ff3fc7ba56ec10a6f656c7a6e0483a28074988f00286"
+    },
+    {
+      "path": "results/part1_stereo/stereo_per_scene.csv",
+      "bytes": 5460,
+      "sha256": "0b89dc7207af2636620282f0c2e981ce713639adf9d54cb98a40ca410ca7f82f"
+    },
+    {
+      "path": "results/part1_stereo/stereo_regions_per_scene.csv",
+      "bytes": 18808,
+      "sha256": "8897e18a72886b364d1e893300a0d4d0d1b43198452ee97be457e3984ba5ce6f"
+    },
+    {
+      "path": "results/part1_stereo/stereo_regions_summary.csv",
+      "bytes": 1661,
+      "sha256": "26450d1f54cf5ac7cc262b743e15ed7eee519e7f556bdd5976bfd18ec0bb2736"
+    },
+    {
+      "path": "results/part1_stereo/stereo_runtime.json",
+      "bytes": 9029,
+      "sha256": "97b25a8f20275f44c843c137fb3e5c37339adab961ee3ffb61501acdaac1eb3b"
+    },
+    {
+      "path": "results/part1_stereo/stereo_summary.csv",
+      "bytes": 258,
+      "sha256": "64dbd38b42fc074f514b96d0250164574f09184e293f534f4ebf50533697af16"
+    },
+    {
+      "path": "results/part2_depth_video/camera_diagnostic.json",
+      "bytes": 324,
+      "sha256": "b6e4121b18ce1dd2ffb5a592495ce0eafbe7c39b34b3cab39f2161ff68a00ac8"
+    },
+    {
+      "path": "results/part2_depth_video/camera_diagnostic_per_image.csv",
+      "bytes": 45053,
+      "sha256": "ab83bada2233aad72256d168e9f4b4e9320c69d309824effefc2eb3d3960d185"
+    },
+    {
+      "path": "results/part2_depth_video/camera_diagnostic_scores.csv",
+      "bytes": 119672,
+      "sha256": "781c792801734d4430fc737911697dd41a6434291a17494ca9c5e64472c9f829"
+    },
+    {
+      "path": "results/part2_depth_video/camera_diagnostic_summary.csv",
+      "bytes": 229,
+      "sha256": "bda64243975ae7315b58cbd0aaa6aa64612e2e94c016578975ea82d6578ba377"
+    },
+    {
+      "path": "results/part2_depth_video/data_summary.json",
+      "bytes": 460,
+      "sha256": "09988faac2f7f41b694177b8f90a9192aeae9d255c3046c2011eaf5ef0b5ece0"
+    },
+    {
+      "path": "results/part2_depth_video/efficiency_summary.csv",
+      "bytes": 541,
+      "sha256": "6d2de196ae0e1f01acc3b2549d4837bcbdbc7ef42d4182f4771b67fbbeebd123"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/nyu_known.json",
+      "bytes": 582,
+      "sha256": "debd4c198337d4ca27bcc24a06e38d345b96659034d14f90eddcf1334ab7639d"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/nyu_known_timing.csv",
+      "bytes": 36909,
+      "sha256": "c53867cbd618b71aaf1d1a3c43d9f41e847ce03b90299dee4bad20d8faa80a50"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/nyu_rgb.json",
+      "bytes": 583,
+      "sha256": "9ad2d496d8a6243c9a924c430f1492ecf5611d750d7bc2277e5a4bd53b5347c0"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/nyu_rgb_timing.csv",
+      "bytes": 66495,
+      "sha256": "abf3b21cb61c9d1e050713e03f162fedb2c4e16b772ea86227e7c84da6278075"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/video_image.json",
+      "bytes": 605,
+      "sha256": "15f952f5d779876b001598bb3cdfee669ccc3696540175c659edebed0287e5b9"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/video_image_timing.csv",
+      "bytes": 1627,
+      "sha256": "52931660b7688ba0d774b951fc099934ac6ff2af170579312b622c58766a69b1"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/video_temporal.json",
+      "bytes": 637,
+      "sha256": "6e6b4796b7d6b34c2129790255cb02fea96c73bac35e68c93a5115421fbe34f9"
+    },
+    {
+      "path": "results/part2_depth_video/runtime/video_temporal_timing.csv",
+      "bytes": 1614,
+      "sha256": "ccaeca31aa87b28d8e24c7080e1c67d9fa88d51db8d0c29d965c03a3f1fd6758"
+    },
+    {
+      "path": "results/part2_depth_video/video_adjacent_change.csv",
+      "bytes": 4273,
+      "sha256": "4044840afb0a21c6ebe09792ffde3bb69c564de60573e3c7dee7b81c7b6a7305"
+    },
+    {
+      "path": "results/part2_depth_video/video_change_summary.csv",
+      "bytes": 84,
+      "sha256": "37bf533b82009bdf6e488ce680b78d544bc62500758169e2608eac74dce7dc04"
+    },
+    {
+      "path": "results/part2_depth_video/video_display.json",
+      "bytes": 235,
+      "sha256": "5537d506c61a3dc1d797010892563daa6d899033345fbf957931939e68471007"
+    },
+    {
+      "path": "results/part3_geocalib/cv_selection_report.json",
+      "bytes": 10225,
+      "sha256": "65441ba29526cc354a8529b92978f7c7a1b24f7c560db1d062924fbb44428fe3"
+    },
+    {
+      "path": "results/part3_geocalib/diag_left_tail.csv",
+      "bytes": 61865,
+      "sha256": "eb68ead0c1c884baa357175e064d6b95f9aceb42fd7cf01def6f7adf3b98b8d6"
+    },
+    {
+      "path": "results/part3_geocalib/diag_left_tail_discriminators.csv",
+      "bytes": 8666,
+      "sha256": "fcddecbc936497a547fdfdba857e2c1011d8d6bec8c65b4a2696251a9118536a"
+    },
+    {
+      "path": "results/part3_geocalib/diag_oracles.csv",
+      "bytes": 2346,
+      "sha256": "55772d55f76cece7b3206a8b8ce0463f3163f134ff74d84935990331c67901e4"
+    },
+    {
+      "path": "results/part3_geocalib/diag_scene_breakdown.csv",
+      "bytes": 3224,
+      "sha256": "5295efa31f20faf3c3934e4767d418727968519ab8ade9a6db06d891ad35270a"
+    },
+    {
+      "path": "results/part3_geocalib/diag_signal_r2.csv",
+      "bytes": 4128,
+      "sha256": "1038863cfb22091e3fe8cd320d57571a905b57e83c99bc72833ff9ab43081c9e"
+    },
+    {
+      "path": "results/part3_geocalib/diag_worst20_geo.csv",
+      "bytes": 4497,
+      "sha256": "34f89cd034e2399db69affc8b6d1b67fc96178b0f5cb69e18062c10fb9f0ae39"
+    },
+    {
+      "path": "results/part3_geocalib/frozen_geocalib_model.json",
+      "bytes": 607838,
+      "sha256": "816f799a82784d86d8985ee255607fa6a7d2806c09c3df423be038654fc14ebd"
+    },
+    {
+      "path": "results/part3_geocalib/generalization_gap.csv",
+      "bytes": 5923,
+      "sha256": "1cae0d6920d9ceae3ec9ff9b4a3b1858e3ca8490f555b60d9aec1afe96a4178e"
+    },
+    {
+      "path": "results/part3_geocalib/oof_ablation_summary.csv",
+      "bytes": 11156,
+      "sha256": "532a780b45e6b41e5a9ab4628b6ad6130a53b9b2e0bc2e8eb86488107ab2672f"
+    },
+    {
+      "path": "results/part3_geocalib/oof_fold_breakdown.csv",
+      "bytes": 23433,
+      "sha256": "af70a57f1ca4f4d91ba41692d930353cef04a937900323402199d9d0a69c63b1"
+    },
+    {
+      "path": "results/part3_geocalib/oof_learning_curve.csv",
+      "bytes": 3653,
+      "sha256": "f66d5e8d9e1f20fdf56479c8d8f573f8469f92f58a6c622946dcca4ad9964493"
+    },
+    {
+      "path": "results/part3_geocalib/oof_multiseed_stability.csv",
+      "bytes": 8830,
+      "sha256": "e2975f30356921474ebf50b128a32893395826f81302ff8989ffb40fdd6b4d18"
+    },
+    {
+      "path": "results/part3_geocalib/oof_paired_bootstrap.csv",
+      "bytes": 12009,
+      "sha256": "faef9bb1191fbe102db107e3343beeaf85a94db580e3c3e89e7ebc983390b948"
+    },
+    {
+      "path": "results/part3_geocalib/oof_per_image.csv",
+      "bytes": 797587,
+      "sha256": "e26968120a7a846addb0f4987e55f8d582c5501a201c157481b8137f77f72e3d"
+    },
+    {
+      "path": "results/part3_geocalib/runtime_overhead.json",
+      "bytes": 1180,
+      "sha256": "a265bcda7438cbdaf6629220d27432a664cc53b68c9c3ab705786354e6386c6f"
+    },
+    {
+      "path": "results/part3_geocalib/test_change_counts.csv",
+      "bytes": 1566,
+      "sha256": "7f31c7e86f01f300a5042b7f458ad744b450ae360d291543fa87f543e4bd5436"
+    },
+    {
+      "path": "results/part3_geocalib/test_depth_bins.csv",
+      "bytes": 5173,
+      "sha256": "fe9999fa4e4c0eaebc92b2e45977950365fdc153e8981fe554f9594622b3b1b5"
+    },
+    {
+      "path": "results/part3_geocalib/test_evaluation_receipt.json",
+      "bytes": 2458,
+      "sha256": "6f4f1ca1f0de15dace30151c856c1f6975e68ab6df2973fc52c343f6dafe73ec"
+    },
+    {
+      "path": "results/part3_geocalib/test_left_tail_case_audit.csv",
+      "bytes": 8766,
+      "sha256": "626667b640a07287916aad5f2969de1ba78f0af70cd155983586930b5424b859"
+    },
+    {
+      "path": "results/part3_geocalib/test_mechanism_diagnostics.csv",
+      "bytes": 299313,
+      "sha256": "48569765288a43c5e48a19cd20b0187e1bfafb35e7b6c675df8de133598ca9da"
+    },
+    {
+      "path": "results/part3_geocalib/test_paired_bootstrap.csv",
+      "bytes": 8655,
+      "sha256": "f36046c54f4806d8455c6963939f552883f6e85b21f2b29fb8ddd71bdf65e6bc"
+    },
+    {
+      "path": "results/part3_geocalib/test_per_image.csv",
+      "bytes": 651682,
+      "sha256": "0e774e99f60e14eb048babf91d9474af66321e1ef81fc8f08f61067f2649a344"
+    },
+    {
+      "path": "results/part3_geocalib/test_representative_cases.csv",
+      "bytes": 8334,
+      "sha256": "6aa2c11f687045e7335a8100bb3387d43d4f41357e511f00714aa9d72561e5d6"
+    },
+    {
+      "path": "results/part3_geocalib/test_spatial_residuals.json",
+      "bytes": 141428,
+      "sha256": "7d577b8fcbd09a86ca638d9d0a9e862f96e69a6b2c97a938126f5988d0fdebcc"
+    },
+    {
+      "path": "results/part3_geocalib/test_summary.csv",
+      "bytes": 3269,
+      "sha256": "a53d042839d08d4a941b59612673eae470a6dbda19dd389fc37727c6e8bd5a45"
+    },
+    {
+      "path": "scripts/run_baselines.sh",
+      "bytes": 1337,
+      "sha256": "0bc714a8b67778c84ed1c65737f03f84da6480644ce52c16411ea6c8a8c7cf03"
+    },
+    {
+      "path": "scripts/run_evaluation.sh",
+      "bytes": 687,
+      "sha256": "6183a4acb85deea88f64b2b5a0ffa02d06745c7121ef4e33ea051924819a87fd"
+    },
+    {
+      "path": "scripts/slurm_gpu.sh",
+      "bytes": 351,
+      "sha256": "9988879079175ef402d94a02acb2e1ea9aa991357a628486ed40eb70b94cdf5d"
+    },
+    {
+      "path": "tests/test_cache_subset.py",
+      "bytes": 1505,
+      "sha256": "84ed8f75fe474bb01b49cae3f07187658916a5f5aa3826bb861901db0b2a908c"
+    },
+    {
+      "path": "tests/test_core.py",
+      "bytes": 1367,
+      "sha256": "a3403870413b8cbd45152a0e1bf2b364a0b4f2f3c84800699fa0f601d5ddfb5b"
+    },
+    {
+      "path": "tests/test_data_and_reference.py",
+      "bytes": 675,
+      "sha256": "6a42322caba762cbd6e72671db0a83a0a40212178ccde31da2b9107d81cffc35"
+    },
+    {
+      "path": "tests/test_delivery_manifest.py",
+      "bytes": 904,
+      "sha256": "43c8c33558296ecee628eab0e6fd84ad7ccb71f306df58854bf7ee6e7fd98190"
+    },
+    {
+      "path": "tests/test_entrypoint_contracts.py",
+      "bytes": 2118,
+      "sha256": "d0254dd43660b929315e6aebf6dcd1cb2560965e59672223ffaeb40a2755afc2"
+    },
+    {
+      "path": "tests/test_indexed_consumers.py",
+      "bytes": 2928,
+      "sha256": "33728313957e50491605e11de1d0899e9aff6a747cd70b2c5dbdbb23d22446ac"
+    },
+    {
+      "path": "tests/test_metric_regressions.py",
+      "bytes": 1292,
+      "sha256": "6e62193ac820cac8913dff7f04bdd679e92f99241cd668f7ee28f0d258ccbd26"
+    },
+    {
+      "path": "tests/test_part2_regressions.py",
+      "bytes": 12832,
+      "sha256": "38bfb43b9cdca268375a758b6d4f816e3f1d88890248c465c153e2378292b35e"
+    },
+    {
+      "path": "tests/test_part3_geocalib.py",
+      "bytes": 6471,
+      "sha256": "bd01d3f421489d330b7333564062ad5f934d616f1ad6a2bf819116ce98538c24"
+    },
+    {
+      "path": "tests/test_stereo_regressions.py",
+      "bytes": 8075,
+      "sha256": "24acb1738c9ef26a6cb4af5bd17a3049e52974c2e3de22759209e069a29dd10c"
+    },
+    {
+      "path": "tests/test_video_recovery.py",
+      "bytes": 5366,
+      "sha256": "12aaf57fba5201250fc90dd2eeb4b5a1f9b5e050f37cb72cddedb19979cd8f7f"
+    }
+  ]
+}

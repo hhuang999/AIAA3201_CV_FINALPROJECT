@@ -1,0 +1,8 @@
+# Stable source checkouts across Linux and Windows.
+* text=auto eol=lf
+# Frozen scientific artifacts are hashed as exact bytes, including CSV newlines.
+results/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+*.npy -text
+*.npz -text
+*.png -text
+*.pdf -text
