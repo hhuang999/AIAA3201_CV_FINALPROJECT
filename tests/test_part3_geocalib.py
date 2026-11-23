@@ -159,3 +159,17 @@ def test_delivered_geocalib_artifacts_and_parity_contracts():
     assert abs(float(test_df.loc[PRIMARY_SINGLE_PASS_METHOD, "rmse"]) - 0.340792) < 1e-5
     assert abs(float(test_df.loc[PRIMARY_SINGLE_PASS_METHOD, "delta1"]) - 0.938413) < 1e-5
     assert abs(float(test_df.loc[PRIMARY_MULTIPASS_METHOD, "abs_rel"]) - 0.083189) < 1e-5
+
+
+def test_plot_camera_diagnostic_regenerates_png(tmp_path):
+    from depthlab.geocalib_figures import plot_camera_diagnostic
+
+    p2_dir = ROOT / "results" / "part2_depth_video"
+    per_csv = p2_dir / "camera_diagnostic_per_image.csv"
+    rep_json = p2_dir / "camera_diagnostic.json"
+    if not (per_csv.is_file() and rep_json.is_file()):
+        pytest.skip("Delivered Part 2 camera diagnostic files not present")
+    out_png = tmp_path / "camera_diagnostic.png"
+    plot_camera_diagnostic(out_png, per_csv, rep_json)
+    assert out_png.is_file()
+    assert out_png.stat().st_size > 10_000

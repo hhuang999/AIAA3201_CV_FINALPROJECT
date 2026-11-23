@@ -35,14 +35,14 @@ Using 5-fold OOF predictions on the `795` training images (`raw` `0.117945 / 0.4
 - **Pure-Geometry & Alternative Parametrizations (`geo_free_left_focal .. geo_conf_ctrl`)**:
   - Quantile knots + Huber loss (`geo_qknots_robust`: `0.092372`) and inverse residual (`geo_inv_residual`: `0.092567`) match or marginally edge `geo_focal_3d` (`0.092502`); rational depth (`0.093340`) and confidence stats (`0.093351`) degrade OOF.
 - **Internal Semantic Scale Prior (`geosem_cls .. geosem_pca128`)**:
-  - Concatenating fold-centered L2-normalized single-pass encoder blocks (`[l2n(cls_384), l2n(patch_mean_384), l2n(patch_std_384), l2n(depth_feat_512)]`, `1688-d` with Ridge L2 `sem_reg=0.05`) cuts Train OOF AbsRel from `0.092502` down to **`0.087323`** (`geosem_scale`, `CV DoF = 113.1`); `PCA-128` (`geosem_pca128`) retains `0.087443` in `152` raw parameters (`DoF = 83.7`).
+  - Concatenating fold-centered L2-normalized single-pass encoder blocks (`[l2n(cls_384), l2n(patch_mean_384), l2n(patch_std_384), l2n(depth_feat_512)]`, `1664-d` semantic vector, yielding `1688` total raw parameters including the `24` geometry/spline weights with Ridge L2 `sem_reg=0.05`) cuts Train OOF AbsRel from `0.092502` down to **`0.087323`** (`geosem_scale`, `CV DoF = 113.1`); `PCA-128` (`geosem_pca128`) retains `0.087443` in `152` raw parameters (`DoF = 83.7`).
 - **Joint Winner — Track A Primary `geocalib_3d`**:
   - Unifying (1) monotone **inverse-depth spline** (`inv_spline(1/Z_hat)` across knots `[1/12, 1/6, 1/3, 1/1.5, 1/0.7, 1/0.3] m^-1`, naturally linearizing far-field S-curve disparity), (2) flip-symmetric `clean` 3D geometry (`cx_off` excluded, `z_clip=4.0`), (3) single-pass L2-normalized Ridge semantic scale prior (`sem_reg=0.05`), and (4) Ridge-regularized **semantic-conditioned 2D spatial field** (`v_tilde, r^2`, `sem_sp_reg=0.08`) achieves Canonical Train OOF **`0.086894 / 0.366619 / 0.932284`** (`5018` raw params / `137.9` CV Eff.DoF, `146.9` on full-795 fit).
-  - It beats `geo_focal_3d` on **5/5** canonical folds (`+0.005608` AbsRel, `95% CI [+0.003786, +0.007455]`) and **4/4** seeds (`4-seed mean = 0.087383 +/- 0.000463` vs `0.092209 +/- 0.000245`). An automated fold-internal stacking blend (`geocalib_3d_blend`) puts weight `alpha = 0.0` on alternative branches, independently selecting pure `geocalib_3d`.
+  - It beats `geo_focal_3d` on **5/5** canonical folds (`+0.005608` AbsRel, `95% CI [+0.003786, +0.007455]`) and **4/4** seeds (`4-seed mean = 0.087383 +/- 0.000463` vs `0.092209 +/- 0.000245`; sample SD, `ddof=1`; population SD `ddof=0` in `cv_selection_report.json`: `0.000401 / 0.000212`). An automated fold-internal stacking blend (`geocalib_3d_blend`) puts weight `alpha = 0.0` on alternative branches, independently selecting pure `geocalib_3d`.
 - **Sample Efficiency ([`oof_learning_curve.csv`](../results/part3_geocalib/oof_learning_curve.csv))**:
   - Trained on just `25%` of fitting scenes per fold (~`50` scenes, `154` images), `geocalib_3d` reaches **`0.092241`** OOF AbsRel — already outperforming `geo_focal_3d` trained on `100%` of scenes (`0.092502`).
 - **Track B Primary `geocalib_3d_flip` (`2x` Forward)**:
-  - Adding a second horizontal-flip ViT-S forward pass with un-mirrored `K2`, learnable log-depth fusion weight `w_flip`, flip-consistency signals, symmetrized `cls`, and `inv_spline` yields Canonical OOF **`0.086697 / 0.366778 / 0.932848`** (`4-seed mean = 0.087196 +/- 0.000451`, `5024` raw / `136.8` CV DoF, `150.9` full-795 DoF).
+  - Adding a second horizontal-flip ViT-S forward pass with un-mirrored `K2`, learnable log-depth fusion weight `w_flip`, flip-consistency signals, symmetrized `cls`, and `inv_spline` yields Canonical OOF **`0.086697 / 0.366778 / 0.932848`** (`4-seed mean = 0.087196 +/- 0.000451`; sample SD, `ddof=1`; population SD `ddof=0`: `0.000391`; `5024` raw / `136.8` CV DoF, `150.9` full-795 DoF).
 
 ---
 
@@ -115,15 +115,17 @@ Using 5-fold OOF predictions on the `795` training images (`raw` `0.117945 / 0.4
   - Top `geocalib_3d` gains vs `geo_focal_3d`: `#329 classroom_0024` (`0.2084 / 0.580 -> 0.1150 / 0.941`), `#839 kitchen_0039` (`0.2683 -> 0.1699`), `#328 classroom_0024` (`0.2082 -> 0.1130`).
   - Worst regressions vs `geo_focal_3d`: `#167 living_room_0013` (`0.0229 -> 0.1146`, `delta1 0.994`), `#1234 living_room_0036` (`0.0370 -> 0.1035`, `delta1 0.991`), `#1148 bedroom_0109` (`0.0713 -> 0.1440`, `delta1 0.925 -> 0.845`) — near-wall high-focal scenes (`f_tilde > 1.20`) where `geo_focal_3d` was already near-oracle and semantics slightly over-shifted scale.
 
-### 4.2 Uncontended Latency & Numerical Parity ([`runtime_overhead.json`](../results/part3_geocalib/runtime_overhead.json), `N=200` Test Images, RTX 4060 Laptop GPU)
+### 4.2 Uncontended Latency, Peak VRAM & Numerical Parity ([`runtime_overhead.json`](../results/part3_geocalib/runtime_overhead.json), RTX 4060 Laptop GPU)
 
-| Stage / Variant | Backbone Passes | Backbone (`ms/img`) | CPU Torch Post (`ms/img`) | GPU CUDA Post (`ms/img`) | End-to-End Total (`ms/img`) | Torch vs NumPy `max |Diff|` |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| `raw` (UniDepthV2 ViT-S) | `1x` | `43.04` | `—` | `—` | `43.04` (GPU) | `—` |
-| `monotone_spline` | `1x` | `43.04` | `21.98` | `—` | `65.02` | `—` |
-| `geo_focal_3d` | `1x` | `43.04` | `4.71` | `—` | `47.75` (CPU-post) | `—` |
-| **`geocalib_3d` (Primary)** | **`1x`** | **`43.04`** | **`5.77`** (NumPy `37.35`) | **`3.89`** | **`46.93` (GPU) / `48.81` (CPU)** | **`7.11e-15 m`** (CPU & GPU) |
-| `geocalib_3d_flip` (Track B) | `2x` | `87.17` | `15.29` | `5.61` | `92.78` (GPU) / `102.46` (CPU) | **`7.11e-15 m`** (CPU & GPU) |
+Evaluated on `480x640` RGB inputs (`490x644` network resolution; backbone in official internal FP16 autocast, post-processing in `float64`; latency over `N=200` test images, peak VRAM over `20` test images after `5` warmup images):
+
+| Stage / Variant | Backbone Passes | Backbone (`ms/img`) | CPU Torch Post (`ms/img`) | GPU CUDA Post (`ms/img`) | End-to-End Total (`ms/img`) | Peak GPU VRAM (`Alloc / Res MiB`) | Torch vs NumPy `max |Diff|` |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| `raw` (UniDepthV2 ViT-S) | `1x` | `43.04` | `—` | `—` | `43.04` (GPU) | `507.18 / 624.0` | `—` |
+| `monotone_spline` | `1x` | `43.04` | `21.98` | `—` | `65.02` | `—` | `—` |
+| `geo_focal_3d` | `1x` | `43.04` | `4.71` | `—` | `47.75` (CPU-post) | `—` | `—` |
+| **`geocalib_3d` (Primary)** | **`1x`** | **`43.04`** | **`5.77`** (NumPy `37.35`) | **`3.89`** | **`46.93` (GPU) / `48.81` (CPU)** | **`511.74 / 624.0`** (post-only `18.75`) | **`7.11e-15 m`** (CPU & GPU) |
+| `geocalib_3d_flip` (Track B) | `2x` | `87.17` | `15.29` | `5.61` | `92.78` (GPU) / `102.46` (CPU) | **`521.73 / 626.0`** | **`7.11e-15 m`** (CPU & GPU) |
 
 ---
 
@@ -135,7 +137,14 @@ Using 5-fold OOF predictions on the `795` training images (`raw` `0.117945 / 0.4
 - [fig4_depth_bins_learning_curve_pareto.png](../results/figures/part3_geocalib/fig4_depth_bins_learning_curve_pareto.png) — 5-depth-bin test bars, training-only sample-efficiency curve (`10% -> 100%`), and accuracy–latency Pareto frontier.
 - [fig5_qualitative_and_failure_cases.png](../results/figures/part3_geocalib/fig5_qualitative_and_failure_cases.png) — Qualitative comparison across left-tail false alarms (`#839/#832/#326`), wide-FoV collapse (`#1151`), and worst regression (`#167`).
 
+```bash
+# Linux
+python -m depthlab.verify --manifest results/manifest.json
+python -m pytest -q
+```
+
 ```powershell
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/manifest.json
-D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
+# Windows (PowerShell, inside an activated Python environment; skips POSIX fcntl/bash & optional video-recovery tests)
+python -m depthlab.verify --manifest results/manifest.json
+python -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
 ```

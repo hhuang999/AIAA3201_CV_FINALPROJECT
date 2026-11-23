@@ -6,7 +6,7 @@ All modules in [`depthlab/`](../depthlab/) are self-contained and verify against
 
 ## 1. Environment & Pinned Inputs
 
-Use Linux + Python 3.10 with [`requirements-reproduction.txt`](../requirements-reproduction.txt) (referencing the pinned PyTorch 2.8 / CUDA 12.8 environment [`requirements-linux-cu128.lock.txt`](../requirements-linux-cu128.lock.txt)) for full backbone GPU reproduction, or Windows Conda environment `vb` for verification, held-out replay, figure regeneration, and unit tests.
+Use Linux + Python 3.10 with [`requirements-reproduction.txt`](../requirements-reproduction.txt) (referencing the pinned PyTorch 2.8 / CUDA 12.8 environment [`requirements-linux-cu128.lock.txt`](../requirements-linux-cu128.lock.txt)) for full backbone GPU reproduction, or an activated Windows Python 3.10+ environment for verification, held-out replay, figure regeneration, and unit tests.
 
 Upstream Git checkouts and local checkpoints are verified by commit revision and SHA-256 digest:
 
@@ -21,7 +21,7 @@ Upstream Git checkouts and local checkpoints are verified by commit revision and
 | [NYU Depth V2 labeled `.mat`](https://horatio.cs.nyu.edu/mit/silberman/nyu_depth_v2/nyu_depth_v2_labeled.mat) | `data/nyu_depth_v2_labeled.mat` |
 | [Official NYU `splits.mat`](https://horatio.cs.nyu.edu/mit/silberman/indoor_seg_sup/splits.mat) | `data/splits.mat` |
 | [Middlebury TrainingQ data](https://vision.middlebury.edu/stereo/submit3/zip/MiddEval3-data-Q.zip) & [GT](https://vision.middlebury.edu/stereo/submit3/zip/MiddEval3-GT0-Q.zip) | `data/MiddEval3-data-Q.zip`, `data/MiddEval3-GT0-Q.zip` |
-| DAVIS clip (`davis_rollercoaster.mp4`, `70` frames @ `24 FPS`) | `data/davis_rollercoaster.mp4` |
+| DAVIS clip (`davis_rollercoaster.mp4`, `70` total frames @ `24 FPS`; `--limit 100` decodes all `70` available frames) | `data/davis_rollercoaster.mp4` |
 | [UniDepthV2 ViT-S config + safetensors](https://huggingface.co/lpiccinelli/unidepth-v2-vits14/tree/main) | `data/weights/unidepth_v2_vits14/` |
 | [Depth Anything V2 Small checkpoint](https://huggingface.co/depth-anything/Depth-Anything-V2-Small/tree/main) | `data/weights/depth_anything_v2_small/depth_anything_v2_vits.pth` |
 | [Video Depth Anything Small checkpoint](https://huggingface.co/depth-anything/Video-Depth-Anything-Small/tree/main) | `data/weights/video_depth_anything_small/video_depth_anything_vits.pth` |
@@ -39,17 +39,20 @@ export VIDEO_PYTHON="$METRIC_PYTHON"
 # Extract datasets & verify official NYU splits
 "$METRIC_PYTHON" -m depthlab.prepare --data-root data --output results/part2_depth_video/data_summary.json
 
-# Part 1: Middlebury 15-scene StereoSGBM ablations + region diagnostics + timing
-"$METRIC_PYTHON" -m depthlab.stereo --data-root data --output results/part1_stereo --figures results/figures/part1_stereo
+# Part 1: Middlebury 15-scene StereoSGBM ablations + region diagnostics + timing (writes scene PNGs under <output>/figures/stereo/)
+"$METRIC_PYTHON" -m depthlab.stereo --data-root data --output results/part1_stereo
 
-# Part 2: RGB-only UniDepthV2 cache, known-K training diagnostic, and DAVIS video models + bokeh render
+# Part 2: RGB-only UniDepthV2 cache, known-K training cache & diagnostic, and DAVIS video models + bokeh render
 "$METRIC_PYTHON" -m depthlab.infer_nyu --data-root data --source third_party/UniDepth --weights data/weights/unidepth_v2_vits14 --output outputs/nyu_rgb
+"$METRIC_PYTHON" -m depthlab.infer_nyu --data-root data --source third_party/UniDepth --weights data/weights/unidepth_v2_vits14 --output outputs/nyu_known --split train --known-intrinsics
 "$METRIC_PYTHON" -m depthlab.diagnose --data-root data --predictions outputs/nyu_rgb --known-predictions outputs/nyu_known --output results/part2_depth_video
 "$VIDEO_PYTHON" -m depthlab.infer_video --method decode --video data/davis_rollercoaster.mp4 --output outputs/frames
 "$VIDEO_PYTHON" -m depthlab.infer_video --method image --source third_party/Depth-Anything-V2 --weights data/weights/depth_anything_v2_small/depth_anything_v2_vits.pth --frames outputs/frames --output outputs/video_image
 "$VIDEO_PYTHON" -m depthlab.infer_video --method video --source third_party/Video-Depth-Anything --weights data/weights/video_depth_anything_small/video_depth_anything_vits.pth --frames outputs/frames --output outputs/video_temporal
-"$VIDEO_PYTHON" -m depthlab.render_video --frames outputs/frames --image outputs/video_image --video outputs/video_temporal --results results/figures/part2_video --delivery outputs/delivery
+"$VIDEO_PYTHON" -m depthlab.render_video --frames outputs/frames --image-predictions outputs/video_image --video-predictions outputs/video_temporal --results results/figures/part2_video --output outputs/delivery
 ```
+
+> **Canvas Deliverable (`depth_results.zip`)**: `depthlab.render_video` automatically writes the git-ignored Canvas archive `outputs/delivery/depth_results.zip`, containing `relative_depth_comparison.mp4` and `depth_aware_blur.mp4` across all `70` frames of `davis_rollercoaster.mp4`.
 
 Or run the bundled shell pipeline directly:
 
@@ -140,7 +143,7 @@ python -m pytest -q
 ```
 
 ```powershell
-# Windows (Conda env vb)
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/manifest.json
-D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
+# Windows (PowerShell, inside an activated Python environment; skips POSIX fcntl/bash & optional video-recovery tests)
+python -m depthlab.verify --manifest results/manifest.json
+python -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
 ```

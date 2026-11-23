@@ -872,6 +872,53 @@ def build_project_manifest(repo_root: Path, manifest_path: Path) -> dict[str, An
     return payload
 
 
+def plot_camera_diagnostic(
+    out_path: Path,
+    per_image_csv: Path,
+    report_json: Path,
+) -> None:
+    """Render Part 2 training-only focal-ratio histogram and depth-scale scatter diagnostic."""
+    _configure_style()
+    frame = pd.read_csv(per_image_csv)
+    report = json.loads(Path(report_json).read_text(encoding="utf-8"))
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    fig, axes = plt.subplots(1, 2, figsize=(13.6, 5.2), layout="constrained")
+    ax0, ax1 = axes
+
+    ax0.hist(frame["focal_ratio"].to_numpy(dtype=np.float64), bins=32, color="#558B9F", edgecolor="#48788B", alpha=0.92)
+    ax0.axvline(1.0, color="#333333", linestyle="--", linewidth=1.8, label="Known focal length")
+    ax0.axvline(
+        float(report["inverse_rgb_scale"]),
+        color="#9B3060",
+        linestyle=":",
+        linewidth=1.9,
+        label="Inverse global scale",
+    )
+    ax0.set_xlabel("Estimated / known focal length")
+    ax0.set_ylabel("Training images")
+    ax0.legend(loc="upper left", frameon=True, framealpha=0.92)
+
+    ax1.scatter(
+        frame["focal_ratio"].to_numpy(dtype=np.float64),
+        frame["raw_over_target"].to_numpy(dtype=np.float64),
+        s=16,
+        color="#4B8499",
+        alpha=0.50,
+        edgecolors="#2E6478",
+        linewidths=0.4,
+    )
+    ax1.set_xlabel("Estimated / known focal length")
+    ax1.set_ylabel("Median raw / target depth")
+    ax1.set_title(
+        f"Training only: Pearson r={float(report['pearson_r']):.3f}, Spearman r={float(report['spearman_r']):.3f}"
+    )
+
+    fig.savefig(out_path, bbox_inches="tight", pad_inches=0.10)
+    plt.close(fig)
+
+
 def generate_all_figures(
     data_root: Path,
     orig_preds: Path,
@@ -882,6 +929,7 @@ def generate_all_figures(
     signal_r2_csv: Path,
     output_dir: Path,
     figures_root: Path,
+    part2_dir: Path | None = Path("results/part2_depth_video"),
 ) -> list[Path]:
     _configure_style()
     output_dir = Path(output_dir)
@@ -902,6 +950,7 @@ def generate_all_figures(
     spatial_data = json.loads((results_dir / "test_spatial_residuals.json").read_text(encoding="utf-8"))
 
     p_pipe = figures_root / "pipeline.png"
+    p_cam_diag = figures_root / "part2_nyu" / "camera_diagnostic.png"
     p_nyu_ex = figures_root / "part2_nyu" / "nyu_raw_examples.png"
     p1 = output_dir / "fig1_architecture_and_oracles.png"
     p2 = output_dir / "fig2_ablation_and_ci.png"
@@ -909,7 +958,14 @@ def generate_all_figures(
     p4 = output_dir / "fig4_depth_bins_learning_curve_pareto.png"
     p5 = output_dir / "fig5_qualitative_and_failure_cases.png"
 
+    out_list: list[Path] = [p_pipe]
     plot_project_pipeline(p_pipe, test_sum_df)
+    if part2_dir is not None:
+        cam_csv = Path(part2_dir) / "camera_diagnostic_per_image.csv"
+        cam_json = Path(part2_dir) / "camera_diagnostic.json"
+        if cam_csv.is_file() and cam_json.is_file():
+            plot_camera_diagnostic(p_cam_diag, cam_csv, cam_json)
+            out_list.append(p_cam_diag)
     plot_nyu_raw_examples(p_nyu_ex, data_root, orig_preds)
     plot_fig1_architecture_and_oracles(p1, oracles_df, signal_r2_df, oof_sum_df, test_sum_df)
     plot_fig2_ablation_and_ci(p2, oof_sum_df, test_sum_df, test_boot_df)
@@ -928,7 +984,7 @@ def generate_all_figures(
         results_dir / "frozen_geocalib_model.json", diag_df,
     )
 
-    out_list = [p_pipe, p_nyu_ex, p1, p2, p3, p4, p5]
+    out_list.extend([p_nyu_ex, p1, p2, p3, p4, p5])
     for p in out_list:
         print(f"Generated {p} ({p.stat().st_size} bytes)", flush=True)
     return out_list
@@ -941,6 +997,7 @@ def main() -> None:
     parser.add_argument("--aux-dir", type=Path, default=Path("outputs/nyu_rgb_aux"))
     parser.add_argument("--flip-dir", type=Path, default=Path("outputs/nyu_rgb_flip"))
     parser.add_argument("--results-dir", type=Path, default=Path("results/part3_geocalib"))
+    parser.add_argument("--part2-dir", type=Path, default=Path("results/part2_depth_video"))
     parser.add_argument("--oracles-csv", type=Path, default=Path("results/part3_geocalib/diag_oracles.csv"))
     parser.add_argument("--signal-r2-csv", type=Path, default=Path("results/part3_geocalib/diag_signal_r2.csv"))
     parser.add_argument("--output-dir", type=Path, default=Path("results/figures/part3_geocalib"))
@@ -954,7 +1011,7 @@ def main() -> None:
         generate_all_figures(
             args.data_root, args.orig_preds, args.aux_dir, args.flip_dir,
             args.results_dir, args.oracles_csv, args.signal_r2_csv,
-            args.output_dir, args.figures_root,
+            args.output_dir, args.figures_root, part2_dir=args.part2_dir,
         )
     if args.manifest_out is not None or args.manifest_only:
         target = args.manifest_out if args.manifest_out is not None else Path("results/manifest.json")

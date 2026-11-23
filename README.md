@@ -4,7 +4,7 @@ Self-contained codebase, numerical evaluations, and 300-DPI figures for the **AI
 
 1. **Part 1 — Classical Stereo Reconstruction (Middlebury TrainingQ, 15 Pairs)**: Bidirectional Semi-Global Block Matching (`StereoSGBM`), reflection border padding vs unpadded ablations, left-right consistency filtering, region-wise (`nonoccluded` / `occluded`) diagnostics, and pinhole disparity-to-metric depth sensitivity.
 2. **Part 2 — Monocular Metric Depth & Video Consistency (NYU Depth V2 + DAVIS)**: Zero-GT-intrinsics evaluation of frozen **UniDepthV2 ViT-S**, training-split camera-intrinsics sensitivity diagnosis (`N=795`), **Depth Anything V2 Small** vs **Video Depth Anything Small** 70-frame temporal consistency comparison, and depth-aware background blur rendering.
-3. **Part 3 — `GeoCalib-3D` (Zero-GT-Intrinsics Post-Hoc Metric Calibration)**: Single-pass joint **inverse-depth monotone spline + predicted-focal / 3D geometry + Ridge-regularized internal ViT-S semantic prior + semantic-conditioned 2D spatial field**, trained strictly on the `795` official NYU training images (`249` scenes) with zero ground-truth intrinsics `$K_{\text{true}}$` and verified once on the `654` held-out test images (`215` scenes).
+3. **Part 3 — `GeoCalib-3D` (Zero-GT-Intrinsics Post-Hoc Metric Calibration)**: Single-pass joint **inverse-depth monotone spline + predicted-focal / 3D geometry + Ridge-regularized internal ViT-S semantic prior + semantic-conditioned 2D spatial field**, trained strictly on the `795` official NYU training images (`249` scenes) with zero ground-truth intrinsics $K_{\text{true}}$ and verified once on the `654` held-out test images (`215` scenes).
 
 Quick navigation: [Part 3 GeoCalib-3D Technical Report](docs/PART3_GEOCALIB.md) | [Reproduction Guide](docs/REPRODUCTION.md) | [Unified Manifest](results/manifest.json)
 
@@ -35,13 +35,13 @@ Evaluated across all `15` rectified **Middlebury TrainingQ** pairs (`OpenCV 5.0.
 ### Part 2: Monocular Camera Diagnostic & Video Depth Consistency (`results/part2_depth_video/`)
 
 - **Camera Intrinsics Sensitivity (`N=795` NYU Training Split Only)**:
-  - **UniDepthV2 ViT-S** (RGB-only, unknown `$K$`): `AbsRel = 0.117945`, `RMSE = 0.430373 m`, `delta1 = 0.884173` (training median ratio `0.9561`).
-  - **UniDepthV2 ViT-S** (with known ground-truth `$K$`): `AbsRel = 0.097094`, `RMSE = 0.396178 m`, `delta1 = 0.920460`.
+  - **UniDepthV2 ViT-S** (RGB-only, unknown $K$): `AbsRel = 0.117945`, `RMSE = 0.430373 m`, `delta1 = 0.884173` (training median ratio `0.9561`).
+  - **UniDepthV2 ViT-S** (with known ground-truth $K$): `AbsRel = 0.097094`, `RMSE = 0.396178 m`, `delta1 = 0.920460`.
   - Predicted normalized focal ratio correlates significantly with raw depth scale ratio (`Pearson r = 0.5231`, `p = 4.76e-57`; `Spearman r = 0.4085`, `p = 2.53e-33`; [camera_diagnostic.json](results/part2_depth_video/camera_diagnostic.json)).
 - **Backbone Compute Profile (NVIDIA A40, [efficiency_summary.csv](results/part2_depth_video/efficiency_summary.csv))**:
   - **UniDepthV2 ViT-S** (`490x644`, internal FP16 autocast): `25.0 ms/img`, `498 MiB` peak allocated.
   - **Depth Anything V2 Small** (`518x924`, FP32): `58.1 ms/frame`, `375 MiB` peak allocated; `70`-frame mean adjacent disparity change `0.103695`.
-  - **Video Depth Anything Small** (`518x924`, FP16 autocast): `61.8 ms/frame`, `2,689 MiB` peak allocated; `70`-frame mean adjacent disparity change `0.103065` (consistent smooth foreground/background separation rendered into depth-aware bokeh clips under [`results/figures/part2_video/`](results/figures/part2_video/video_frame_35.png)).
+  - **Video Depth Anything Small** (`518x924`, FP16 autocast): `61.8 ms/frame`, `2,689 MiB` peak allocated; `70`-frame mean adjacent disparity change `0.103065` (official `davis_rollercoaster.mp4` contains `70` frames total, so `--limit 100` processes all `70` frames; `depthlab.render_video` renders consistent foreground/background separation under [`results/figures/part2_video/`](results/figures/part2_video/video_frame_35.png) and packages `relative_depth_comparison.mp4` and `depth_aware_blur.mp4` into the git-ignored Canvas deliverable `outputs/delivery/depth_results.zip`).
 
 ![Part 2 Camera Intrinsics Diagnostic & Raw Examples](results/figures/part2_nyu/camera_diagnostic.png)
 
@@ -51,9 +51,9 @@ Evaluated across all `15` rectified **Middlebury TrainingQ** pairs (`OpenCV 5.0.
 
 ### Part 3: `GeoCalib-3D` Held-Out 654-Image Benchmark (`results/part3_geocalib/`)
 
-All methods below are evaluated over the identical RGB-only **UniDepthV2 ViT-S** prediction arrays with zero ground-truth intrinsics `$K_{\text{true}}$`, `5`-fold / `4`-seed (`20261031, 42, 100, 20261121`) training-only selection (`795` images / `249` scenes), locked parameters (`test_read: false`, `frozen_geocalib_model.json` SHA-256 `816f799a...`), and one-shot held-out evaluation on `654` test images (`215` scenes):
+All methods below are evaluated over the identical RGB-only **UniDepthV2 ViT-S** prediction arrays (`480x640` RGB input -> `490x644` network resolution, official internal FP16 autocast) with zero ground-truth intrinsics $K_{\text{true}}$, `5`-fold / `4`-seed (`20261031, 42, 100, 20261121`) training-only selection (`795` images / `249` scenes), locked parameters (`test_read: false`, `frozen_geocalib_model.json` SHA-256 `816f799a...`), and one-shot held-out evaluation on `654` test images (`215` scenes). Part 3 end-to-end latencies (`43.04 / 46.93 / 92.78 ms/img`) and peak allocated VRAM (`raw`: `507.18 MiB`, `geocalib_3d` `float64` GPU post: `511.74 MiB`, `geocalib_3d_flip`: `521.73 MiB`) are uncontended measurements on an **NVIDIA GeForce RTX 4060 Laptop GPU** (distinct from Part 2's **NVIDIA A40** `25.0 ms/img` / `498 MiB` backbone profile):
 
-| Method | Track (`Passes`) | Params (`Raw / Eff.DoF`) | Train OOF `AbsRel` | OOF `RMSE` (m) | OOF `delta1` | Test `AbsRel` $\downarrow$ | Test `RMSE` (m) $\downarrow$ | Test `delta1` $\uparrow$ | End-to-End GPU (`ms/img`) |
+| Method | Track (`Passes`) | Params (`Raw / Eff.DoF`) | Train OOF `AbsRel` | OOF `RMSE` (m) | OOF `delta1` | Test `AbsRel` $\downarrow$ | Test `RMSE` (m) $\downarrow$ | Test `delta1` $\uparrow$ | End-to-End RTX 4060 (`ms/img`) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | `raw` (UniDepthV2 ViT-S) | 1-Pass (`1x`) | `0 / 0.0` | 0.117945 | 0.430373 | 0.884173 | 0.114540 | 0.398839 | 0.892293 | `43.04` |
 | `global_scale` | 1-Pass (`1x`) | `1 / 1.0` | 0.105587 | 0.416395 | 0.897421 | 0.102033 | 0.389248 | 0.899513 | `—` |
@@ -113,9 +113,9 @@ python -m pytest -q
 ```
 
 ```powershell
-# Windows (Conda env vb)
-D:\anaconda\envs\vb\python.exe -m depthlab.verify --manifest results/manifest.json
-D:\anaconda\envs\vb\python.exe -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
+# Windows (PowerShell, inside an activated Python environment; skips POSIX fcntl/bash & optional video-recovery tests)
+python -m depthlab.verify --manifest results/manifest.json
+python -m pytest -q --ignore=tests/test_video_recovery.py -k "not shell_defaults and not writer_crash_resume"
 ```
 
 ```bash

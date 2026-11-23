@@ -21,5 +21,22 @@
   "end_to_end_geocalib_3d_flip_gpu_ms": 92.7818604997755,
   "max_abs_diff_sp_gpu_vs_numpy": 7.105427357601002e-15,
   "max_abs_diff_mp_gpu_vs_numpy": 7.105427357601002e-15,
-  "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU"
+  "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "rgb_input_hw": [
+    480,
+    640
+  ],
+  "network_hw": [
+    490,
+    644
+  ],
+  "backbone_precision": "official internal FP16 autocast",
+  "post_precision": "float64",
+  "backbone_single_pass_peak_allocated_mib": 507.18,
+  "backbone_single_pass_peak_reserved_mib": 624.0,
+  "geocalib_3d_gpu_post_only_peak_allocated_mib": 18.75,
+  "end_to_end_geocalib_3d_gpu_peak_allocated_mib": 511.74,
+  "end_to_end_geocalib_3d_gpu_peak_reserved_mib": 624.0,
+  "end_to_end_geocalib_3d_flip_gpu_peak_allocated_mib": 521.73,
+  "end_to_end_geocalib_3d_flip_gpu_peak_reserved_mib": 626.0
 }

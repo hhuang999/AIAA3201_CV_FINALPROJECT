@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 11944,
-      "sha256": "ff326ef8c81ec0db1e0cd6cf9c0d101f22e0edfcbdbd36477df98ec9b9d38548"
+      "bytes": 12664,
+      "sha256": "f15d94a5ac36aa832464de3af6a482528fe7d6863c79c076921b8e8811152ac9"
     },
     {
       "path": "depthlab/__init__.py",
@@ -49,8 +49,8 @@
     },
     {
       "path": "depthlab/geocalib_figures.py",
-      "bytes": 46916,
-      "sha256": "bb2c13cb2035afd186f5cbb9d8c8a0bb48538f2f1ac864d26b30ef817dc1267a"
+      "bytes": 49176,
+      "sha256": "77b686e57bd4ab9e5e2eaa673311054fea31a0177e70b8864d5d43ba587600e0"
     },
     {
       "path": "depthlab/geocalib_io.py",
@@ -104,18 +104,18 @@
     },
     {
       "path": "docs/PART3_GEOCALIB.md",
-      "bytes": 19983,
-      "sha256": "f2fbd7e15fdb06f2053206d06d9615a3775b97c448ec75e69590d51577f208d8"
+      "bytes": 20774,
+      "sha256": "bc67e03d371ea70987273caa3d0b67925e12a12bee5ab82d0730cecd3d4846c7"
     },
     {
       "path": "docs/REPRODUCTION.md",
-      "bytes": 7995,
-      "sha256": "cf5d6ec1e474b2b2107f32862b46120c67563aa06e233bbf93b25014fa1a7e76"
+      "bytes": 8627,
+      "sha256": "8467f228fc41e716eec27673815ab68652ca511dde664ec7fe293121eda29056"
     },
     {
       "path": "requirements-linux-cu128.lock.txt",
-      "bytes": 4890,
-      "sha256": "ffbd55fc9ff369510ceb96014e6eba2fbe82249250a75c588ee919a67be44163"
+      "bytes": 4760,
+      "sha256": "273c8b3f015b30c002a2b9afa98caf826e55c8b045b31314b08aa81b1e045452"
     },
     {
       "path": "requirements-reproduction.txt",
@@ -419,8 +419,8 @@
     },
     {
       "path": "results/part3_geocalib/diag_oracles.csv",
-      "bytes": 2346,
-      "sha256": "55772d55f76cece7b3206a8b8ce0463f3163f134ff74d84935990331c67901e4"
+      "bytes": 2349,
+      "sha256": "b8d5e47a67d0cd9d87d4ad079c84b9a8782f75ce8646d4c07654f4c29c04b52c"
     },
     {
       "path": "results/part3_geocalib/diag_scene_breakdown.csv",
@@ -479,8 +479,8 @@
     },
     {
       "path": "results/part3_geocalib/runtime_overhead.json",
-      "bytes": 1180,
-      "sha256": "a265bcda7438cbdaf6629220d27432a664cc53b68c9c3ab705786354e6386c6f"
+      "bytes": 1755,
+      "sha256": "ff7163344922439b38035455407df21c8b67e4bcb1e35417fc0819ac595a3629"
     },
     {
       "path": "results/part3_geocalib/test_change_counts.csv",
@@ -494,8 +494,8 @@
     },
     {
       "path": "results/part3_geocalib/test_evaluation_receipt.json",
-      "bytes": 2458,
-      "sha256": "6f4f1ca1f0de15dace30151c856c1f6975e68ab6df2973fc52c343f6dafe73ec"
+      "bytes": 3067,
+      "sha256": "9de2a4faa02e3cb2ef505a9122520b8ef631598bbe588ffdb4914c97c21c05ac"
     },
     {
       "path": "results/part3_geocalib/test_left_tail_case_audit.csv",
@@ -589,8 +589,8 @@
     },
     {
       "path": "tests/test_part3_geocalib.py",
-      "bytes": 6471,
-      "sha256": "bd01d3f421489d330b7333564062ad5f934d616f1ad6a2bf819116ce98538c24"
+      "bytes": 7063,
+      "sha256": "3dac33bd871d15bd1b36cb4869539fb2faabed929a6578f7f4cacc6134baa507"
     },
     {
       "path": "tests/test_stereo_regressions.py",
