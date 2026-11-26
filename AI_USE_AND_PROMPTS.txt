@@ -1,0 +1,128 @@
+AI-ASSISTANCE RECORD (SEPARATE FROM THE REPORT PDF)
+
+Project: AIAA 3201 Project 3 — Stereo Geometry, Calibrated Monocular Depth (GeoCalib-3D), and Video Consistency
+Authors: Zhengang XIA, Hongbo HUANG
+
+Scope
+AI assistants supported implementation, debugging, experiment interpretation, evidence checks and report drafting. Codex was used in this report-writing and verification session. The supplied project history also identifies Claude Code, Google Gemini, and xAI Grok in earlier stages; this file is not a complete log of their sessions. Their product sources are cited in the report. Saved execution records, not assistant assertions, support the numerical results.
+
+The prompts below are representative actual user instructions visible in the project conversation. They are excerpts, not a fabricated exhaustive history. Operational credentials and unrelated instructions are excluded. The list is kept outside the PDF at the user's explicit request.
+
+1. Metric improvement objective:
+“好的，接下来请你重点继续完善3B，看看能不能找到让AbsRel、RMSE和δ1都得到改善的方案。Part1和Part2先保留当前版本，报告和视频暂时不要动。现在显卡充足，你可以极大缩短测试时间”
+
+2. Frozen-method maintenance:
+“好的，请按你的收尾清单直接完善 feat/part3b-sota-v2，保留 H6 [H6 = GeoCalib-3D] 主方案和现有冻结结果，不再扩展算法方向。修好后做好测试，并用我的 GitHub 身份 commit 和 push，报告和视频暂时不要动。（你的建议的四组问题也请一并修复了）”
+
+3. Report planning and production (excerpt):
+“请你稍微帮助我规划一下这个 report怎么写会比较好，根据我们的工作，怎么安排这个 report的架构会更合适。请你先告诉我你的安排的方案，根据我发给你的老师的要求。然后请你进行编写。”
+
+4. Report quality and prompt-list placement:
+“首先， report里面不需要简短的提示词清单，其次，REPORT里的相关工作以及其他部分包括方法、实验与分析、局限与结论，尽善尽美，按照拿满分的要求去写，而不是说满足基本要求。”
+
+5. Scientific visual presentation:
+“这里我给出一点建议，首先就是多使用图表。各种样式的都可以，只要能更好地展现出我们的结果，而且呢使报告更好看。其次就是部分方法论或者实验图，我希望你按照科研标准去制作。可以使用一些latex包去绘制这些流程图或者说方法论”
+
+Verification in this report session
+Teacher PDFs and primary papers were checked; formulas/claims were compared with the frozen implementation and CSV/JSON evidence; independent bounded evidence checks identified and corrected interpretation/measurement-scope errors. Figures were generated from saved numeric/image artifacts, including a TikZ pipeline. Every final PDF page was inspected and the extracted source package was compiled independently. This report-writing session did not train/refit a model, score the official test set, or create a new video.
+
+6. Main-aligned content completion:
+“好的，请直接把你说的三项内容补齐，并与最新 main 的命名和结果版本对齐。先专注内容完整性，确保充分呈现我们已经完成的工作，不再扩展算法方向，正文仍控制在老师要求的 6–8 页。修改后重新核对、编译，把 PDF 和 LaTeX 源码包发给我。”
+
+The 22 November revision used main 13fb878 archives throughout. It preserves the frozen primary method, corrects source-version and diagnostic-scope mismatches, and adds the three requested evidence components. The PDF has no prompt list.
+
+7. Preserve supplied polish and correct facts only:
+“这个是codex进行的语言润色，这个的话首先请你进行阅读，除非和事实不相符，请你保留即可（这个仅仅为事实核查），请你先告诉我结果，我再进行下一步的工作”
+
+8. Produce the approved revision:
+“可以的。那就这么处理，请你直接给我一个最新的version的latex包”
+
+23 November revision: the supplied polished language was integrated with the
+approved factual corrections, aligned to main 0ab5a92, and compiled/rendered.
+The saved model, core metrics, and image content remain unchanged. This task
+did not perform training, inference, official scoring, new video production,
+or a repository push. The prompt list remains separate from the report PDF.
+
+9. Adopt supplied Gemini edits subject to factual accuracy:
+“这个是我的gemini neon的建议，只要他的修改是符合事实的（内容也符合实际的实验，就请你直接采取，不要自己写）”
+
+The user supplied Gemini wording for the final language refinements. This
+version integrates those exact replacements after checking saved results,
+measurement scope, source hashes, and the PDF typography; unrelated prose is
+unchanged. Gemini's unverified quality/grade estimates are not adopted as facts.
+
+10. Full CVPR structure polish and post-review audit (24 November):
+“对 AIAA 3201 Project 3 的 CVPR 格式 LaTeX 论文草稿执行全量审稿与修改方案设计，目标是在审稿后通过精准修订产出达到 CVPR 审稿标准的高质量论文（6–8 页正文，不含参考文献）。” / “参考 paper_review_action_brief.txt [external review checklist] 并以 Git 同步推送到 Overleaf main 分支。”
+
+The 24 November CVPR revision keeps all frozen metrics and model parameters
+at main 0ab5a92 verbatim without retraining, refitting, or new GPU test runs.
+It restructures narrative cohesion across tracks, standardizes terminology and
+5-decimal metric precision, adds Eff. DoF in Table 1 and RTX 4060 latencies/VRAM
+from runtime_overhead.json in Table 4, augments Figure 7 with 70-frame
+center-row x-t temporal slices, updates UniDepthV2 to IEEE TPAMI 2026 and adds
+Eigen 2014 / OpenCV 2000 / DAVIS 2016 / PyTorch 2019 citations, fixes Figure 5
+legend placement and clean URL wrapping, removes obsolete draft files, and
+enforces LF line-ending hash parity.
+
+11. Cold-reader clarity, notation, and multi-round independent verification (24-25 November):
+“再次review当前project. 要从一个有CV基础但是完全不了解当前project的角度的读者来出发, 看看有没有什么内部编号/表意不明, 论证逻辑不清晰的语句和段落. 请你找出来并进行修改, 保障可读性.” / “修复这些问题并开新的subagent来review. 直到最终检查到没有问题之后再push.”
+
+The cold-reader audit and independent subagent verification loop keep all frozen
+numbers and the 8-page main body + 1-page references layout intact while
+correcting fixed-intrinsics open-room framing, explicitly defining OOF-residual
+Ridge probe targets, one-sided bootstrap p-values alongside two-sided 95% CIs,
+S(k_0), (g_bar_u, g_bar_v), head-wise Gauss-Newton Hessian (N_tr, kappa_k,
+lambda_k), four-path MODE_HH4, fixed Kinect intrinsics (1.082 vs. 1.14), VDA
+2.63 GiB windowing VRAM, Flip-TTA 5-cue assembly, exact 6-of-9 promotion
+eligibility, Flip-TTA visual/parameter clarity, Table 4 per-image/frame units,
+deterministic Matplotlib PDF metadata, Google Gemini acknowledgment ([8]), and
+package .txt provenance alignment across multi-round subagent audits prior to
+Overleaf push.
+
+12. User-supplied Gemini literal replacements with factual verification (25 November):
+“只要是符合事实且合理的，那就请你直接加上去。不要做你自己的任何修改，并且保留历史记录。”
+
+The user supplied exact LaTeX replacements for the abstract latency phrase,
+Introduction roadmap, Related Work, optimization/Flip-TTA, camera diagnostics,
+failure cases, video observations, efficiency, and future work, plus three
+BibTeX entries and a formatting/figure checklist. Accepted text is copied from
+that supplied wording, with existing citation keys retained. No unrelated
+report prose was rewritten.
+
+Factual exclusions: the all-block finite-difference curvature/documentation
+clause was omitted; the original exact curvature definition is preserved in
+EVIDENCE_MAP.txt. The video paragraph omits the unsupported foreground-motion
+causal attribution and the claim that missing GT/intrinsics prevents
+GeoCalib-3D inference. All reported values retain the frozen evidence.
+
+The requested Raw spatial-bias panel and x-t discussion-region boxes were
+rendered from existing evidence. Stereo quantile recoloring was not performed
+because this report package contains rendered stereo panels, not raw arrays.
+The table groups and missing-memory marker were updated. Typography-only line
+breaking, float spacing, plot-panel height, and reference leading retain the
+10-point body font, original margins, and 8-body-page + 1-reference-page limit.
+The AI prompt list stays outside the PDF. No model fitting, inference, test-set
+scoring, algorithm changes, or new videos were performed.
+
+History: the pre-edit report is commit 111a8558e194627681fdb66be89b4194223febe5;
+an annotated local checkpoint and a separately hashed source ZIP were saved
+before editing. The update uses an ordinary new commit without rewriting
+history. Code tests on the pinned 0ab5a92 export: 98 passed, CPU-only.
+
+13. Final Gemini fact check, figure presentation, and delivery verification (26 November):
+“这个是Gemini的对于当前最新的report的审核结果，请你进行判断其的准确性，如果它说的属实就直接执行不属实的话就算了”
+
+Gemini identified candidate typesetting and delivery issues. Codex checked the
+proposal against the course handout, the rendered PDF and LaTeX, and the frozen
+code and evidence. It protected the capitalization in the Metric3D title,
+updated the Teddy display range from the verified original depth array,
+moved the Figure 5 legend and disclosed its color limits, and clarified the
+Figure 6 error maps and Figure 7 discussion box. Existing correct symbols,
+model spellings, and table values were kept.
+
+The two Canvas movies were rendered from the previously validated 70-frame
+reproduction cache. Their model revisions, source clip, file integrity, and full
+decoding were checked. The archived A40 run remains the source of the report's
+video numbers. This round did not train a model, rerun backbone inference, or
+rescore the NYU test split. The public repository and the submission package
+carry the same excerpt-only AI-use record.

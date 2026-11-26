@@ -1,11 +1,16 @@
 {
   "schema": "aiaa3201_project_manifest",
-  "file_count": 120,
+  "file_count": 121,
   "files": [
     {
+      "path": "AI_USE_AND_PROMPTS.txt",
+      "bytes": 10472,
+      "sha256": "e47b9ce154412eb05335d9aa43ceb88eb82a59842e313ce9ee327805193a2a83"
+    },
+    {
       "path": "README.md",
-      "bytes": 12664,
-      "sha256": "f15d94a5ac36aa832464de3af6a482528fe7d6863c79c076921b8e8811152ac9"
+      "bytes": 13416,
+      "sha256": "5b3c45b5476048383d75778a70dcaa2e9217cb691e122c8fdd20b22574a81a73"
     },
     {
       "path": "depthlab/__init__.py",
